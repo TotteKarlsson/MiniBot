@@ -52,7 +52,7 @@ __fastcall TMain::TMain(TComponent* Owner)
     mIniFile(joinPath(gAppDataFolder, "ArrayBot.ini"), true, true),
     mLogLevel(lAny),
     mAB(mIniFile, gAppDataFolder),
-//    mProcessSequencer(mAB, gAppDataFolder),
+    mProcessSequencer(mAB, mArrayCamClient, gAppDataFolder),
 	mABProcessSequencerFrame(NULL),
     mSequencerButtons1(NULL),
     mSequencerButtons2(NULL)
@@ -201,16 +201,6 @@ void __fastcall TMain::AppInBox(mlxStructMessage &msg)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::UIUpdateTimerTimer(TObject *Sender)
-{
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMain::mUnitControlRGClick(TObject *Sender)
-{
-}
-
-//---------------------------------------------------------------------------
 void __fastcall TMain::MainPCChange(TObject *Sender)
 {
 	//Check what tab got selected
@@ -256,30 +246,6 @@ void __fastcall TMain::MainPCChange(TObject *Sender)
         mXYZUnitFrame1->disable();
         mXYZUnitFrame2->disable();
     }
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMain::mASStartBtnClick(TObject *Sender)
-{
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMain::SequencesPanel1Resize(TObject *Sender)
-{
-    if(mSequencerButtons1)
-    {
-    	mSequencerButtons1->update();
-    }
-
-    if(mSequencerButtons2)
-    {
-    	mSequencerButtons2->update();
-    }
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMain::Button1Click(TObject *Sender)
-{
 }
 
 //---------------------------------------------------------------------------

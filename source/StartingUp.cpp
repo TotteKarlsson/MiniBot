@@ -92,71 +92,8 @@ void __fastcall	TMain::setupUIFrames()
 
     //The sequencer buttons frame holds shortcut buttons for preprogrammed sequences
     mSequencerButtons1 = new TSequencerButtonsFrame(mProcessSequencer, "Cutting", MiddlePanel);
-    mSequencerButtons1->Parent = CategoryPanel1;
+    mSequencerButtons1->Parent = MiddlePanel;
     mSequencerButtons1->Align = alClient;
-    CategoryPanel1->Caption = vclstr(mSequencerButtons1->getCategory());
-
-    mSequencerButtons2 = new TSequencerButtonsFrame(mProcessSequencer, "Setup", MiddlePanel);
-    mSequencerButtons2->Parent = CategoryPanel2;
-    mSequencerButtons2->Align = alClient;
-    CategoryPanel2->Caption = vclstr(mSequencerButtons2->getCategory());
-
-    //Create frames showing motor positions
-    TXYZPositionsFrame* f1 = new TXYZPositionsFrame(this, mAB.getCoverSlipUnit());
-    f1->Parent = this->mRightPanel;
-    f1->Align = alTop;
-
-    TXYZPositionsFrame* f2 = new TXYZPositionsFrame(this, mAB.getWhiskerUnit());
-    f2->Parent = this->mRightPanel;
-    f2->Align = alTop;
-
-	//Setup JoyStick;
-
-    //Over ride joysticks button events  (cycle speeds and XY motions)
-    mAB.getJoyStick().setButtonEvents(5,  NULL, onJSButton5Click);
-    mAB.getJoyStick().setButtonEvents(6,  NULL, onJSButton6Click);
-
-    //!Button 14 emergency stop
-    mAB.getJoyStick().setButtonEvents(14, NULL, onJSButton14Click);
-
-    //JoyStick Settings CB
-    JoyStickSettings& js = mAB.getJoyStickSettings();
-    JoyStickSetting* jss = js.getFirst();
-    while(jss)
-    {
-        JoyStickSettingsCB->Items->AddObject(jss->getLabel().c_str(), (TObject*) jss);
-        jss = js.getNext();
-    }
-
-    JoyStickSettingsCB->ItemIndex = 0;
-    JoyStickSettingsCB->OnChange(NULL);
-    mJSSpeedMediumBtn->Click();
-    //mJSCSBtn->Click();
-	mAB.enableJoyStick();
-
-    //XY velocity parameters
-    mMaxXYJogVelocityJoystick->setValue(mAB.getJoyStick().getX1Axis().getMaxVelocity());
-    mXYJogAccelerationJoystick->setValue(mAB.getJoyStick().getX1Axis().getAcceleration());
-
-    if(mAB.getCoverSlipUnit().getZMotor())
-    {
-        mMaxZJogVelocityJoystick->setValue(mAB.getCoverSlipUnit().getZMotor()->getVelocity());
-        mZJogAccelerationJoystick->setValue(mAB.getCoverSlipUnit().getZMotor()->getAcceleration());
-    }
-
-    //Lift Settings CB
-    PairedMoves& pms = mAB.getLiftMoves();
-    PairedMove* pm = pms.getFirst();
-    while(pm)
-    {
-        string key = pm->mLabel;
-        LiftCB1->Items->AddObject(pm->mLabel.c_str(), (TObject*) pm);
-        LiftCB2->Items->AddObject(pm->mLabel.c_str(), (TObject*) pm);
-        pm = pms.getNext();
-    }
-
-    LiftCB2->ItemIndex = 0;
-    LiftCB2->OnChange(NULL);
 
 	//Create and setup XYZ unit frames
     mXYZUnitFrame1 = new TXYZUnitFrame(this);
@@ -175,12 +112,5 @@ void __fastcall	TMain::onFinishedInitBot()
 {
 	Log(lInfo) << "Synching ArrayBot UI";
     ReInitBotBtn->Action = ShutDownA;
-
-    //Setup the wiggler
-    mTheWiggler.setAmplitude(mWigglerAmplitudeE->getValue());
-    mTheWiggler.setMaxVelocity(mWigglerVelocityE->getValue());
-    mTheWiggler.setMaxAcceleration(mWigglerAccelerationE->getValue());
-    mTheWiggler.assignMotors(mAB.getWhiskerUnit().getXMotor(), mAB.getWhiskerUnit().getYMotor());
-
 }
 

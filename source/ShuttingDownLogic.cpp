@@ -32,6 +32,10 @@ void __fastcall TMain::ShutDownTimerTimer(TObject *Sender)
     if(UIUpdateTimer->Enabled)
     {
         UIUpdateTimer->Enabled = false;
+	if(mAB.getJoyStick().isEnabled())
+    {
+		mAB.getJoyStick().disable();
+    }
     }
 
     if(gSplashForm && gSplashForm->isOnShowTime())

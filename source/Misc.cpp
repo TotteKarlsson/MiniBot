@@ -105,10 +105,10 @@ void __fastcall TMain::ApplicationEvents1Exception(TObject *Sender, Exception *E
 	Log(lInfo) << "Application Exception: "<<stdstr(E->Message);
 }
 
-void __fastcall TMain::BitBtn3Click(TObject *Sender)
-{
-	infoMemo->Clear();
-}
+//void __fastcall TMain::BitBtn3Click(TObject *Sender)
+//{
+//	infoMemo->Clear();
+//}
 
 //This one is called from the reader thread
 void __fastcall TMain::logMsg()

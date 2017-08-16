@@ -75,9 +75,7 @@ class TMain : public TRegistryForm
 	TToolBar *ToolBar1;
 	TBitBtn *mClearLogWindowBtn;
 	TTimer *UIUpdateTimer;
-	TTimer *LiftTimer;
-	TAction *abortLiftA;
-	TAction *liftA;
+
 	TComboBox *LogLevelCB;
 	TTabSheet *mMoveSequencesPage;
 	TTimer *WaitForDeviceInitTimer;
@@ -99,34 +97,13 @@ class TMain : public TRegistryForm
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
     void __fastcall stopAllAExecute(TObject *Sender);
     void __fastcall ApplicationEvents1Exception(TObject *Sender, Exception *E);
-    void __fastcall BitBtn3Click(TObject *Sender);
-    void __fastcall JoyStickValueEdit(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall reInitBotAExecute(TObject *Sender);
     void __fastcall ShutDownAExecute(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
-	void __fastcall JSControlClick(TObject *Sender);
-	void __fastcall JSSpeedBtnClick(TObject *Sender);
-	void __fastcall AddJsSettingBtnClick(TObject *Sender);
-	void __fastcall JoyStickSettingsCBChange(TObject *Sender);
-	void __fastcall mXYCtrlRGClick(TObject *Sender);
-	void __fastcall LiftTimerTimer(TObject *Sender);
-	void __fastcall abortLiftAExecute(TObject *Sender);
-	void __fastcall liftAExecute(TObject *Sender);
-	void __fastcall LiftCBChange(TObject *Sender);
 	void __fastcall LogLevelCBChange(TObject *Sender);
 	void __fastcall WaitForDeviceInitTimerTimer(TObject *Sender);
-	void __fastcall mJoyStickRGClick(TObject *Sender);
-	void __fastcall UIUpdateTimerTimer(TObject *Sender);
-	void __fastcall mUnitControlRGClick(TObject *Sender);
 	void __fastcall MainPCChange(TObject *Sender);
 	void __fastcall mRightPanelDblClick(TObject *Sender);
-	void __fastcall mWiggleBtnClick(TObject *Sender);
-	void __fastcall mWiggleSpinButtonDownClick(TObject *Sender);
-	void __fastcall mWiggleSpinButtonUpClick(TObject *Sender);
-void __fastcall mASStartBtnClick(TObject *Sender);
-	void __fastcall mPullRibbonBtnClick(TObject *Sender);
-	void __fastcall SequencesPanel1Resize(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall HomeAllDevicesAExecute(TObject *Sender);
 	void __fastcall WaitForHandleTimerTimer(TObject *Sender);
 
@@ -156,6 +133,12 @@ void __fastcall mASStartBtnClick(TObject *Sender);
 
         vector<TFrame*>					        mFrames;
 
+        										//!The ArrayCam client connects to
+                                                //an ArrayCam server. The client processes
+                                                //incoming messages over a socket, in
+                                                //onArrayCamMessageReceived
+		ArrayCamClient				        	mArrayCamClient;
+
         							            //!Arraybot is allocated on the heap.
                                                 //!So that we can catch init exceptions in the
                                                 //!constructor of the main form
@@ -163,7 +146,7 @@ void __fastcall mASStartBtnClick(TObject *Sender);
 
           										//!The Process sequencer allow individual
                                                 //!processes to be executed in sequence
-//  	    ProcessSequencer  						mProcessSequencer;
+  	    ProcessSequencer  						mProcessSequencer;
 
 
 		TXYZUnitFrame*					        mXYZUnitFrame1;

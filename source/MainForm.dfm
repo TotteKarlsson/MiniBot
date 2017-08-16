@@ -35,7 +35,6 @@ object Main: TMain
     OnChange = MainPCChange
     object mFrontPage: TTabSheet
       Caption = 'The Bot'
-      ExplicitWidth = 1295
       object MiddlePanel: TPanel
         Left = 0
         Top = 0
@@ -44,18 +43,14 @@ object Main: TMain
         Align = alClient
         AutoSize = True
         TabOrder = 0
-        ExplicitWidth = 1295
-        ExplicitHeight = 612
       end
     end
     object mMoveSequencesPage: TTabSheet
       Caption = 'Sequences'
       ImageIndex = 4
-      ExplicitWidth = 1295
     end
     object TabSheet1: TTabSheet
       Caption = 'Motors'
-      ExplicitWidth = 1295
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
@@ -70,7 +65,6 @@ object Main: TMain
         Padding.Right = 5
         Padding.Bottom = 5
         TabOrder = 0
-        ExplicitWidth = 1190
       end
       object Panel1: TPanel
         Left = 1373
@@ -79,7 +73,6 @@ object Main: TMain
         Height = 712
         Align = alRight
         TabOrder = 1
-        ExplicitLeft = 1190
         object mCheckDevicesBtn: TBitBtn
           Left = 1
           Top = 177
@@ -142,12 +135,10 @@ object Main: TMain
     object TabSheet2: TTabSheet
       Caption = 'Settings'
       ImageIndex = 2
-      ExplicitWidth = 1295
     end
     object TabSheet5: TTabSheet
       Caption = 'Logging'
       ImageIndex = 4
-      ExplicitWidth = 1295
       object BottomPanel: TPanel
         Left = 0
         Top = 0
@@ -155,7 +146,6 @@ object Main: TMain
         Height = 712
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1295
         object infoMemo: TMemo
           Left = 1
           Top = 31
@@ -172,7 +162,6 @@ object Main: TMain
           ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
-          ExplicitWidth = 1293
         end
         object ToolBar1: TToolBar
           Left = 1
@@ -183,7 +172,6 @@ object Main: TMain
           ButtonHeight = 30
           Caption = 'ToolBar1'
           TabOrder = 1
-          ExplicitWidth = 1293
           object mClearLogWindowBtn: TBitBtn
             Left = 0
             Top = 0
@@ -197,7 +185,6 @@ object Main: TMain
             Font.Style = []
             ParentFont = False
             TabOrder = 0
-            OnClick = BitBtn3Click
           end
           object LogLevelCB: TComboBox
             Left = 75
@@ -223,7 +210,6 @@ object Main: TMain
     object TabSheet3: TTabSheet
       Caption = 'About'
       ImageIndex = 6
-      ExplicitWidth = 1295
       inline TAboutArrayBotFrame_21: TAboutArrayBotFrame_2
         Left = 0
         Top = 0
@@ -231,25 +217,25 @@ object Main: TMain
         Height = 712
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1295
+        ExplicitWidth = 1478
         ExplicitHeight = 712
         inherited GroupBox1: TGroupBox
           Width = 1478
           Height = 526
-          ExplicitWidth = 1295
+          ExplicitWidth = 1478
           ExplicitHeight = 526
           inherited Memo1: TMemo
             Top = 25
             Width = 1474
             Height = 499
             ExplicitTop = 25
-            ExplicitWidth = 1291
+            ExplicitWidth = 1474
             ExplicitHeight = 499
           end
         end
         inherited Panel1: TPanel
           Width = 1478
-          ExplicitWidth = 1295
+          ExplicitWidth = 1478
           inherited Image1: TImage
             Left = 1292
             ExplicitLeft = 708
@@ -324,11 +310,9 @@ object Main: TMain
     end
     object abortLiftA: TAction
       Caption = 'Abort Lift'
-      OnExecute = abortLiftAExecute
     end
     object liftA: TAction
       Caption = 'Lift'
-      OnExecute = liftAExecute
     end
     object HomeAllDevicesA: TAction
       Caption = 'Home All'
@@ -350,14 +334,12 @@ object Main: TMain
   object UIUpdateTimer: TTimer
     Enabled = False
     Interval = 250
-    OnTimer = UIUpdateTimerTimer
     Left = 468
     Top = 752
   end
   object LiftTimer: TTimer
     Enabled = False
     Interval = 200
-    OnTimer = LiftTimerTimer
     Left = 1392
     Top = 256
   end
