@@ -1,0 +1,687 @@
+Release 0.9.0 (Aug 11)
+=======================
+* Fixed "Can't get referenced motor" message
+* Got arrycam request for focus and zoom partially working
+* Added frame to set zoom and focus parameters for IPC message
+* Stripped Log time for log messages sent to splash screen
+* Fixed reading registry parameters -> proper size of application
+* Added ability to add new sequence category to a sequence
+* Added ability to log a sequence XML to logfile
+* Changed UI style.
+* Added ability to Home all motors at once.
+* Connected Pause button on sequence control form.
+* Updated year on splash form.
+* Simplified MotorMove process frame
+
+Release 0.8.9 (Aug 8)
+=======================
+* Moved Wiggler to Wiggler tab
+* Renamed PageControl1 to MainPC
+* Fixed bug causing sequence with no category field to not load
+* Fixing startup and shutdown issues
+* Added arraybot template sequences
+* Updated ini file template
+* Changed Baud
+* Added required libraries to large arraybot compile group
+* Added two CPP files for arraycam communications and Wiggler logic
+* Added logic to deal with processsequence categories
+* Renamed application sounds frame
+* Moved ArrayCam GB to the right panel
+* Moved out frames from atapi
+* After restructure of atapi
+* Creating Navitar test application
+* Renamed ui folder -> source
+
+Release 0.8.8 (June 7)
+=======================
+* Added frames for user selection os application sounds
+* Added application sound properties
+* Added pagecontrol component to settings page
+* Updated sound test application
+* Re-enabled the splashscren
+* Moved the ArrayCam connect button to the frontpage
+* Updated release script
+
+Release 0.8.7 (April 5)
+=======================
+* Below are changelogs realted to atapi, as well as to the ArrayBot UI
+* Moved MotorWigglerunit to core library
+* Moved motor wiggler into coreLibs
+* Preparing Arraybot for processes that can communicate with ArrayCam
+* Made arraybot an object instead of pointer within main UI
+* Added code for dealing with ArrayCam Client requests
+* Significant simplifications of how processes are handled internally
+* Moved arrayCamClient to the main library, atlib
+* Added client components for the ArrayCam server
+* Added UI LED's to indicate state of ArrayCamServer
+* Updated the release script
+* General changes to VCL frames that are dynamically created -> Pass references instead of pointers
+* Added Start, Stop Video, enable disable barcodescanner and other useful requests to the ArrayCamClient class
+* Added ability to subscribe to arraycams message processor using a modified observer/subject pattern
+* Added more robust handling of arraycam responses
+* Simplified XML reading writing of processes
+* Got a semi robust handling of arraycamrequests at client side
+* Renamed arraycamrequest to arraycamrequestprocess
+* Firmed up the actual ArraCam request protocol using a static map
+* Some renaming of units
+* Added a ArrayCamProtocol class holding message specs, request definitions
+* Moved motorwiggler into core
+* Removed ProcessSequencer from ArrayBot class
+* Added functions and properties to ArrayCamRequest class
+* Populating frames with objects in stead of pointers
+* Restored state from previous version having arraybot being a pointer in most frames..
+* Many changes to processes logic - need testing!!
+* Added units for arraycam requests
+* Updated code for the labelprinter to accept commands stored in the database
+* Added database lookup table enum
+* Added utility function to atdb data module: getBlockID
+* Fixed some inconsistencies in the CoverSlip datamodule.
+* Added a Ribbons datamodule, that might be used for ribbons specific dataprocessing
+* Added a ribbonOnCS client dataset
+* Added a getLastCount to counter class
+* Added getLastNumber of sections property to UC7 component
+* Added counter for ribbon order.
+* Added field for ribbon creator in ribbons table
+* Added a Zebra scanner frame to deal with scanner logic
+* Fixed barcode reader crash bug -> needed dynamic lining with runtime libraries
+* Added a TCoverSlipDataModule to vcl/datamodules
+* Fixed enabling/disabling of joystickaxes while a motorsequence is executed
+* Added atdb connection Frame
+* Added form to control, start and stop a sequence of processes
+* Added Thorlabs library files for Borland
+* Added Kinesis files
+* Added class for stop and resume operation
+* Adding stop and resume process
+* Fixing ab->at namespace
+* Reorganized thirdparty folder somewhat
+* Moved doxygen file to new folder
+* Improved usability of programmed robot moves frames
+* Removed obsolete SendWidowMessage function and cleaned up unnecessary white space
+* Added datamatrix parameter structure
+* Added satrt/stop decode session functions for barcode scanner
+* Simplifying scanner code (SSIDLL)
+* Added info about errors
+* Added specimententered date field
+* Added entered_by field to specimen table
+* Added function to hand out the barcode readers memory
+* Added a isconnected API call to SSIDLL
+* Refactoring ABObject -> ATObject
+* Renamed top level ABObject to ATObject
+* Added unit for barcodereader class
+* Added barcodereader module
+* Added ssidll to thirdparty folder
+* Adding atSSI dll project code
+* Added ssidll code
+* Implementing sensor database logging
+* Adding db writing from arduinoCOntroller application
+* Re-enabling sensors arduino
+* Cleaning up arduino code
+* Cleaning up arduino controller code
+* Added a few sound ID's
+* Added usage of YesNo form on position confirmation on AB sequences page
+* Changed buttons on sequence frame to be ArraybotButtons, i.e. adding sound
+* Removed OnEnter 'update'
+* Updated reticle to accept a custom origin
+* Changed arduino message processor to not start unless a connection is made
+* Added a Reticle class for arrayCam
+* Added Yes/No form to VCL library
+* Added handling of UC7 system commands.
+* Added UC7 north knife stage position max position
+* Started work on a threaded soundplayer
+* Updated how arraybot shortcut buttons are placed
+* Added logic to handle joystick axis deadzones
+* Changed motorprocessing delay to 150ms from 50 ms
+* Fixed long travelstage stop profiled command to be executed in thread
+* Some UC7 fixes regarding moving of the knife stage
+* Re=enabled sounds using atResources.dll
+* Fixed a motor shutdown bug, related to its status timer
+* Removed arduino
+* Fixed a VERY nasty bug regarding usage of serialport
+* Removed code related to PufferArduino
+
+Release 0.8.6 (April 5)
+=======================
+* Added functionality to pause/resume a move sequence by adding a stop/resume action to the process sequences
+* Improved usability of steps programming
+* Refactored dslib -> dsl
+* Removed references to the puffer arduino
+
+Release 0.8.5 (March 16)
+=======================
+* Merging wiggler branch
+* Added sound when user switches the page control
+* Updated sequences checklist
+* Added sound to alert form for sequences
+* Added confirmation dialog when executing a sequence
+* Added/updated wiggler with a pull/relax feature
+* Created an ArrayBot checklist
+* Added for motor enabled and disabled check when checking status
+* Added sounds when switching JS speeds
+* Checking logs overflow. Clear Logmemo when more then 1000 lines
+* Enabled log times to logger
+* Added a Motor wiggler
+* Added buttons/functionality to gently pull the ribbon
+* Removed obsolete arduino code
+* Fixed compilation
+* Moved all Arduino stuff to the Arduino controller project
+* Updated Arduino sketches, before moving to the ArduinoController project
+* Cleanup
+* Creating proper distribution structure
+* Getting UI functional
+* Added a simple UC7 Arduino serial port simulator
+* Added Close/Open logic
+* Getting UC7 test app up and running
+* Getting testapp up to spec
+* Adding UC7 API test application
+* Updating to new hardware configuration
+* Worked on serial test program for barcode reader
+* refactored ab->at
+* Moved ArrayCam to its own repository
+* Moved most backend code to the ATAPI repository
+* Before refactoring api's into the atapi repository
+* Improved calculated fields for block label creation
+* Finished wrapping label printer dll
+* Added labelprinter class wrapping printer dll
+* Updated ArrayCam MySQL connection properties
+* Added some calculated fields to ATDB (DB modules may be moved to separate "AT repository"
+* Upgraded db connection
+* Added getTableNames function
+* Moved atdb to separate github repo at git@github.com:TotteKarlsson/atDB.git
+* Cleaning up atdb
+* Fixed 'required' fields
+* Removing the queries from the ATDB datamodule
+* Added database credentials to ini file
+* Added queries for deleting ribbons and notes when deleting a block
+* Simplifying the atDB datamodule
+* Added notes for ribbons to UI
+* Adding ribbon notes UI
+* A lot of database work
+* Cleaning up DB Connections
+* May abandon SQLite db cause of multiple threads
+* Adding multi threaded db inserts to avoid sluggish UI
+* Added environmental readings to local database
+* Added Sensor Arduino classes and code
+* Removed Sensor arduino code from lights Arduino sketch
+* Splitting up Light and Sensor arduino into two separate hardware/software modules.
+* Moved light controls to settings form
+* Fixed image notes grids to show a condensed date.
+* Added connect to ImagesAndMovies datamodule.
+* Added panel for 1:1 and 1:2 buttons on main UI
+* Got foreign keys working properly for the local SQlite DB (pragma foreign_keys = ON)
+* Added some db utility functions related to handling of current user
+* Getting db implementation up
+* Configuring the camera
+* Added Images data module to handle images and notes
+* Added slider to set gamma for the camera.
+* Added automatic insertion of image meta data into local database
+* Changed jpg creation to newer updated format
+* Figured out nested queries using dbExpress
+* Getting SQLite embedded DB stuff working trough class ATDBClientDBSession
+* Adding Poco SQLite support
+* Organizing usage of shared database modules
+* Added ibot application to arraybot repository
+* Adding the ATDB application to ArrayBot repository
+* Adding local database to arraybot - to be used with atdbentry application
+* Fixed location for saving images and movies
+
+============================= 2017 ========================================================
+
+Release 0.8.4 (Sept 28)
+=======================
+* Added ability to specify output folders for snapshots and movies in ArrayCam
+* Changed Arduino DHT code to use different library code (that actually works)
+* Added isClosingDown boolean to ArrayCam in order to avoid UI updates during shutdown
+* Wrote database code to handle blocks and multiple notes
+* Added new library to use for the DHT22 arduino temperature sensor
+* Adding deletion capability of blocks
+* Got first data entry form working
+* Getting DB application closer to initial testing
+* Restarting DB application creation
+* Added abATDB entry package
+* Added new atdb data entry application
+
+Release 0.8.3 (Sept 19)
+=======================
+* Various organizing refactoring stuff
+* Using lower case on folders
+* Removed a few obsolete units
+* Compiled using new relative folders
+* Added ability to add arduinoserver command to a process sequence
+* Added ArduinoServer command initial code
+* Added message to get puffer arduino status
+* Stability fixes
+* Disabled part of UI during startup to avoid mishaps during init
+* Added logic to disable/enable UI controls based on connection to arduino server
+* Partioned ArrayCam functions into Closing and CameraFunctions cpp files
+* Added ability to pair front and back LED's.
+* Fixed bunch of UI annoyances
+* Changed usage of arduino device messaging in the arduino controller application -> all messaging now goes trough the server.
+* Added more message handling to the server
+* Fixed mistake in Arduino client class
+* Added more command in the Arduino server class
+* Fixed UI bugs in arduino server application
+* Added client connect/disconnect callbacks in order to properly update ArrayCam UI
+* Updated Lights sketch to send messages useful for updating UI's
+* Updated camera app to update its trackbars regarding lights
+* Restored Lights sketch.
+* Moved LightsArduino logic to the Lights Arduino device class
+* Preparing to make the arduino controller into standalone server
+* Cleaning up interfaces
+* Added ribbon length automation control to ArrayBot UI
+* Removed sound control in the arduino controller UI
+* Removed some raw pointers
+* Cleaned up ArrayCam UI a little
+* Changed ArrayBot shortcut buttons to fill the space on their buttonbar
+* Added new Arduino messages DISABLE_PUFFER and START_NEW_RIBBON
+* Renamed arduino_controller to ArduinoController
+* Specialized arduino client logic into new classes, puffer and lights arduino clients respectively
+* Added ability to control puffer arduino simulator over serial port
+* Created class to specifically deal with ribbon length control
+* Created a LeicaUC7 controller
+* Moved specialized functionality from arduino device into pufferarduino class
+* Added ability to set some mouse parameters trough the Leica arduino sketch
+
+Release 0.8.2 (Sept 8)
+=======================
+* Implemented Control of Leica UI trough mouse automation by an arduino
+* Implemented auto zero cut together with the puffer
+* Added a  LeicaUC7Controller class
+* Nasty UI bug seem to be related to using the ArduinoDevice directly in the UI instead of going trough the ArduinoServer class
+* Added SET_CUT_PRESET command handler in the ArduinoServer
+* Puffer Arduino code and LeicaArduino code was changed to agree..
+* Added ZeroCut, and PresetCut buttons, with logic to perform the actions, to Controller UI
+* Updated puffer arduino sketch
+* Added LeicaSerial sketch test
+* Setting up zero cut with leica
+* Added Puffer and Lights Arduino classes
+* Adding Arduino pin read and write functions
+* Updated motor, devices info page
+* Fixed triggered child action logic so that a child action can act on a parent action and end at a different position.
+* Cleaned up arduino sketches
+* Fixed scrollbars on motors page
+* Cleaned up sequencing UI
+* Fixed tabbing issues on forms and frames.
+* Moved several forms and frames to arraybots VCLPackage
+
+Release 0.8.1 (Aug 31)
+=======================
+* Fixed log level initialization in ArrayCam
+* Renamed array_cam.ini to ArrayCam.ini
+* Fixed sounds for unfocused windows
+* Removed the 'restore' sounds from the main UI
+* Added a soundplayer class for playing simple sounds
+* Upgrading the sound experience
+
+Release 0.8.0 (Aug 26)
+=======================
+* Improved readability of sequence page
+* Adding more sounding buttons
+* Added readme file to Arduino lib folder
+* Updated puffer sketches
+* Changed UI themes to 'Iceberg Classico"
+* Fixed scrolling problem on Motors Page
+* Renamed About form for the Arduino controller
+
+Release 0.7.9 (Aug 26)
+=======================
+* Created a ArrayBot buttons with small feedback sound
+* Added buttons to main window for setting of and enabling the puffer
+* Fixed saving of sequences
+* Refining Process Sequence wording
+* Added positional update of Trigger functions
+* Added check for motor positions and not asking for updating in case position difference is negligible
+* Updated "save positions with a click" code
+
+Release 0.7.8 (Aug 23)
+=======================
+* Implemented ability to step trough a sequence of processes
+* Allowed a process to trigger its own device..
+* Renamed CombinedMoveFrame to ParallellProcessFrame
+* Renamed class Parallell to ParallellProcess
+* Major redesign of how Process sequences are implemented in the UI
+* Added a vcl utils unit
+* Added ArrayBot package
+* Restructuring/simplifying
+* Added an ArrayBot Resource DLL, to hold sound and other resources
+* Added DirectSound class to ArrayBot
+* Adding sound support using DirectX
+
+Release 0.7.7 (Aug 19)
+=======================
+* Added positional limits to all motors, causing them to stop
+* Added warning sounds when a motor crosses a positional limit
+* Creating forms and frames folders, and eventually libs
+* Added xinput application to get joystick battery status
+* Added scrollbox to ArrayCam application for right panel controls
+
+Release 0.7.6 (Aug 12)
+=======================
+* Added saving of parameters for the ArrayCam application
+* Cleaned up arduino controller app
+* Updated Arduinoserver with some light extra code
+* Fixed some arduinoserver shutdown issues
+* Removed arraybot doxygen stuff from repository
+* Re moved light control from Arraybot Main UI
+* Now storing sequences in "sequences" folder
+* Removed pre and post dwell times from process frames
+* Fixed deletion/addition of camera shots and videos minor update to puffer sketch
+* Added ability to control lights with trackbars
+* Added settings form to ArrayCam
+* Added maximized screen features to main forms
+* Added saving form properties to registry
+
+Release 0.7.5 (Aug 10)
+=======================
+* New camera features
+* Added code to create avi movies with the camera
+* Added ability to enable auto exposure in arrayCam
+
+Release 0.7.4 (Aug 8)
+=======================
+* Added take snapshot feature to ArrayCam
+* Added button to toggle log window in ArrayCam
+* Fixed camera panel to scale properly (no stretching)
+
+Release 0.7.3 (Aug 8)
+=======================
+* Added ability to flip image vertical and horizontal in ArrayCam
+* Updated Lights Arduino Sketch with settings for LED's
+* Organizing arduino folder
+* Removed naive motor stopping logic
+
+Release 0.7.2 (Aug 4)
+=======================
+* Added Arduino client code to main UI
+* Added code to automatically init sequence on sequence tab
+* Added page with About info in order to save space on right UI panel
+
+Release 0.7.1 (Aug 4)
+=======================
+* Added icon to ArrayCam
+* Tracking down POV bug
+* Reorganising apps into apps
+* ArduinoController -> Arrayduino
+* Adding ArrayCam application
+* Added ability to turn off the control of a XYZ-Angle unit, Whisker or CoverSlip side.
+* Cleaned up JoyStick selection bugs
+* Fixing JoyStick flakiness when switching between the two
+* Fixed code to accept low level Camera messages in the VCL forms loop
+* Preparing to incorporate camera code
+* Cleaning up camera code
+* Imported library for camera driver
+* More initial Camera code
+* Added initial Camera Capture code
+* Getting puffer setup
+* Renamed arduino_controller to arduinoController
+* Implemented necessary messages between the arduino server and client.
+* Fixed so that UI messages (from threads) are synchronized.
+* More Arduino stuff
+
+Release 0.7.0 (Jul 28)
+=======================
+* Major release containing new ArduinoController application used
+  to control peripheral Arduinos
+* Renamed the arduino_server to Arduino_controller
+* Adding lights arduino code
+* Creating an Arduino Client test application
+* Added shutdown code
+* Fixed so Motor shield code can be compiled "anywhere"
+* Added AdaFruit motor shield code for the arduino
+* Getting the Arduino socket server up and running
+* More serial stuff
+* Added testing program for abSerial
+* Added callback functionality to serial
+* Created separate unit for the SerialWorker
+* Worked on serial code... not trivial unfortunately
+* Got serial communication setup with arduino
+* Adding classes for talking to the arduino over the serial port
+* Creating an arduino server
+* Fixed several glitches: Splash, wrong parameters for DCServo (need to setup actuator selection), and more
+
+Release 0.6.5 (Jul 20)
+=======================
+* Moved sequence shortcut bottoms to top of page
+* Changed precision of motor position on front page to 4 decimals
+* Fixed bug when adding a trigger from the UI
+* Added logic to handle life time of a triggered process
+* Added some arduino stuff
+* Removed setAcceleration function -> use setVelocityParameters instead
+* Simplifying setting of velocity + acceleration
+* Added creation of a TriggerFunction
+* Worked on Trigger functionality, adding/deleting triggers
+* More triggering code
+* Adding trigger functions
+* Got XML reading of triggers partly implemented
+* Changing so that processes need to call virtual init function to be initialized before executing a sequence
+* Added logic operator logic
+* Getting triggers out to the UI
+* Changes to "Move To" position logic
+* Renamed some frames
+* Adding a positional trigger frame
+* More UI fixes
+* Added update mechanism of sequencer buttons
+* Fixed many UI inconsistencies
+* Improving UI features, fonts etc..
+* Updated the XML format for saving a sequence
+* Got the TimeDelay process implemented
+* Got Timedelay UI frame implemented
+* Updated Doxygen docs
+* Creating frame for entering a TimeDelay Process
+* Simplifying triggering functionality
+* Using tr1 function, bind logic for trigger functions
+* Changed set velocity to use the motorcommand processor
+* More code for positional triggering of motors
+* Creating specialized move classes: Absolute, Relative and Continuous
+* Move is now an abstract class
+* Added lift distance for the Ribbon lifter
+* Fixed lifting bug
+* Updating RibbonLifter
+* Implementing the Ribbon lifter
+* Adding code for lifting the ribbon in one action (will not be used -> use
+  sequencer instead
+
+Release 0.6.4 (Jul 6)
+=======================
+* Fixed lifting bug
+* Updating RibbonLifter
+* Implementing the Ribbon lifter
+
+Release 0.6.3 (Jul 5)
+=======================
+* Added switch joystick button on settings page
+* Added support for two joysticks and switching between them
+* Added code to remove a process sequence
+* Re-enabled the splash screen
+
+Release 0.6.2 (Jul 1)
+=======================
+* Got combined move processing working ok
+* Implemented custom naming of ProcessSequences
+* More work on Process sequences
+* Functional XML reading/writing of nested processes
+* Speed up compilation times a lot
+* Populating frames code
+* Added more frames to deal with combined moves
+* Added XML reading/writing of combined moves
+* Added classes for dealing with Process sequences
+
+Release 0.6.1 (Jun 28)
+=======================
+* "Backlogged release" released from develop branch
+* Trimming up paired moves
+* Added frame for XYZ unit positions
+* Refactoring XYZProcessSeq frame
+* Time outs need to be fixed
+* Updated processing logic
+* Added command pending flag for motors
+* Added a PreDwellTime variable to process class
+* Added Stow and Working position buttons
+* Implemented experimental sequence processes moves
+* Implemented ability to just turn off JS axes per unit
+* Added some utility functions
+* Added joystick settings to be applied to angle motor
+* Fixed so that enabling/disabling of joystick only occur one time at a time
+* Getting speeds more consistently applied
+* Moved vcl frames and forms to UI code
+* Fixed bug regarding non initialized joystick on startup
+* Consolidated angle controller with the XYZUnit class
+* Many changes to process processing
+* Added a position resolution parameter when making a move
+* Moved angle controller into XYZ Unit
+
+Release 0.6.0 (Jun 21)
+=======================
+* Added MoveSequencers to Main arrayBot UI
+* Added *.txt files to install folder
+
+Release 0.5.9 (Jun 13)
+=======================
+* Fixed splash screen messages
+* Added About form
+* Renamed FrameUnit
+* Added more files for startup logic
+* Added code for preventing two instances of ArrayBot to be running
+* Added skeleton code for a splash screen
+* Added skeleton code for about box
+* Added skelton code for reading the Changelog file
+* Updated release script
+* Enable joystick after a move
+* Finding "lift bug"
+
+Release 0.5.8 (Jun 9)
+=======================
+* Added position ranges for each motor
+* Fixed Paired move known bugs
+* Implemented Button 14 on PS4 controller to do the lift
+* Added getMaxPosition function motors
+
+Release 0.5.7 (Jun 8)
+=======================
+* Added lifting code
+* Updated UI with updated notification of angles and lift action
+* Fixed reading writing of lift parameters
+* New class implementing a PairedMove
+* Refactoring
+
+Release 0.5.6 (Jun 8)
+=======================
+* Added cycling of speeds and XY stages enabled
+* Added icons
+* Changed XY control to use a RadioGroup control
+* Fixed Camera angle bug
+
+Release 0.5.5 (Jun 7)
+=======================
+* Fixed joystick bug and improved response a little.
+* Fixed initialization of joystick speeds
+* Dealing with quick JS response
+* Added code to handle an absent JoyStick
+
+Release 0.5.4 (Jun 6)
+=======================
+* Fixed issues with enabled/disabled motors.
+* Added ability to enable/disable motors
+* A motor does sometime get disabled, for various reasons. When disabled, no current is
+* holding the motor so moving the motor manually is ok (I guess).
+* Renamed JoyStick to ArrayBotJoyStick
+* Added Joystick settings for the Angle controllers
+* Renamed abJoyStick to abArrayBotJoyStick
+* Renamed formname
+
+* Cleaned up 
+Release 0.5.3 (Jun 3)
+=======================
+* Enabled ability to use a PS3 controller to controll all XY stages
+* Enabled button control of both angle motors
+* Enabled button  control of both z-axis stages
+
+Release 0.5.1 (May 27)
+=======================
+* This release can move all stages using a joystick
+* Changed up/down buttons
+* Updated ini template file
+* Added controller for Camera angle to ArrayBot API and UI
+* Adding another angle controller to ArrayBot
+* Renaming spatialMove to LinearMove
+* Added more doxygen docs
+* More move/process logic
+* Added/rename Process sequencer, more abstract than MoveSequencer
+* Added process class, abstract class for a process to be used with the
+* Process sequencer
+* Adding logic to ProcessSequencer
+* Achieved a simple UI sequencer
+* Refactoring: moveToPosition -> moveAbsolute
+* Fixing up cyclic header dependencies
+* More move logic
+* Renamed XYZUnitPostiion to Position
+* Added units for implementation of move logic
+* Added code to deal with JoyStick velocity settings
+* Added units for JoyStick Settings
+* Added release script for setup application
+* Created release scripts
+* Updated doxygen docs
+* More fixes to reading float numbers
+* Fixing FloatLabeled Edit reference
+* Cleaned up UI
+* Added property to restore window size correctly
+* Added angle control for the cover slip
+* Re enabled TCube DC servo motor unit - for the angle controller
+* Fixed INI reading for the CS angle controller
+* Added CoverSlipAngleController and class for a MoveSequencer
+* Consolodating logic into ArrayBot class
+* Added inifile saves of MainForm properties
+* Added class to capture ArrayBot concepts
+* Renamed CoreExporter to abExporter
+* Fixed velocity settings for potentiometers on devices
+* Added ini template
+* Added 'custom' Thorlab structs
+* Updated misc files
+* Added sense of direction for whisker x-axis
+* Getting ready to test a consolidated move
+* Organizing two XYZUnits
+* Got coordinated move at an angle working
+* Added some initial logic for handling positions
+* Implemented goto position
+* Added a 'manual' jog velocity and acceleration to use in UI
+* Fixed Unit and motor frames
+* Work on initialization and destruction
+* Added frames for XYZ unit and Motor
+* Refining the UI
+* First test on real system
+* Added initial velocity, acceleration settings for the motors
+* Compiled with somewhat new dsl structure
+* More work on getting motor properties going
+* Adding range properties for velocity, acceleration, backlash, position and jogstep
+* First version of XYZ control
+* Creating initial UI for testing
+* Before Creating XYZUnit, i.e. unit handling 3 motors
+* Added enable/disable functions for Joystick and Joystick axes
+* Fixed subtle bug for setting velocity and acceleration for the ZFS unit
+* Using JogMoveMode and JogStopMode for jogging parameter instead of just JogMode
+* Added Joystick functions.
+* Fine control over each axis and each button
+* Added some logic for disconnecting and destroying devices
+* Added threaded/unthreaded motor calls
+* Cleaning up code before putting things together
+* Added support for z stage motor
+* Got LTS control under control
+* Preparing code for z stage stepper motor
+* Adding support for Long Travel stages LTS150
+* Added weighted average to input stream
+* More joystick testing
+* About to test with joystick
+* Added class for motor commands
+* Organising test code
+* Adding logic to throttle messages to the hardware devices
+* Added testing of joystick
+* Setting up code for threads..
+
+Release 0.5.0 (Apr 24)
+=======================
+* Initial commit
+* Transfered code from a temporary bitbucket repository
+
+------ 2016 ------
+
+This changelog contain messasges for changes related both to the ARRAYBOT API, as
+well as the Arraybot UI.
