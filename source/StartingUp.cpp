@@ -2,7 +2,7 @@
 #pragma hdrstop
 #include "MainForm.h"
 #include "TMemoLogger.h"
-#include "TSplashForm.h"
+#include "forms/TSplashForm.h"
 #include "TXYZUnitFrame.h"
 #include "TXYZPositionsFrame.h"
 #include "arraybot/apt/atAPTMotor.h"
@@ -11,12 +11,11 @@
 #include "UIUtilities.h"
 #include "mtkVCLUtils.h"
 
-
 //---------------------------------------------------------------------------
 extern TSplashForm*  	gSplashForm;
 extern bool             gAppIsStartingUp;
 extern string           gAppDataFolder;
-
+extern string           gAppName;
 
 //---------------------------------------------------------------------------
 void __fastcall TMain::FormCreate(TObject *Sender)
@@ -26,7 +25,6 @@ void __fastcall TMain::FormCreate(TObject *Sender)
 
 	this->Visible = true;
 	setupWindowTitle();
-
 
 	TMemoLogger::mMemoIsEnabled = true;
     if(gSplashForm)
@@ -69,16 +67,13 @@ void __fastcall TMain::FormCreate(TObject *Sender)
 
 //---------------------------------------------------------------------------
 void __fastcall TMain::FormShow(TObject *Sender)
-{
-
-}
+{}
 
 void TMain::setupProperties()
 {
 	//Setup UI properties
     mProperties.setSection("UI");
 	mProperties.setIniFile(&mIniFile);
-
 	mProperties.add((BaseProperty*)  &mLogLevel.setup( 	                    		"LOG_LEVEL",    	                lAny));
 }
 
@@ -90,27 +85,35 @@ void __fastcall	TMain::setupUIFrames()
     mABProcessSequencerFrame->Align = alClient;
     mABProcessSequencerFrame->init();
 
-    //The sequencer buttons frame holds shortcut buttons for preprogrammed sequences
-    mSequencerButtons1 = new TSequencerButtonsFrame(mProcessSequencer, "Cutting", MiddlePanel);
-    mSequencerButtons1->Parent = MiddlePanel;
-    mSequencerButtons1->Align = alClient;
-
 	//Create and setup XYZ unit frames
     mXYZUnitFrame1 = new TXYZUnitFrame(this);
     mXYZUnitFrame1->assignUnit(&mAB.getCoverSlipUnit());
     mXYZUnitFrame1->Parent = ScrollBox1;
     mXYZUnitFrame1->Left = 10;
 
-    mXYZUnitFrame2 = new TXYZUnitFrame(this);
-    mXYZUnitFrame2->assignUnit(&mAB.getWhiskerUnit());
-    mXYZUnitFrame2->Parent = ScrollBox1;
-    mXYZUnitFrame2->Left = 10;
-    mXYZUnitFrame2->Top = mXYZUnitFrame1->Top + mXYZUnitFrame1->Height;
+    TAboutArrayBotFrame_21->AppNameLabel->Caption = vclstr(gAppName);
 }
 
 void __fastcall	TMain::onFinishedInitBot()
 {
 	Log(lInfo) << "Synching ArrayBot UI";
     ReInitBotBtn->Action = ShutDownA;
+
+    //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+    	Log(lError) << "Failed getting Coverslip UnitZ motor";
+        return;
+    }
+
+    TMotorPositionFrame1->assignMotor(m);
+	JogStepE->setValue(m->getJogStep());
+    JogVelocityE->setValue(m->getJogVelocity());
+    JogAccelerationE->setValue(m->getJogAcceleration());
+
+	JogStepE->update();
+	JogVelocityE->update();
+	JogAccelerationE->update();
 }
 

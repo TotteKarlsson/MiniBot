@@ -4,7 +4,7 @@
 #include "mtkLogger.h"
 #include "mtkVCLUtils.h"
 #include "arraybot/apt/atAPTMotor.h"
-#include "TSplashForm.h"
+#include "forms/TSplashForm.h"
 #include "frames/TXYZUnitFrame.h"
 
 using namespace mtk;
@@ -46,23 +46,22 @@ void __fastcall TMain::ShutDownTimerTimer(TObject *Sender)
     	Log(lDebug) << "Waiting for splash..";
     }
 
-    //This will save any ini parameters in the frame
-    if(mFrames.size())
-    {
-        for(int i = 0; i < mFrames.size(); i++)
-        {
-            delete mFrames[i];
-        }
-
-        mFrames.clear();
-    }
+//    //This will save any ini parameters in the frame
+//    if(mFrames.size())
+//    {
+//        for(int i = 0; i < mFrames.size(); i++)
+//        {
+//            delete mFrames[i];
+//        }
+//
+//        mFrames.clear();
+//    }
 
 	if(mAB.isActive())
     {
     	if(!mAB.isShuttingDown())
         {
 	        mXYZUnitFrame1->disable();
-    	    mXYZUnitFrame2->disable();
 	    	mAB.shutDown();
         }
         else
@@ -85,7 +84,6 @@ void __fastcall TMain::ShutDownAExecute(TObject *Sender)
 {
     mAB.getJoyStick().disable();
     mXYZUnitFrame1->disable();
-    mXYZUnitFrame2->disable();
 
     //The shutdown disconnects all devices
     mAB.shutDown();
@@ -109,7 +107,7 @@ void __fastcall TMain::FormCloseQuery(TObject *Sender, bool &CanClose)
     	|| mAB.isActive()
         || UIUpdateTimer->Enabled
         || (gSplashForm && gSplashForm->isOnShowTime())
-        || mFrames.size()
+//        || mFrames.size()
         || mLogFileReader.isRunning()
       )
     {

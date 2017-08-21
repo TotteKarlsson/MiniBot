@@ -7,7 +7,7 @@
 #include "mtkLogger.h"
 #include "mtkVCLUtils.h"
 #include "core/atExceptions.h"
-#include "TSplashForm.h"
+#include "forms/TSplashForm.h"
 #include "mtkRestartApplicationUtils.h"
 #include "UIUtilities.h"
 using namespace mtk;
@@ -15,14 +15,17 @@ using namespace std;
 
 //---------------------------------------------------------------------------
 USEFORM("MainForm.cpp", Main);
+USEFORM("P:\ArrayBot\source\frames\TMotorPositionFrame.cpp", MotorPositionFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
-string              gLogFileLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), "ArrayBot");
-string              gLogFileName                = "ArrayBot.log";
-string 		        gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\ArrayBot\\0.5.0";
-string 		        gAppDataFolder 				= joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), "ArrayBot");
+string 				gAppName					= "MiniBot";
+string              gLogFileLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
+string              gLogFileName                = "MiniBot.log";
+string 		        gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\MiniBot\\0.5.0";
+string 		        gAppDataFolder 				= joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
 HWND                gOtherAppWindow             = NULL;
 string              gDefaultAppTheme            = "Iceberg Classico";
-string              gRestartMutexName           = "arrayBotRestartMutex";
+string              gAppMutexName     		    = "MiniBotMutex";
+string              gRestartMutexName           = "MiniBotRestartMutex";
 string              gFullDateTimeFormat         = "%Y-%m-%dT%H:%M:%S";
 string              gDateFormat                 = "%Y-%m-%d";
 string              gTimeFormat                 = "%H:%M:%S";
@@ -53,18 +56,18 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		}
 
         //Look at this later... does not work yet
-        const char appMutexName [] = "arrayBotAppMutex";
+        const char* appMutexName  = gAppMutexName.c_str();
         appMutex = ::CreateMutexA(NULL, FALSE, appMutexName);
         if( ERROR_ALREADY_EXISTS == GetLastError() )
         {
-             Log(lInfo) << "Arraybot is already running!";
+             Log(lInfo) << gAppName << " is already running!";
             // Program already running somewhere
             ::EnumWindows(FindOtherWindow, NULL);
 
             if(gOtherAppWindow != NULL)
             {
                 //Send a custom message to restore window here..
-                Log(lInfo) << "Arraybot is already running!";
+                Log(lInfo) << gAppName << " is already running!";
             }
 
             return(1); // Exit program
@@ -80,6 +83,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         {
 	        gSplashForm = new TSplashForm(gLogFileName, Application);
             Application->ShowMainForm = false;
+            gSplashForm->TAboutArrayBotFrame1->AppNameLabel->Caption = vclstr(gAppName);
             gSplashForm->Show();
             gSplashForm->Update();
         }
@@ -88,9 +92,10 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
             gSplashForm = NULL;
         }
 
-		Application->Title = "ArrayBot - Software for Microtomes";
+		Application->Title = "MiniBot - Software for Microtomes";
 		TStyleManager::TrySetStyle("Amakrits");
 		Application->CreateForm(__classid(TMain), &Main);
+		Application->CreateForm(__classid(TMotorPositionFrame), &MotorPositionFrame);
 		Application->ShowMainForm = false;
 		Application->Run();
 	}

@@ -4,7 +4,7 @@
 #include "mtkLogger.h"
 #include "mtkVCLUtils.h"
 #include "arraybot/apt/atAPTMotor.h"
-#include "TSplashForm.h"
+#include "forms/TSplashForm.h"
 #include "forms/TTextInputDialog.h"
 #include "frames/TXYZUnitFrame.h"
 
@@ -105,11 +105,6 @@ void __fastcall TMain::ApplicationEvents1Exception(TObject *Sender, Exception *E
 	Log(lInfo) << "Application Exception: "<<stdstr(E->Message);
 }
 
-//void __fastcall TMain::BitBtn3Click(TObject *Sender)
-//{
-//	infoMemo->Clear();
-//}
-
 //This one is called from the reader thread
 void __fastcall TMain::logMsg()
 {
@@ -132,7 +127,7 @@ void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift
 
 void TMain::setupWindowTitle()
 {
-	string title = createWindowTitle("ArrayBot", Application);
+	string title = createWindowTitle("MiniBot", Application);
 	this->Caption = vclstr(title);
 }
 
@@ -148,7 +143,7 @@ int __stdcall FindOtherWindow(HWND hwnd, LPARAM lParam)
 	GetWindowText(hwnd, &buffer[0], length + 1);
 
     string s(stdstr(buffer));
-	if(startsWith("ArrayBot", s))
+	if(startsWith("MiniBot", s))
 	{
 		// do something with hwnd here
 		gOtherAppWindow = hwnd;
@@ -160,9 +155,3 @@ int __stdcall FindOtherWindow(HWND hwnd, LPARAM lParam)
 
 	return true;
 }
-
-void __fastcall TMain::mRightPanelDblClick(TObject *Sender)
-{
-	this->BorderStyle = (this->BorderStyle == bsNone) ? bsSizeable : bsNone;
-}
-

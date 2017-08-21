@@ -1,4 +1,3 @@
-//---------------------------------------------------------------------------
 #if defined DSL_STATIC
 	#pragma comment(lib, "mtkCommon-static.lib")
 	#pragma comment(lib, "mtkMath-static.lib")

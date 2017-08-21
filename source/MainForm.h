@@ -36,6 +36,7 @@
 #include "TSoundsFrame.h"
 #include "sound/atApplicationSound.h"
 #include "TApplicationSoundsFrame.h"
+#include "TMotorPositionFrame.h"
 
 using Poco::Timestamp;
 using mtk::IniFileProperties;
@@ -89,6 +90,16 @@ class TMain : public TRegistryForm
 	TBitBtn *BitBtn1;
 	TAction *HomeAllDevicesA;
 	TTimer *WaitForHandleTimer;
+	TArrayBotButton *ArrayBotButton1;
+	TArrayBotButton *ArrayBotButton2;
+	TArrayBotButton *FillMoreBtn;
+	TArrayBotButton *FillLessBtn;
+	TFloatLabeledEdit *JogStepE;
+	TGroupBox *GroupBox1;
+	TFloatLabeledEdit *JogVelocityE;
+	TFloatLabeledEdit *JogAccelerationE;
+	TMotorPositionFrame *TMotorPositionFrame1;
+	TTimer *CheckForNewPositionTimer;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -103,9 +114,19 @@ class TMain : public TRegistryForm
 	void __fastcall LogLevelCBChange(TObject *Sender);
 	void __fastcall WaitForDeviceInitTimerTimer(TObject *Sender);
 	void __fastcall MainPCChange(TObject *Sender);
-	void __fastcall mRightPanelDblClick(TObject *Sender);
 	void __fastcall HomeAllDevicesAExecute(TObject *Sender);
 	void __fastcall WaitForHandleTimerTimer(TObject *Sender);
+	void __fastcall mClearLogWindowBtnClick(TObject *Sender);
+	void __fastcall ArrayBotButton1Click(TObject *Sender);
+	void __fastcall ArrayBotButton2Click(TObject *Sender);
+	void __fastcall JogEditEdit(TObject *Sender, WORD &Key, TShiftState Shift);
+	void __fastcall JogMotorMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+	void __fastcall JogMotorMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+	void __fastcall CheckForNewPositionTimerTimer(TObject *Sender);
+
+
 
     private:
 		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences = 1,
@@ -127,11 +148,7 @@ class TMain : public TRegistryForm
         IniFileProperties  			            mProperties;
 		mtk::Property<mtk::LogLevel>            mLogLevel;
 
-
-                										//Sound properties
 		void									setupProperties();
-
-        vector<TFrame*>					        mFrames;
 
         										//!The ArrayCam client connects to
                                                 //an ArrayCam server. The client processes
@@ -150,11 +167,11 @@ class TMain : public TRegistryForm
 
 
 		TXYZUnitFrame*					        mXYZUnitFrame1;
-		TXYZUnitFrame*					        mXYZUnitFrame2;
+
 
 		TABProcessSequencerFrame*		        mABProcessSequencerFrame;
         TSequencerButtonsFrame*			        mSequencerButtons1;
-        TSequencerButtonsFrame*			        mSequencerButtons2;
+
 
 		void __fastcall		                    OnException();
 

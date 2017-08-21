@@ -2,7 +2,7 @@
 #pragma hdrstop
 #include "MainForm.h"
 #include "TMemoLogger.h"
-#include "TSplashForm.h"
+#include "forms/TSplashForm.h"
 #include "mtkStringList.h"
 #include "core/atUtilities.h"
 #include "arraybot/apt/atAPTMotor.h"
@@ -14,11 +14,12 @@
 #include "core/atExceptions.h"
 #include "sound/atSounds.h"
 #include "core/atCore.h"
-#include "frames/TABProcessSequencerFrame.h"
+#include "TABProcessSequencerFrame.h"
 #include "frames/TXYZPositionsFrame.h"
 #include "frames/TXYZUnitFrame.h"
 #include "frames/TSequencerButtonsFrame.h"
 #include "UIUtilities.h"
+#include "arraybot/apt/atAbsoluteMove.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "TIntegerLabeledEdit"
@@ -31,6 +32,7 @@
 #pragma link "cspin"
 #pragma link "TSoundsFrame"
 #pragma link "TApplicationSoundsFrame"
+#pragma link "TMotorPositionFrame"
 #pragma resource "*.dfm"
 TMain *Main;
 
@@ -40,8 +42,10 @@ extern string           gAppDataFolder;
 extern TSplashForm*  	gSplashForm;
 extern bool             gAppIsStartingUp;
 extern string 			gApplicationRegistryRoot;
+extern string 			gAppName;
 
 using namespace mtk;
+string gFillBoatProcessName = "Fill Boat";
 
 //---------------------------------------------------------------------------
 __fastcall TMain::TMain(TComponent* Owner)
@@ -49,13 +53,12 @@ __fastcall TMain::TMain(TComponent* Owner)
 	TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
 	mLogFileReader(joinPath(gAppDataFolder, gLogFileName), &logMsg),
     mInitBotThread(),
-    mIniFile(joinPath(gAppDataFolder, "ArrayBot.ini"), true, true),
+    mIniFile(joinPath(gAppDataFolder, gAppName + ".ini"), true, true),
     mLogLevel(lAny),
     mAB(mIniFile, gAppDataFolder),
     mProcessSequencer(mAB, mArrayCamClient, gAppDataFolder),
 	mABProcessSequencerFrame(NULL),
-    mSequencerButtons1(NULL),
-    mSequencerButtons2(NULL)
+    mSequencerButtons1(NULL)
 {
     //Init the CoreLibDLL -> give intra messages their ID's
 	initABCoreLib();
@@ -76,12 +79,14 @@ __fastcall TMain::TMain(TComponent* Owner)
 	WaitForDeviceInitTimer->Enabled = true;
 }
 
+//---------------------------------------------------------------------------
 void TMain::enableDisableUI(bool e)
 {
 	MainPC->Visible = e;
 	enableDisablePanel(MiddlePanel, e);
 }
 
+//---------------------------------------------------------------------------
 void __fastcall TMain::WndProc(TMessage& Message)
 {
     if (Message.Msg == getABCoreMessageID("MOTOR_WARNING_MESSAGE") && getABCoreMessageID("MOTOR_WARNING_MESSAGE") != 0)
@@ -134,6 +139,7 @@ void __fastcall TMain::WaitForDeviceInitTimerTimer(TObject *Sender)
     }
 }
 
+//---------------------------------------------------------------------------
 void __fastcall TMain::reInitBotAExecute(TObject *Sender)
 {
 	mAB.initialize();
@@ -143,15 +149,11 @@ void __fastcall TMain::reInitBotAExecute(TObject *Sender)
 		mXYZUnitFrame1->assignUnit(&mAB.getCoverSlipUnit());
     }
 
-    if(mXYZUnitFrame2)
-    {
-		mXYZUnitFrame2->assignUnit(&mAB.getWhiskerUnit());
-    }
-
     //ArrayBotJoyStick stuff.....
     ReInitBotBtn->Action = ShutDownA;
 }
 
+//---------------------------------------------------------------------------
 void __fastcall TMain::stopAllAExecute(TObject *Sender)
 {
 	mAB.stopAll();
@@ -184,11 +186,6 @@ void __fastcall TMain::AppInBox(mlxStructMessage &msg)
                 	mSequencerButtons1->update();
                 }
 
-                if(mSequencerButtons2)
-                {
-                	mSequencerButtons2->update();
-                }
-
             break;
             default:
             break ;
@@ -212,15 +209,9 @@ void __fastcall TMain::MainPCChange(TObject *Sender)
 
     else if(MainPC->TabIndex == pcMain)
     {
-//        SequencesPanel1->Parent = mFrontPage;
         if(mSequencerButtons1)
         {
         	mSequencerButtons1->update();
-        }
-
-        if(mSequencerButtons2)
-        {
-        	mSequencerButtons2->update();
         }
     }
     else if(MainPC->TabIndex == pcMotors)
@@ -230,7 +221,6 @@ void __fastcall TMain::MainPCChange(TObject *Sender)
 
         //Disable motor status timers
         mXYZUnitFrame1->enable();
-        mXYZUnitFrame2->enable();
     }
 
 	else if(MainPC->TabIndex == pcAbout)
@@ -244,7 +234,6 @@ void __fastcall TMain::MainPCChange(TObject *Sender)
 
         //Disable motor status timers
         mXYZUnitFrame1->disable();
-        mXYZUnitFrame2->disable();
     }
 }
 
@@ -268,6 +257,165 @@ void __fastcall TMain::WaitForHandleTimerTimer(TObject *Sender)
         if(sendAppMessage(abSequencerUpdate) != true)
         {
             Log(lDebug)<<"Sending sequencer update to UI was unsuccesful";
+        }
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::mClearLogWindowBtnClick(TObject *Sender)
+{
+	if(infoMemo)
+    {
+    	infoMemo->Clear();
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::ArrayBotButton1Click(TObject *Sender)
+{
+	//Run a sequence
+	mProcessSequencer.selectSequence("Drain Boat");
+    mProcessSequencer.start();
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::ArrayBotButton2Click(TObject *Sender)
+{
+	//Run a sequence
+	mProcessSequencer.selectSequence("Fill Boat");
+    mProcessSequencer.start();
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::JogEditEdit(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+	if(Key != vkReturn)
+    {
+    	return;
+    }
+
+    TFloatLabeledEdit* e = dynamic_cast<TFloatLabeledEdit*>(Sender);
+
+    //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+    	Log(lError) << "Failed getting Coverslip UnitZ motor";
+        return;
+    }
+
+    if(e == JogStepE)
+    {
+ 		m->setJogStep(e->getValue());
+    }
+    else if(e == JogVelocityE)
+    {
+ 		m->setJogVelocity(e->getValue());
+    }
+    else if(e == JogAccelerationE)
+    {
+ 		m->setJogAcceleration(e->getValue());
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y)
+{
+   //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+    	Log(lError) << "Failed getting Coverslip UnitZ motor";
+        return;
+    }
+
+	if(m->getJogMoveMode() == jmContinuous)
+    {
+    	m->stop();
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y)
+{
+	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
+    if(!btn)
+    {
+    	Log(lError) << "Failed to cast button";
+    	return;
+    }
+
+    //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+    	Log(lError) << "Failed getting Coverslip UnitZ motor";
+        return;
+    }
+
+    if(btn == FillMoreBtn)
+    {
+        m->jogReverse();
+    }
+    else if(btn == FillLessBtn)
+    {
+        //Get the motor and jog it
+    	m->jogForward();
+    }
+
+
+    //Enable checkForNewPositionTimer
+    if(!CheckForNewPositionTimer->Enabled)
+    {
+    	sleep(100);
+	    CheckForNewPositionTimer->Enabled = true;
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::CheckForNewPositionTimerTimer(TObject *Sender)
+{
+	//wait for ab to be inactive
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(m && !m->isActive() && !m->isMotorCommandPending())
+    {
+		CheckForNewPositionTimer->Enabled = false;
+
+		//Get the fill sequence
+        if(mProcessSequencer.getSequences().getCurrentSequenceName() == gFillBoatProcessName)
+        {
+        	Log(lInfo) << "Found sequence: \"Fill Boat\"";
+            ProcessSequence* s = mProcessSequencer.getSequences().getCurrent();
+            if(s && s->getProcessWithName(gFillBoatProcessName))
+            {
+            	Process* p = s->getProcessWithName(gFillBoatProcessName);
+
+                if(p && p->getProcessName() == gFillBoatProcessName)
+                {
+                	AbsoluteMove* am = dynamic_cast<AbsoluteMove*>(p);
+                    {
+                    	if(am)
+                        {
+                        	am->setPosition(m->getPosition());
+                        }
+                        else
+                        {
+		                    Log(lError) << "Failed to cast to an AbsoluteMove process..";
+                        }
+                    }
+                }
+                else
+                {
+                    Log(lError) << "Failed getting process with name: GotoZ";
+                }
+
+            }
+            else
+            {
+            	Log(lError) << "Failed getting process: " <<gFillBoatProcessName;
+            }
         }
     }
 }
