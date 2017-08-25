@@ -15,7 +15,6 @@ using namespace std;
 
 //---------------------------------------------------------------------------
 USEFORM("MainForm.cpp", Main);
-USEFORM("P:\ArrayBot\source\frames\TMotorPositionFrame.cpp", MotorPositionFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 string 				gAppName					= "MiniBot";
 string              gLogFileLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
@@ -95,7 +94,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->Title = "MiniBot - Software for Microtomes";
 		TStyleManager::TrySetStyle("Amakrits");
 		Application->CreateForm(__classid(TMain), &Main);
-		Application->CreateForm(__classid(TMotorPositionFrame), &MotorPositionFrame);
 		Application->ShowMainForm = false;
 		Application->Run();
 	}

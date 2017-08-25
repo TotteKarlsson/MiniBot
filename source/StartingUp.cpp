@@ -62,7 +62,7 @@ void __fastcall TMain::FormCreate(TObject *Sender)
     //Init pagecontrols
 	MainPC->TabIndex = 0;
 	gAppIsStartingUp = false;
-	WaitForHandleTimer->Enabled = true;
+    this->SetFocus();
 }
 
 //---------------------------------------------------------------------------
@@ -107,13 +107,6 @@ void __fastcall	TMain::onFinishedInitBot()
         return;
     }
 
-    TMotorPositionFrame1->assignMotor(m);
-	JogStepE->setValue(m->getJogStep());
-    JogVelocityE->setValue(m->getJogVelocity());
-    JogAccelerationE->setValue(m->getJogAcceleration());
-
-	JogStepE->update();
-	JogVelocityE->update();
-	JogAccelerationE->update();
+//    MotorPositionFrame1->assignMotor(m);
 }
 

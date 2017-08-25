@@ -89,16 +89,10 @@ class TMain : public TRegistryForm
 	TArrayBotButton *StopButton;
 	TBitBtn *BitBtn1;
 	TAction *HomeAllDevicesA;
-	TTimer *WaitForHandleTimer;
-	TArrayBotButton *ArrayBotButton1;
-	TArrayBotButton *ArrayBotButton2;
+	TArrayBotButton *DiveButton;
+	TArrayBotButton *LiftBtn;
 	TArrayBotButton *FillMoreBtn;
 	TArrayBotButton *FillLessBtn;
-	TFloatLabeledEdit *JogStepE;
-	TGroupBox *GroupBox1;
-	TFloatLabeledEdit *JogVelocityE;
-	TFloatLabeledEdit *JogAccelerationE;
-	TMotorPositionFrame *TMotorPositionFrame1;
 	TTimer *CheckForNewPositionTimer;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
@@ -115,23 +109,20 @@ class TMain : public TRegistryForm
 	void __fastcall WaitForDeviceInitTimerTimer(TObject *Sender);
 	void __fastcall MainPCChange(TObject *Sender);
 	void __fastcall HomeAllDevicesAExecute(TObject *Sender);
-	void __fastcall WaitForHandleTimerTimer(TObject *Sender);
 	void __fastcall mClearLogWindowBtnClick(TObject *Sender);
-	void __fastcall ArrayBotButton1Click(TObject *Sender);
-	void __fastcall ArrayBotButton2Click(TObject *Sender);
-	void __fastcall JogEditEdit(TObject *Sender, WORD &Key, TShiftState Shift);
+	void __fastcall DiveButtonClick(TObject *Sender);
+	void __fastcall LiftBtnClick(TObject *Sender);
 	void __fastcall JogMotorMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
 	void __fastcall JogMotorMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
 	void __fastcall CheckForNewPositionTimerTimer(TObject *Sender);
-
-
+	void __fastcall FormKeyPress(TObject *Sender, System::WideChar &Key);
+	void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
 
     private:
-		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences = 1,
-        										pcMotors = 2, pcSettings = 3,
-                                                pcLogs = 4, pcAbout = 5};
+		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
+        										pcMotors, pcLogs, pcAbout};
 
         void									enableDisableUI(bool enable);
         LogFileReader                           mLogFileReader;
@@ -182,10 +173,10 @@ class TMain : public TRegistryForm
 		__fastcall 					            TMain(TComponent* Owner);
 		__fastcall 					            ~TMain();
 
-		void __fastcall                         AppInBox(mlxStructMessage &Msg);
-        BEGIN_MESSAGE_MAP
-            MESSAGE_HANDLER(UWM_MESSAGE,        mlxStructMessage,         AppInBox);
-        END_MESSAGE_MAP(TForm)
+//		void __fastcall                         AppInBox(mlxStructMessage &Msg);
+//        BEGIN_MESSAGE_MAP
+//            MESSAGE_HANDLER(UWM_MESSAGE,        mlxStructMessage,         AppInBox);
+//        END_MESSAGE_MAP(TForm)
 
 		TNewRibbonForm* 						mNewRibbonForm;
 };

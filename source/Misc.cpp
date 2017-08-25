@@ -116,15 +116,6 @@ void __fastcall TMain::logMsg()
     infoMemo->Lines->Insert(0, (vclstr(mLogFileReader.getData())));
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
-{
-	if(Key == vkEscape)
-    {
-    	Close();
-    }
-}
-
 void TMain::setupWindowTitle()
 {
 	string title = createWindowTitle("MiniBot", Application);

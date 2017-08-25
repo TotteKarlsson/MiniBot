@@ -34,6 +34,7 @@
 #pragma link "TApplicationSoundsFrame"
 #pragma link "TMotorPositionFrame"
 #pragma resource "*.dfm"
+//---------------------------------------------------------------------------
 TMain *Main;
 
 extern string           gLogFileLocation;
@@ -75,8 +76,8 @@ __fastcall TMain::TMain(TComponent* Owner)
 
     //We will setup UI frames after the bot is initialized
 	mInitBotThread.start();
-
 	WaitForDeviceInitTimer->Enabled = true;
+    this->WindowProc = WndProc;
 }
 
 //---------------------------------------------------------------------------
@@ -89,42 +90,47 @@ void TMain::enableDisableUI(bool e)
 //---------------------------------------------------------------------------
 void __fastcall TMain::WndProc(TMessage& Message)
 {
-    if (Message.Msg == getABCoreMessageID("MOTOR_WARNING_MESSAGE") && getABCoreMessageID("MOTOR_WARNING_MESSAGE") != 0)
+	switch (Message.Msg)
     {
-    	MotorMessageData* msg = reinterpret_cast<MotorMessageData*>(Message.WParam);
-       	APTMotor* mtr = mAB.getMotorWithSerial(msg->mSerial);
-
-        if(!mtr)
-        {
-        	//real bad....
-        }
-
-		//Handle the warning..
-        if(msg->mCurrentPosition >= msg->mPositionLimits.getValue().getMax())
-        {
-            if(mtr)
-            {
-            	if(mtr->getLastCommand() != mcStopHard)
-                {
-            		mtr->stop();
-	                //playABSound(absMotorWarning);
-    	            Log(lInfo) << "Stopped motor: "<<mtr->getName();
-                }
-            }
-        }
-
-        if(mtr->isInDangerZone())
-        {
-        	//playABSound(absMotorWarning);
-        }
-
-        //Message is now consumed.. delete it
-        delete msg;
+    	case WM_GETDLGCODE:
+	    	Log(lInfo) << "Got WM_GETDLGCODE";
+        break;
+//        case getABCoreMessageID("MOTOR_WARNING_MESSAGE"):
+//        {
+//
+//            MotorMessageData* msgData = reinterpret_cast<MotorMessageData*>(Message.WParam);
+//            APTMotor* mtr = mAB.getMotorWithSerial(msgData->mSerial);
+//
+//            if(!mtr)
+//            {
+//                //real bad....
+//            }
+//
+//            //Handle the warning..
+//            if(msgData->mCurrentPosition >= msgData->mPositionLimits.getValue().getMax())
+//            {
+//                if(mtr)
+//                {
+//                    if(mtr->getLastCommand() != mcStopHard)
+//                    {
+//                        mtr->stop();
+//                        //playABSound(absMotorWarning);
+//                        Log(lInfo) << "Stopped motor: "<<mtr->getName();
+//                    }
+//                }
+//            }
+//
+//            if(mtr->isInDangerZone())
+//            {
+//                //playABSound(absMotorWarning);
+//            }
+//
+//            //Message is now consumed.. delete it
+//            delete msgData;
+//        }
     }
-    else
-    {
-        TForm::WndProc(Message);
-    }
+
+    TForm::WndProc(Message);
 }
 
 //---------------------------------------------------------------------------
@@ -160,42 +166,42 @@ void __fastcall TMain::stopAllAExecute(TObject *Sender)
 }
 
 
-//---------------------------------------------------------------------------
-void __fastcall TMain::AppInBox(mlxStructMessage &msg)
-{
-    if(msg.lparam == NULL)
-    {
-        return;
-    }
-
-    try
-    {
-        ApplicationMessageEnum aMsg = msg.lparam->mMessageEnum;
-
-        switch(aMsg)
-        {
-            case abSplashWasClosed:
-                Log(lDebug2) << "Splash form sent message that it was closed";
-                gSplashForm = NULL;
-            break;
-
-            case abSequencerUpdate:
-                Log(lDebug2) << "Update sequencer shortcuts";
-                if(mSequencerButtons1)
-                {
-                	mSequencerButtons1->update();
-                }
-
-            break;
-            default:
-            break ;
-        }
-	}
-	catch(...)
-	{
-		Log(lError) << "Received an unhandled windows message!";
-	}
-}
+////---------------------------------------------------------------------------
+//void __fastcall TMain::AppInBox(mlxStructMessage &msg)
+//{
+//    if(msg.lparam == NULL)
+//    {
+//        return;
+//    }
+//
+//    try
+//    {
+//        ApplicationMessageEnum aMsg = msg.lparam->mMessageEnum;
+//
+//        switch(aMsg)
+//        {
+//            case abSplashWasClosed:
+//                Log(lDebug2) << "Splash form sent message that it was closed";
+//                gSplashForm = NULL;
+//            break;
+//
+//            case abSequencerUpdate:
+//                Log(lDebug2) << "Update sequencer shortcuts";
+//                if(mSequencerButtons1)
+//                {
+//                	mSequencerButtons1->update();
+//                }
+//
+//            break;
+//            default:
+//            break ;
+//        }
+//	}
+//	catch(...)
+//	{
+//		Log(lError) << "Received an unhandled windows message!";
+//	}
+//}
 
 //---------------------------------------------------------------------------
 void __fastcall TMain::MainPCChange(TObject *Sender)
@@ -247,21 +253,6 @@ void __fastcall TMain::HomeAllDevicesAExecute(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::WaitForHandleTimerTimer(TObject *Sender)
-{
-    if(Application->MainForm->Handle)
-    {
-        WaitForHandleTimer->Enabled = false;
-
-        //Send a message to main ui to update sequence shortcuts
-        if(sendAppMessage(abSequencerUpdate) != true)
-        {
-            Log(lDebug)<<"Sending sequencer update to UI was unsuccesful";
-        }
-    }
-}
-
-//---------------------------------------------------------------------------
 void __fastcall TMain::mClearLogWindowBtnClick(TObject *Sender)
 {
 	if(infoMemo)
@@ -271,7 +262,7 @@ void __fastcall TMain::mClearLogWindowBtnClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::ArrayBotButton1Click(TObject *Sender)
+void __fastcall TMain::DiveButtonClick(TObject *Sender)
 {
 	//Run a sequence
 	mProcessSequencer.selectSequence("Drain Boat");
@@ -279,43 +270,11 @@ void __fastcall TMain::ArrayBotButton1Click(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::ArrayBotButton2Click(TObject *Sender)
+void __fastcall TMain::LiftBtnClick(TObject *Sender)
 {
 	//Run a sequence
 	mProcessSequencer.selectSequence("Fill Boat");
     mProcessSequencer.start();
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMain::JogEditEdit(TObject *Sender, WORD &Key, TShiftState Shift)
-{
-	if(Key != vkReturn)
-    {
-    	return;
-    }
-
-    TFloatLabeledEdit* e = dynamic_cast<TFloatLabeledEdit*>(Sender);
-
-    //Get the motor and jog it
-    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
-    if(!m)
-    {
-    	Log(lError) << "Failed getting Coverslip UnitZ motor";
-        return;
-    }
-
-    if(e == JogStepE)
-    {
- 		m->setJogStep(e->getValue());
-    }
-    else if(e == JogVelocityE)
-    {
- 		m->setJogVelocity(e->getValue());
-    }
-    else if(e == JogAccelerationE)
-    {
- 		m->setJogAcceleration(e->getValue());
-    }
 }
 
 //---------------------------------------------------------------------------
@@ -334,6 +293,7 @@ void __fastcall TMain::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
     {
     	m->stop();
     }
+    this->SetFocus();
 }
 
 //---------------------------------------------------------------------------
@@ -364,7 +324,6 @@ void __fastcall TMain::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
         //Get the motor and jog it
     	m->jogForward();
     }
-
 
     //Enable checkForNewPositionTimer
     if(!CheckForNewPositionTimer->Enabled)
@@ -398,7 +357,10 @@ void __fastcall TMain::CheckForNewPositionTimerTimer(TObject *Sender)
                     {
                     	if(am)
                         {
-                        	am->setPosition(m->getPosition());
+                        	if(isEqual(am->getPosition(), m->getPosition(), 3))
+                            {
+                        		am->setPosition(m->getPosition());
+                            }
                         }
                         else
                         {
@@ -416,6 +378,89 @@ void __fastcall TMain::CheckForNewPositionTimerTimer(TObject *Sender)
             {
             	Log(lError) << "Failed getting process: " <<gFillBoatProcessName;
             }
+        }
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
+{
+    //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+        Log(lError) << "Failed getting Coverslip UnitZ motor";
+    }
+
+    if(Key == 'u' || Key == 'U')
+    {
+		LiftBtn->Click();
+    }
+    else if(Key == 'd' || Key == 'D')
+    {
+	    DiveButton->Click();
+    }
+    else if(Key == VK_UP && m)
+    {
+       	m->jogReverse();
+    }
+    else if(Key == VK_DOWN && m)
+    {
+       	m->jogForward();
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+    //Get the motor and jog it
+    APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+    if(!m)
+    {
+        Log(lError) << "Failed getting Coverslip UnitZ motor";
+    }
+
+	if(Key == vkEscape)
+    {
+    	Close();
+    }
+    else if(Key == VK_UP && m)
+    {
+       	m->jogReverse();
+    }
+    else if(Key == VK_DOWN && m)
+    {
+       	m->jogForward();
+    }
+
+    if(Key == vkDown || Key == vkUp)
+    {
+	    //Enable checkForNewPositionTimer
+        if(!CheckForNewPositionTimer->Enabled)
+        {
+            sleep(100);
+            CheckForNewPositionTimer->Enabled = true;
+        }
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMain::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
+
+{
+    if(Key == VK_UP || Key == VK_DOWN)
+    {
+       	//Get the motor and jog it
+        APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
+        if(!m)
+        {
+            Log(lError) << "Failed getting Coverslip UnitZ motor";
+            return;
+        }
+
+        if(m->getJogMoveMode() == jmContinuous)
+        {
+            m->stop();
         }
     }
 }

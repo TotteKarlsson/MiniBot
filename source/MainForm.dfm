@@ -6,7 +6,7 @@ object Main: TMain
   ClientWidth = 1508
   Color = clBtnFace
   Constraints.MinHeight = 900
-  Constraints.MinWidth = 1100
+  Constraints.MinWidth = 1200
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -19
@@ -19,6 +19,8 @@ object Main: TMain
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 23
@@ -27,7 +29,7 @@ object Main: TMain
     Top = 0
     Width = 1508
     Height = 914
-    ActivePage = mFrontPage
+    ActivePage = TabSheet3
     Align = alClient
     TabHeight = 60
     TabOrder = 0
@@ -46,13 +48,13 @@ object Main: TMain
         DesignSize = (
           1500
           844)
-        object ArrayBotButton1: TArrayBotButton
+        object DiveButton: TArrayBotButton
           Left = 977
           Top = 40
           Width = 400
           Height = 400
           Anchors = [akTop]
-          Caption = 'Drain'
+          Caption = 'Dive'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -43
@@ -60,15 +62,15 @@ object Main: TMain
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          OnClick = ArrayBotButton1Click
+          OnClick = DiveButtonClick
           SoundID = 'BUTTON_CLICK_4'
         end
-        object ArrayBotButton2: TArrayBotButton
+        object LiftBtn: TArrayBotButton
           Left = 67
           Top = 40
           Width = 400
           Height = 400
-          Caption = 'Fill'
+          Caption = 'Lift'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -43
@@ -76,7 +78,7 @@ object Main: TMain
           Font.Style = []
           ParentFont = False
           TabOrder = 1
-          OnClick = ArrayBotButton2Click
+          OnClick = LiftBtnClick
           SoundID = 'BUTTON_CLICK_4'
         end
         object FillLessBtn: TArrayBotButton
@@ -118,34 +120,6 @@ object Main: TMain
           Style = bsNew
           TabOrder = 4
           SoundID = 'BUTTON_CLICK_4'
-        end
-        inline TMotorPositionFrame1: TMotorPositionFrame
-          Left = 1300
-          Top = 728
-          Width = 185
-          Height = 102
-          Anchors = [akRight, akBottom]
-          AutoSize = True
-          TabOrder = 5
-          ExplicitLeft = 1300
-          ExplicitTop = 728
-          ExplicitWidth = 185
-          ExplicitHeight = 102
-          inherited GroupBox1: TGroupBox
-            Width = 185
-            Height = 102
-            Align = alClient
-            ExplicitWidth = 185
-            ExplicitHeight = 102
-            inherited mPosL: TLabel
-              Top = 25
-              Width = 181
-              Height = 75
-              ExplicitTop = 25
-              ExplicitWidth = 53
-              ExplicitHeight = 23
-            end
-          end
         end
       end
     end
@@ -240,53 +214,6 @@ object Main: TMain
       Caption = 'Settings'
       ImageIndex = 2
       TabVisible = False
-      object GroupBox1: TGroupBox
-        Left = 24
-        Top = 32
-        Width = 377
-        Height = 193
-        Caption = 'Fine Move Settings'
-        TabOrder = 0
-        object JogStepE: TFloatLabeledEdit
-          Left = 24
-          Top = 63
-          Width = 121
-          Height = 31
-          EditLabel.Width = 90
-          EditLabel.Height = 23
-          EditLabel.Caption = 'Step (mm)'
-          TabOrder = 0
-          Text = '1.00'
-          OnKeyDown = JogEditEdit
-          Value = 1.000000000000000000
-        end
-        object JogVelocityE: TFloatLabeledEdit
-          Left = 24
-          Top = 135
-          Width = 121
-          Height = 31
-          EditLabel.Width = 130
-          EditLabel.Height = 23
-          EditLabel.Caption = 'Velocity (mm/s)'
-          TabOrder = 1
-          Text = '10.00'
-          OnKeyDown = JogEditEdit
-          Value = 10.000000000000000000
-        end
-        object JogAccelerationE: TFloatLabeledEdit
-          Left = 176
-          Top = 135
-          Width = 121
-          Height = 31
-          EditLabel.Width = 176
-          EditLabel.Height = 23
-          EditLabel.Caption = 'Acceleration (m/s^2)'
-          TabOrder = 2
-          Text = '15.00'
-          OnKeyDown = JogEditEdit
-          Value = 15.000000000000000000
-        end
-      end
     end
     object TabSheet5: TTabSheet
       Caption = 'Logging'
@@ -397,6 +324,12 @@ object Main: TMain
       end
     end
   end
+  object PullPosTimer: TTimer
+    Enabled = False
+    Interval = 300
+    Left = 90
+    Top = 34
+  end
   object ActionList1: TActionList
     Left = 764
     Top = 792
@@ -478,18 +411,11 @@ object Main: TMain
     Left = 576
     Top = 752
   end
-  object WaitForHandleTimer: TTimer
-    Enabled = False
-    Interval = 100
-    OnTimer = WaitForHandleTimerTimer
-    Left = 480
-    Top = 496
-  end
   object CheckForNewPositionTimer: TTimer
     Enabled = False
     Interval = 50
     OnTimer = CheckForNewPositionTimerTimer
-    Left = 552
-    Top = 144
+    Left = 672
+    Top = 432
   end
 end
