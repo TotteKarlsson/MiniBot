@@ -2,11 +2,11 @@ object Main: TMain
   Left = 0
   Top = 0
   Caption = 'MiniBot Version 0.5.8'
-  ClientHeight = 914
-  ClientWidth = 1508
+  ClientHeight = 872
+  ClientWidth = 1356
   Color = clBtnFace
-  Constraints.MinHeight = 900
-  Constraints.MinWidth = 1200
+  Constraints.MinHeight = 910
+  Constraints.MinWidth = 1372
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -19
@@ -27,44 +27,33 @@ object Main: TMain
   object MainPC: TPageControl
     Left = 0
     Top = 0
-    Width = 1508
-    Height = 914
-    ActivePage = TabSheet3
+    Width = 1356
+    Height = 872
+    ActivePage = mFrontPage
     Align = alClient
     TabHeight = 60
     TabOrder = 0
     TabWidth = 150
     OnChange = MainPCChange
+    ExplicitWidth = 1653
+    ExplicitHeight = 914
     object mFrontPage: TTabSheet
       Caption = 'The Bot'
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
       object MiddlePanel: TPanel
         Left = 0
         Top = 0
-        Width = 1500
-        Height = 844
+        Width = 1348
+        Height = 802
         Align = alClient
         AutoSize = True
         TabOrder = 0
+        ExplicitWidth = 1645
+        ExplicitHeight = 844
         DesignSize = (
-          1500
-          844)
-        object DiveButton: TArrayBotButton
-          Left = 977
-          Top = 40
-          Width = 400
-          Height = 400
-          Anchors = [akTop]
-          Caption = 'Dive'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -43
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = DiveButtonClick
-          SoundID = 'BUTTON_CLICK_4'
-        end
+          1348
+          802)
         object LiftBtn: TArrayBotButton
           Left = 67
           Top = 40
@@ -77,35 +66,13 @@ object Main: TMain
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 1
+          TabOrder = 0
           OnClick = LiftBtnClick
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object FillLessBtn: TArrayBotButton
-          Left = 512
-          Top = 237
-          Width = 137
-          Height = 105
-          Caption = 'v'
-          TabOrder = 2
-          OnMouseDown = JogMotorMouseDown
-          OnMouseUp = JogMotorMouseUp
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object FillMoreBtn: TArrayBotButton
-          Left = 512
-          Top = 80
-          Width = 137
-          Height = 105
-          Caption = '^'
-          TabOrder = 3
-          OnMouseDown = JogMotorMouseDown
-          OnMouseUp = JogMotorMouseUp
           SoundID = 'BUTTON_CLICK_4'
         end
         object StopButton: TArrayBotButton
           Left = 67
-          Top = 636
+          Top = 594
           Width = 183
           Height = 180
           Margins.Left = 15
@@ -118,22 +85,82 @@ object Main: TMain
           Caption = 'Stop Motor'
           ParentBiDiMode = False
           Style = bsNew
-          TabOrder = 4
+          TabOrder = 1
           SoundID = 'BUTTON_CLICK_4'
+          ExplicitTop = 636
+        end
+        object Panel2: TPanel
+          Left = 487
+          Top = 16
+          Width = 721
+          Height = 465
+          Anchors = [akTop, akRight]
+          BevelOuter = bvNone
+          Caption = 'Panel2'
+          TabOrder = 2
+          ExplicitLeft = 784
+          DesignSize = (
+            721
+            465)
+          object DiveButton: TArrayBotButton
+            Left = 224
+            Top = 40
+            Width = 400
+            Height = 400
+            Anchors = [akTop]
+            Caption = 'Dive'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -43
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 0
+            OnClick = DiveButtonClick
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object FillLessBtn: TArrayBotButton
+            Left = 0
+            Top = 237
+            Width = 137
+            Height = 105
+            Anchors = [akTop, akRight]
+            Caption = 'v'
+            TabOrder = 1
+            OnMouseDown = JogMotorMouseDown
+            OnMouseUp = JogMotorMouseUp
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object FillMoreBtn: TArrayBotButton
+            Left = 0
+            Top = 120
+            Width = 137
+            Height = 105
+            Anchors = [akTop, akRight]
+            Caption = '^'
+            TabOrder = 2
+            OnMouseDown = JogMotorMouseDown
+            OnMouseUp = JogMotorMouseUp
+            SoundID = 'BUTTON_CLICK_4'
+          end
         end
       end
     end
     object mMoveSequencesPage: TTabSheet
       Caption = 'Sequences'
       ImageIndex = 4
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
     end
     object TabSheet1: TTabSheet
       Caption = 'Motors'
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
-        Width = 1395
-        Height = 844
+        Width = 1243
+        Height = 802
         HorzScrollBar.Smooth = True
         VertScrollBar.Tracking = True
         Align = alClient
@@ -143,14 +170,18 @@ object Main: TMain
         Padding.Right = 5
         Padding.Bottom = 5
         TabOrder = 0
+        ExplicitWidth = 1540
+        ExplicitHeight = 844
       end
       object Panel1: TPanel
-        Left = 1395
+        Left = 1243
         Top = 0
         Width = 105
-        Height = 844
+        Height = 802
         Align = alRight
         TabOrder = 1
+        ExplicitLeft = 1540
+        ExplicitHeight = 844
         object mCheckDevicesBtn: TBitBtn
           Left = 1
           Top = 177
@@ -214,22 +245,28 @@ object Main: TMain
       Caption = 'Settings'
       ImageIndex = 2
       TabVisible = False
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
     end
     object TabSheet5: TTabSheet
       Caption = 'Logging'
       ImageIndex = 4
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
       object BottomPanel: TPanel
         Left = 0
         Top = 0
-        Width = 1500
-        Height = 844
+        Width = 1348
+        Height = 802
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 1645
+        ExplicitHeight = 844
         object infoMemo: TMemo
           Left = 1
           Top = 31
-          Width = 1498
-          Height = 812
+          Width = 1346
+          Height = 770
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -241,16 +278,19 @@ object Main: TMain
           ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
+          ExplicitWidth = 1643
+          ExplicitHeight = 812
         end
         object ToolBar1: TToolBar
           Left = 1
           Top = 1
-          Width = 1498
+          Width = 1346
           Height = 30
           AutoSize = True
           ButtonHeight = 30
           Caption = 'ToolBar1'
           TabOrder = 1
+          ExplicitWidth = 1643
           object mClearLogWindowBtn: TBitBtn
             Left = 0
             Top = 0
@@ -290,49 +330,54 @@ object Main: TMain
     object TabSheet3: TTabSheet
       Caption = 'About'
       ImageIndex = 6
+      ExplicitWidth = 1645
+      ExplicitHeight = 844
       inline TAboutArrayBotFrame_21: TAboutArrayBotFrame_2
         Left = 0
         Top = 0
-        Width = 1500
-        Height = 844
+        Width = 1348
+        Height = 802
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1500
+        ExplicitWidth = 1645
         ExplicitHeight = 844
         inherited GroupBox1: TGroupBox
-          Width = 1500
-          Height = 658
-          ExplicitWidth = 1500
+          Width = 1348
+          Height = 616
+          ExplicitWidth = 1645
           ExplicitHeight = 658
           inherited Memo1: TMemo
             Top = 25
-            Width = 1496
-            Height = 631
+            Width = 1344
+            Height = 589
             ExplicitTop = 25
-            ExplicitWidth = 1496
+            ExplicitWidth = 1641
             ExplicitHeight = 631
           end
         end
         inherited Panel1: TPanel
-          Width = 1500
-          ExplicitWidth = 1500
+          Width = 1348
+          ExplicitWidth = 1645
           inherited Image1: TImage
-            Left = 1314
+            Left = 1162
             ExplicitLeft = 708
           end
         end
       end
     end
   end
-  object PullPosTimer: TTimer
-    Enabled = False
-    Interval = 300
-    Left = 90
-    Top = 34
+  object DummyBtn: TButton
+    Left = 1168
+    Top = 616
+    Width = 129
+    Height = 65
+    Caption = 'DummyBtn'
+    TabOrder = 1
+    Visible = False
   end
   object ActionList1: TActionList
-    Left = 764
-    Top = 792
+    Left = 716
+    Top = 752
     object checkForDevices: TAction
       Caption = 'Devices Check'
       OnExecute = checkForDevicesExecute
@@ -390,32 +435,33 @@ object Main: TMain
     Enabled = False
     Interval = 100
     OnTimer = ShutDownTimerTimer
-    Left = 228
-    Top = 760
+    Left = 348
+    Top = 752
   end
   object ApplicationEvents1: TApplicationEvents
     OnException = ApplicationEvents1Exception
-    Left = 664
-    Top = 784
+    Left = 624
+    Top = 656
   end
   object UIUpdateTimer: TTimer
     Enabled = False
     Interval = 250
-    Left = 468
+    OnTimer = UIUpdateTimerTimer
+    Left = 436
     Top = 752
   end
   object WaitForDeviceInitTimer: TTimer
     Enabled = False
     Interval = 100
     OnTimer = WaitForDeviceInitTimerTimer
-    Left = 576
+    Left = 544
     Top = 752
   end
   object CheckForNewPositionTimer: TTimer
     Enabled = False
     Interval = 50
     OnTimer = CheckForNewPositionTimerTimer
-    Left = 672
-    Top = 432
+    Left = 352
+    Top = 680
   end
 end

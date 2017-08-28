@@ -44,7 +44,6 @@ class TABProcessSequencerFrame;
 class TRibbonLifterFrame;
 class TXYZUnitFrame;
 class TSequencerButtonsFrame;
-class TNewRibbonForm;
 
 //---------------------------------------------------------------------------
 class TMain : public TRegistryForm
@@ -94,6 +93,8 @@ class TMain : public TRegistryForm
 	TArrayBotButton *FillMoreBtn;
 	TArrayBotButton *FillLessBtn;
 	TTimer *CheckForNewPositionTimer;
+	TButton *DummyBtn;
+	TPanel *Panel2;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -119,6 +120,7 @@ class TMain : public TRegistryForm
 	void __fastcall CheckForNewPositionTimerTimer(TObject *Sender);
 	void __fastcall FormKeyPress(TObject *Sender, System::WideChar &Key);
 	void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
+	void __fastcall UIUpdateTimerTimer(TObject *Sender);
 
     private:
 		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
@@ -172,13 +174,6 @@ class TMain : public TRegistryForm
 	public:		// User declarations
 		__fastcall 					            TMain(TComponent* Owner);
 		__fastcall 					            ~TMain();
-
-//		void __fastcall                         AppInBox(mlxStructMessage &Msg);
-//        BEGIN_MESSAGE_MAP
-//            MESSAGE_HANDLER(UWM_MESSAGE,        mlxStructMessage,         AppInBox);
-//        END_MESSAGE_MAP(TForm)
-
-		TNewRibbonForm* 						mNewRibbonForm;
 };
 
 extern PACKAGE TMain *Main;
