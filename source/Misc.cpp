@@ -69,11 +69,6 @@ void __fastcall TMain::checkForDevicesExecute(TObject *Sender)
     delete t;
 }
 
-void __fastcall TMain::FrameClosed(TObject *Sender)
-{
-	;
-}
-
 //---------------------------------------------------------------------------
 void __fastcall TMain::LogLevelCBChange(TObject *Sender)
 {

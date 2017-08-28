@@ -35,12 +35,8 @@ object Main: TMain
     TabOrder = 0
     TabWidth = 150
     OnChange = MainPCChange
-    ExplicitWidth = 1653
-    ExplicitHeight = 914
     object mFrontPage: TTabSheet
       Caption = 'The Bot'
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
       object MiddlePanel: TPanel
         Left = 0
         Top = 0
@@ -49,8 +45,6 @@ object Main: TMain
         Align = alClient
         AutoSize = True
         TabOrder = 0
-        ExplicitWidth = 1645
-        ExplicitHeight = 844
         DesignSize = (
           1348
           802)
@@ -87,7 +81,6 @@ object Main: TMain
           Style = bsNew
           TabOrder = 1
           SoundID = 'BUTTON_CLICK_4'
-          ExplicitTop = 636
         end
         object Panel2: TPanel
           Left = 487
@@ -98,7 +91,6 @@ object Main: TMain
           BevelOuter = bvNone
           Caption = 'Panel2'
           TabOrder = 2
-          ExplicitLeft = 784
           DesignSize = (
             721
             465)
@@ -144,18 +136,23 @@ object Main: TMain
             SoundID = 'BUTTON_CLICK_4'
           end
         end
+        object MotorPositionFrame1: TMotorPositionFrame
+          Left = 1174
+          Top = 709
+          Width = 161
+          Height = 81
+          Anchors = [akRight, akBottom]
+          AutoSize = True
+          TabOrder = 3
+        end
       end
     end
     object mMoveSequencesPage: TTabSheet
       Caption = 'Sequences'
       ImageIndex = 4
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
     end
     object TabSheet1: TTabSheet
       Caption = 'Motors'
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
@@ -170,8 +167,6 @@ object Main: TMain
         Padding.Right = 5
         Padding.Bottom = 5
         TabOrder = 0
-        ExplicitWidth = 1540
-        ExplicitHeight = 844
       end
       object Panel1: TPanel
         Left = 1243
@@ -180,8 +175,6 @@ object Main: TMain
         Height = 802
         Align = alRight
         TabOrder = 1
-        ExplicitLeft = 1540
-        ExplicitHeight = 844
         object mCheckDevicesBtn: TBitBtn
           Left = 1
           Top = 177
@@ -245,14 +238,10 @@ object Main: TMain
       Caption = 'Settings'
       ImageIndex = 2
       TabVisible = False
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
     end
     object TabSheet5: TTabSheet
       Caption = 'Logging'
       ImageIndex = 4
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
       object BottomPanel: TPanel
         Left = 0
         Top = 0
@@ -260,8 +249,6 @@ object Main: TMain
         Height = 802
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1645
-        ExplicitHeight = 844
         object infoMemo: TMemo
           Left = 1
           Top = 31
@@ -278,8 +265,6 @@ object Main: TMain
           ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
-          ExplicitWidth = 1643
-          ExplicitHeight = 812
         end
         object ToolBar1: TToolBar
           Left = 1
@@ -290,7 +275,6 @@ object Main: TMain
           ButtonHeight = 30
           Caption = 'ToolBar1'
           TabOrder = 1
-          ExplicitWidth = 1643
           object mClearLogWindowBtn: TBitBtn
             Left = 0
             Top = 0
@@ -330,8 +314,6 @@ object Main: TMain
     object TabSheet3: TTabSheet
       Caption = 'About'
       ImageIndex = 6
-      ExplicitWidth = 1645
-      ExplicitHeight = 844
       inline TAboutArrayBotFrame_21: TAboutArrayBotFrame_2
         Left = 0
         Top = 0
@@ -339,25 +321,25 @@ object Main: TMain
         Height = 802
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1645
-        ExplicitHeight = 844
+        ExplicitWidth = 1348
+        ExplicitHeight = 802
         inherited GroupBox1: TGroupBox
           Width = 1348
           Height = 616
-          ExplicitWidth = 1645
-          ExplicitHeight = 658
+          ExplicitWidth = 1348
+          ExplicitHeight = 616
           inherited Memo1: TMemo
             Top = 25
             Width = 1344
             Height = 589
             ExplicitTop = 25
-            ExplicitWidth = 1641
-            ExplicitHeight = 631
+            ExplicitWidth = 1344
+            ExplicitHeight = 589
           end
         end
         inherited Panel1: TPanel
           Width = 1348
-          ExplicitWidth = 1645
+          ExplicitWidth = 1348
           inherited Image1: TImage
             Left = 1162
             ExplicitLeft = 708

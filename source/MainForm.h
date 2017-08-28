@@ -23,20 +23,14 @@
 #include <Vcl.StdActns.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
-#include "TAboutArrayBot_2Frame.h"
 #include "TFloatLabeledEdit.h"
 #include "TIntegerLabeledEdit.h"
 #include "TIntLabel.h"
 #include "TPropertyCheckBox.h"
 #include "TArrayBotBtn.h"
-#include "arraybot/apt/atMotorWiggler.h"
-#include "cspin.h"
-#include <Vcl.Imaging.pngimage.hpp>
-#include <Vcl.Graphics.hpp>
-#include "TSoundsFrame.h"
-#include "sound/atApplicationSound.h"
-#include "TApplicationSoundsFrame.h"
+#include "TAboutArrayBot_2Frame.h"
 #include "TMotorPositionFrame.h"
+//---------------------------------------------------------------------------
 
 using Poco::Timestamp;
 using mtk::IniFileProperties;
@@ -95,6 +89,7 @@ class TMain : public TRegistryForm
 	TTimer *CheckForNewPositionTimer;
 	TButton *DummyBtn;
 	TPanel *Panel2;
+	TMotorPositionFrame *MotorPositionFrame1;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -157,21 +152,14 @@ class TMain : public TRegistryForm
           										//!The Process sequencer allow individual
                                                 //!processes to be executed in sequence
   	    ProcessSequencer  						mProcessSequencer;
-
-
 		TXYZUnitFrame*					        mXYZUnitFrame1;
 
 
 		TABProcessSequencerFrame*		        mABProcessSequencerFrame;
         TSequencerButtonsFrame*			        mSequencerButtons1;
-
-
 		void __fastcall		                    OnException();
 
-        void __fastcall 				        FrameClosed(TObject *Sender);
-
-
-	public:		// User declarations
+	public:
 		__fastcall 					            TMain(TComponent* Owner);
 		__fastcall 					            ~TMain();
 };

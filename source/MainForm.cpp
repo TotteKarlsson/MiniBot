@@ -33,6 +33,8 @@
 #pragma link "TSoundsFrame"
 #pragma link "TApplicationSoundsFrame"
 #pragma link "TMotorPositionFrame"
+#pragma link "TAboutArrayBot_2Frame"
+#pragma link "TMotorPositionFrame"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TMain *Main;
