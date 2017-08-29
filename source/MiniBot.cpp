@@ -92,10 +92,11 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         }
 
 		Application->Title = "MiniBot - Software for Microtomes";
-		TStyleManager::TrySetStyle("Amakrits");
+		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMain), &Main);
 		Application->ShowMainForm = false;
 		Application->Run();
+        delete gSplashForm;
 	}
 	catch (Exception &exception)
 	{

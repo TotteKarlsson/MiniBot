@@ -1,3 +1,12 @@
+Release 0.5.2 (Aug 29)
+=======================
+* Added simple Help panel
+* Added ability to use a foot switch (emitting the letter 'T')
+* Added motor position frame
+* Fixed up/down arrows
+* Changed minibot to move coverslip instead of changing water level
+* Getting arrow keys working
+
 Release 0.5.1 (Aug 21)
 =======================
 * Fixed so nudging the fill position is always saved

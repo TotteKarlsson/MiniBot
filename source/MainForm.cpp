@@ -49,13 +49,14 @@ extern string 			gAppName;
 
 using namespace mtk;
 string gDiveProcessName = "Dive";
+string gLiftProcessName = "Lift";
 
-void DummyFocus()
-{
-    Main->DummyBtn->Visible=true;
-    Main->DummyBtn->SetFocus();
-    Main->DummyBtn->Visible=false;
-}
+//void DummyFocus()
+//{
+//    Main->DummyBtn->Visible=true;
+//    Main->DummyBtn->SetFocus();
+//    Main->DummyBtn->Visible=false;
+//}
 
 //---------------------------------------------------------------------------
 __fastcall TMain::TMain(TComponent* Owner)
@@ -100,13 +101,14 @@ void __fastcall TMain::UIUpdateTimerTimer(TObject *Sender)
 {
 	if(MainPC->TabIndex == pcMain)
     {
-    	DummyFocus();
+//    	DummyFocus();
     }
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
 {
+	static bool wasAborted(false);
     //Get the motor and jog it
     APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
     if(!m)
@@ -114,7 +116,15 @@ void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
         Log(lError) << "Failed getting Coverslip UnitZ motor";
     }
 
-    if(Key == 'u' || Key == 'U')
+    if(m && m->isActive())
+    {
+		mProcessSequencer.getCurrentSequence()->getCurrent()->stop();
+        wasAborted = true;
+		return;
+    }
+
+
+    if(Key == 'l' || Key == 'L')
     {
 		LiftBtn->Click();
     }
@@ -122,6 +132,39 @@ void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
     {
 	    DiveButton->Click();
     }
+    else if(Key == 't' || Key == 'T')
+    {
+    	//Toggle sequence
+
+    	//Check for current process sequence
+    	string cSeqName = mProcessSequencer.getSequences().getCurrentSequenceName();
+        if(wasAborted && cSeqName == gDiveProcessName)
+        {
+			cSeqName = gLiftProcessName;
+        }
+        else if(wasAborted && cSeqName == gLiftProcessName)
+        {
+			cSeqName = gDiveProcessName;
+        }
+        else if(cSeqName == gDiveProcessName)
+        {
+			cSeqName = gLiftProcessName;
+        }
+        else
+        {
+			cSeqName = gDiveProcessName;
+        }
+
+        if(cSeqName == gDiveProcessName)
+        {
+            DiveButton->Click();
+        }
+        else
+        {
+            LiftBtn->Click();
+        }
+    }
+    wasAborted = false;
 }
 
 //---------------------------------------------------------------------------
@@ -137,24 +180,6 @@ void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift
 	if(Key == vkEscape)
     {
     	Close();
-    }
-    else if(Key == VK_UP && m)
-    {
-       	m->jogReverse();
-    }
-    else if(Key == VK_DOWN && m)
-    {
-       	m->jogForward();
-    }
-
-    if(Key == vkDown || Key == vkUp)
-    {
-	    //Enable checkForNewPositionTimer
-        if(!CheckForNewPositionTimer->Enabled)
-        {
-            sleep(100);
-            CheckForNewPositionTimer->Enabled = true;
-        }
     }
 }
 
@@ -182,35 +207,66 @@ void __fastcall TMain::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
 //---------------------------------------------------------------------------
 void __fastcall TMain::WndProc(TMessage& Message)
 {
-	TForm::WndProc(Message);
+	bool jogUp(false);
+    bool jogDown(false);
+
 	switch (Message.Msg)
     {
     	case WM_GETDLGCODE:
 	    	Log(lInfo) << "Got WM_GETDLGCODE";
+		    Message.Result = 1;
         break;
 
+		case CM_DIALOGKEY:
+        {
+			Log(lInfo) << "Got CM_DIALOGKEY";
+            switch (reinterpret_cast<TCMDialogKey&>(Message).CharCode)
+        	{
+    	        case VK_UP:  	jogUp 	= true;  break;
+        	    case VK_DOWN:	jogDown = true;  break;
+                case VK_LEFT:
+                case VK_RIGHT:
+                	Message.Result = 1;
+                break;
+
+        	}
+        }
+        break;
 		case CM_WANTSPECIALKEY:
         {
 	    	Log(lInfo) << "Got WM_WANTSPECIALKEY";
-        	APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
-            if(!m)
-            {
-                Log(lError) << "Failed getting Coverslip UnitZ motor";
-            }
-
-
             switch (reinterpret_cast<TCMWantSpecialKey&>(Message).CharCode)
             {
+    	        case VK_UP:  	jogUp 	= true;  break;
+        	    case VK_DOWN:	jogDown = true;  break;
                 case VK_LEFT:
                 case VK_RIGHT:
-                case VK_UP:
-                case VK_DOWN:
-
-                    break;
+               		Message.Result = 1;
+                break;
             }
-            Message.Result = 1;
         }
         break;
+    }
+
+    if(jogUp || jogDown)
+    {
+		if(jogUp)
+        {
+        	JogMotorMouseDown(FillMoreBtn, mbLeft, TShiftState(), 0,0);
+        }
+        if(jogDown)
+        {
+        	JogMotorMouseDown(FillLessBtn, mbLeft, TShiftState(), 0,0);
+        }
+
+       	JogMotorMouseUp(FillLessBtn, mbLeft, TShiftState(), 0,0);
+        Log(lInfo) << "Joggin up or down..";
+	    Message.Result = 1;
+    }
+
+    if(Message.Result != 1)
+    {
+		TForm::WndProc(Message);
     }
 }
 
@@ -324,7 +380,7 @@ void __fastcall TMain::LiftBtnClick(TObject *Sender)
 void __fastcall TMain::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y)
 {
-   //Get the motor and jog it
+   //Get the motor and stop it
     APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
     if(!m)
     {
@@ -358,73 +414,68 @@ void __fastcall TMain::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
         return;
     }
 
+    if(mProcessSequencer.getSequences().getCurrentSequenceName() != gDiveProcessName)
+    {
+		return;
+    }
+
     if(btn == FillMoreBtn)
     {
+	    updateDivePosition(m->getPosition() - m->getJogStep());
         m->jogReverse();
+
     }
     else if(btn == FillLessBtn)
     {
+	    updateDivePosition(m->getPosition() + m->getJogStep());
         //Get the motor and jog it
     	m->jogForward();
     }
-
-    //Enable checkForNewPositionTimer
-    if(!CheckForNewPositionTimer->Enabled)
-    {
-    	sleep(100);
-	    CheckForNewPositionTimer->Enabled = true;
-    }
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMain::CheckForNewPositionTimerTimer(TObject *Sender)
+void TMain::updateDivePosition(double pos)
 {
-	//wait for ab to be inactive
     APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
-    if(m && !m->isActive() && !m->isMotorCommandPending())
+    if(!m)
     {
-		CheckForNewPositionTimer->Enabled = false;
+    	Log(lError) << "Failed getting Coverslip UnitZ motor";
+        return;
+    }
 
-		//Get the fill sequence
-        if(mProcessSequencer.getSequences().getCurrentSequenceName() == gDiveProcessName)
+    //Get the dive sequence
+    if(mProcessSequencer.getSequences().getCurrentSequenceName() != gDiveProcessName)
+    {
+    	return;
+    }
+
+    Log(lInfo) << "Found sequence: \""<< gDiveProcessName <<"\"";
+    ProcessSequence* s = mProcessSequencer.getSequences().getCurrent();
+    if(s && s->getProcessWithName(gDiveProcessName))
+    {
+	    Process* p = s->getProcessWithName(gDiveProcessName);
+        if(p && p->getProcessName() == gDiveProcessName)
         {
-        	Log(lInfo) << "Found sequence: \"Fill Boat\"";
-            ProcessSequence* s = mProcessSequencer.getSequences().getCurrent();
-            if(s && s->getProcessWithName(gDiveProcessName))
+            AbsoluteMove* am = dynamic_cast<AbsoluteMove*>(p);
+            if(am)
             {
-            	Process* p = s->getProcessWithName(gDiveProcessName);
-
-                if(p && p->getProcessName() == gDiveProcessName)
-                {
-                	AbsoluteMove* am = dynamic_cast<AbsoluteMove*>(p);
-                    {
-                    	if(am)
-                        {
-                        	if(isEqual(am->getPosition(), m->getPosition(), 3))
-                            {
-                        		am->setPosition(m->getPosition());
-                            }
-                        }
-                        else
-                        {
-		                    Log(lError) << "Failed to cast to an AbsoluteMove process..";
-                        }
-                    }
-                }
-                else
-                {
-                    Log(lError) << "Failed getting process with name: GotoZ";
-                }
-
+                am->setPosition(pos);
+                mProcessSequencer.saveCurrent();
             }
             else
             {
-            	Log(lError) << "Failed getting process: " <<gDiveProcessName;
+                Log(lError) << "Failed to cast to an AbsoluteMove process..";
             }
         }
+        else
+        {
+            Log(lError) << "Failed getting process with name: "<<gDiveProcessName;
+        }
+    }
+    else
+    {
+        Log(lError) << "Failed getting process: " <<gDiveProcessName;
     }
 }
-
 
 
 

@@ -86,10 +86,10 @@ class TMain : public TRegistryForm
 	TArrayBotButton *LiftBtn;
 	TArrayBotButton *FillMoreBtn;
 	TArrayBotButton *FillLessBtn;
-	TTimer *CheckForNewPositionTimer;
-	TButton *DummyBtn;
 	TPanel *Panel2;
 	TMotorPositionFrame *MotorPositionFrame1;
+	TPanel *Panel3;
+	TMemo *Memo1;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -112,7 +112,6 @@ class TMain : public TRegistryForm
           int X, int Y);
 	void __fastcall JogMotorMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
-	void __fastcall CheckForNewPositionTimerTimer(TObject *Sender);
 	void __fastcall FormKeyPress(TObject *Sender, System::WideChar &Key);
 	void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
 	void __fastcall UIUpdateTimerTimer(TObject *Sender);
@@ -158,7 +157,7 @@ class TMain : public TRegistryForm
 		TABProcessSequencerFrame*		        mABProcessSequencerFrame;
         TSequencerButtonsFrame*			        mSequencerButtons1;
 		void __fastcall		                    OnException();
-
+        void									updateDivePosition(double newPos);
 	public:
 		__fastcall 					            TMain(TComponent* Owner);
 		__fastcall 					            ~TMain();

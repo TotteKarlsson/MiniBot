@@ -3,10 +3,10 @@ object Main: TMain
   Top = 0
   Caption = 'MiniBot Version 0.5.8'
   ClientHeight = 872
-  ClientWidth = 1356
+  ClientWidth = 1179
   Color = clBtnFace
   Constraints.MinHeight = 910
-  Constraints.MinWidth = 1372
+  Constraints.MinWidth = 1195
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -19
@@ -27,7 +27,7 @@ object Main: TMain
   object MainPC: TPageControl
     Left = 0
     Top = 0
-    Width = 1356
+    Width = 1179
     Height = 872
     ActivePage = mFrontPage
     Align = alClient
@@ -40,13 +40,13 @@ object Main: TMain
       object MiddlePanel: TPanel
         Left = 0
         Top = 0
-        Width = 1348
+        Width = 1171
         Height = 802
         Align = alClient
         AutoSize = True
         TabOrder = 0
         DesignSize = (
-          1348
+          1171
           802)
         object LiftBtn: TArrayBotButton
           Left = 67
@@ -83,20 +83,21 @@ object Main: TMain
           SoundID = 'BUTTON_CLICK_4'
         end
         object Panel2: TPanel
-          Left = 487
+          Left = 540
           Top = 16
-          Width = 721
+          Width = 612
           Height = 465
           Anchors = [akTop, akRight]
           BevelOuter = bvNone
           Caption = 'Panel2'
+          Constraints.MinWidth = 612
           TabOrder = 2
           DesignSize = (
-            721
+            612
             465)
           object DiveButton: TArrayBotButton
-            Left = 224
-            Top = 40
+            Left = 45
+            Top = 24
             Width = 400
             Height = 400
             Anchors = [akTop]
@@ -112,8 +113,8 @@ object Main: TMain
             SoundID = 'BUTTON_CLICK_4'
           end
           object FillLessBtn: TArrayBotButton
-            Left = 0
-            Top = 237
+            Left = 472
+            Top = 261
             Width = 137
             Height = 105
             Anchors = [akTop, akRight]
@@ -124,8 +125,8 @@ object Main: TMain
             SoundID = 'BUTTON_CLICK_4'
           end
           object FillMoreBtn: TArrayBotButton
-            Left = 0
-            Top = 120
+            Left = 472
+            Top = 128
             Width = 137
             Height = 105
             Anchors = [akTop, akRight]
@@ -137,8 +138,8 @@ object Main: TMain
           end
         end
         object MotorPositionFrame1: TMotorPositionFrame
-          Left = 1174
-          Top = 709
+          Left = 991
+          Top = 704
           Width = 161
           Height = 81
           Anchors = [akRight, akBottom]
@@ -156,7 +157,7 @@ object Main: TMain
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
-        Width = 1243
+        Width = 1066
         Height = 802
         HorzScrollBar.Smooth = True
         VertScrollBar.Tracking = True
@@ -169,7 +170,7 @@ object Main: TMain
         TabOrder = 0
       end
       object Panel1: TPanel
-        Left = 1243
+        Left = 1066
         Top = 0
         Width = 105
         Height = 802
@@ -245,14 +246,14 @@ object Main: TMain
       object BottomPanel: TPanel
         Left = 0
         Top = 0
-        Width = 1348
+        Width = 1171
         Height = 802
         Align = alClient
         TabOrder = 0
         object infoMemo: TMemo
           Left = 1
           Top = 31
-          Width = 1346
+          Width = 1169
           Height = 770
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
@@ -269,7 +270,7 @@ object Main: TMain
         object ToolBar1: TToolBar
           Left = 1
           Top = 1
-          Width = 1346
+          Width = 1169
           Height = 30
           AutoSize = True
           ButtonHeight = 30
@@ -317,45 +318,83 @@ object Main: TMain
       inline TAboutArrayBotFrame_21: TAboutArrayBotFrame_2
         Left = 0
         Top = 0
-        Width = 1348
-        Height = 802
+        Width = 1171
+        Height = 448
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1348
-        ExplicitHeight = 802
+        ExplicitWidth = 1171
+        ExplicitHeight = 448
         inherited GroupBox1: TGroupBox
-          Width = 1348
-          Height = 616
-          ExplicitWidth = 1348
-          ExplicitHeight = 616
+          Width = 1171
+          Height = 262
+          ExplicitWidth = 1171
+          ExplicitHeight = 262
           inherited Memo1: TMemo
             Top = 25
-            Width = 1344
-            Height = 589
+            Width = 1167
+            Height = 235
             ExplicitTop = 25
-            ExplicitWidth = 1344
-            ExplicitHeight = 589
+            ExplicitWidth = 1167
+            ExplicitHeight = 235
           end
         end
         inherited Panel1: TPanel
-          Width = 1348
-          ExplicitWidth = 1348
+          Width = 1171
+          ExplicitWidth = 1171
           inherited Image1: TImage
-            Left = 1162
+            Left = 985
             ExplicitLeft = 708
           end
         end
       end
+      object Panel3: TPanel
+        Left = 0
+        Top = 448
+        Width = 1171
+        Height = 354
+        Align = alBottom
+        TabOrder = 1
+        object Memo1: TMemo
+          Left = 1
+          Top = 1
+          Width = 1169
+          Height = 352
+          Align = alClient
+          Lines.Strings = (
+            'MiniBot Help'
+            
+              'There are two main operation of the MiniBot, '#39'Dive'#39' and '#39'Lift'#39'. ' +
+              ' Dive is used to submerge a coverslip into the Microtome boat, a' +
+              'nd the Lift '
+            'operation is used to lift the Coverslip out of the boat.'
+            
+              'The Dive and Lift operation can be executed by pressing the butt' +
+              'ons on the UI, using a keyboard, or using a foot switch.'
+            ''
+            'Keyboard'
+            '    Use the keyboard keys '#39'L'#39' for Lift and '#39'D'#39' for Dive.'
+            
+              '    Use the Up and Down arrows for fine tuning the '#39'Dive'#39' positi' +
+              'on.'
+            ''
+            'FootSwitch'
+            
+              '    The footswitch operates the motor. It will execute and toggl' +
+              'e between the Lift and Dive operation. '
+            
+              '    If the foot switch is pressed while the motor is running, th' +
+              'en the motor will stop and the operation (Lift or Dive) will be ' +
+              'toggled.'
+            ''
+            
+              'Setup motor properties on the Motors page, e.g. velocity and tri' +
+              'm step.')
+          TabOrder = 0
+          ExplicitLeft = 0
+          ExplicitTop = 4
+        end
+      end
     end
-  end
-  object DummyBtn: TButton
-    Left = 1168
-    Top = 616
-    Width = 129
-    Height = 65
-    Caption = 'DummyBtn'
-    TabOrder = 1
-    Visible = False
   end
   object ActionList1: TActionList
     Left = 716
@@ -438,12 +477,5 @@ object Main: TMain
     OnTimer = WaitForDeviceInitTimerTimer
     Left = 544
     Top = 752
-  end
-  object CheckForNewPositionTimer: TTimer
-    Enabled = False
-    Interval = 50
-    OnTimer = CheckForNewPositionTimerTimer
-    Left = 352
-    Top = 680
   end
 end

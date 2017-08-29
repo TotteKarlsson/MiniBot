@@ -18,8 +18,6 @@ __fastcall TMain::~TMain()
 //	delete mSequencerButtons;
 
 //    delete mABProcessSequencerFrame;
-//	delete mXYZUnitFrame1;
-//	delete mXYZUnitFrame2;
 	mProperties.write();
     mIniFile.save();
 }
@@ -32,30 +30,12 @@ void __fastcall TMain::ShutDownTimerTimer(TObject *Sender)
     if(UIUpdateTimer->Enabled)
     {
         UIUpdateTimer->Enabled = false;
+    }
+
 	if(mAB.getJoyStick().isEnabled())
     {
 		mAB.getJoyStick().disable();
     }
-    }
-
-    if(gSplashForm && gSplashForm->isOnShowTime())
-    {
-	    gSplashForm->setShowTime(0);
-        gSplashForm->Close();
-
-    	Log(lDebug) << "Waiting for splash..";
-    }
-
-//    //This will save any ini parameters in the frame
-//    if(mFrames.size())
-//    {
-//        for(int i = 0; i < mFrames.size(); i++)
-//        {
-//            delete mFrames[i];
-//        }
-//
-//        mFrames.clear();
-//    }
 
 	if(mAB.isActive())
     {
@@ -106,8 +86,6 @@ void __fastcall TMain::FormCloseQuery(TObject *Sender, bool &CanClose)
 	if(	   mAB.getJoyStick().isEnabled()
     	|| mAB.isActive()
         || UIUpdateTimer->Enabled
-        || (gSplashForm && gSplashForm->isOnShowTime())
-//        || mFrames.size()
         || mLogFileReader.isRunning()
       )
     {
