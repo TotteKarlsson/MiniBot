@@ -5,10 +5,10 @@
 #include "arraybot/atArrayBot.h"
 #include "abUIDataStructures.h"
 #include "InitArrayBotThread.h"
-#include "mtkIniFileProperties.h"
-#include "mtkLogFileReader.h"
-#include "TRegistryForm.h"
-#include "TSTDStringLabeledEdit.h"
+#include "dslIniFileProperties.h"
+#include "dslLogFileReader.h"
+#include "dslTRegistryForm.h"
+#include "dslTSTDStringLabeledEdit.h"
 #include <System.Actions.hpp>
 #include <System.Classes.hpp>
 #include <Vcl.ActnList.hpp>
@@ -23,17 +23,18 @@
 #include <Vcl.StdActns.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
-#include "TFloatLabeledEdit.h"
-#include "TIntegerLabeledEdit.h"
-#include "TIntLabel.h"
-#include "TPropertyCheckBox.h"
+#include "dslTFloatLabeledEdit.h"
+#include "dslTIntegerLabeledEdit.h"
+#include "dslTIntLabel.h"
+#include "dslTPropertyCheckBox.h"
 #include "TArrayBotBtn.h"
 #include "TAboutArrayBot_2Frame.h"
 #include "TMotorPositionFrame.h"
+
 //---------------------------------------------------------------------------
 
 using Poco::Timestamp;
-using mtk::IniFileProperties;
+using dsl::IniFileProperties;
 class TABProcessSequencerFrame;
 class TRibbonLifterFrame;
 class TXYZUnitFrame;
@@ -133,7 +134,7 @@ class TMain : public TRegistryForm
 
         IniFile						            mIniFile;
         IniFileProperties  			            mProperties;
-		mtk::Property<mtk::LogLevel>            mLogLevel;
+		dsl::Property<dsl::LogLevel>            mLogLevel;
 
 		void									setupProperties();
 

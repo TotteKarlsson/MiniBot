@@ -1,7 +1,7 @@
 #ifndef UIUtilitiesH
 #define UIUtilitiesH
 #include "abUIDataStructures.h"
-#include "mtkStringList.h"
+#include "dslStringList.h"
 
 //---------------------------------------------------------------------------
 PACKAGE void loadStyles();

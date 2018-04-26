@@ -37,6 +37,10 @@ object Main: TMain
     OnChange = MainPCChange
     object mFrontPage: TTabSheet
       Caption = 'The Bot'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object MiddlePanel: TPanel
         Left = 0
         Top = 0
@@ -151,9 +155,17 @@ object Main: TMain
     object mMoveSequencesPage: TTabSheet
       Caption = 'Sequences'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet1: TTabSheet
       Caption = 'Motors'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
@@ -239,10 +251,18 @@ object Main: TMain
       Caption = 'Settings'
       ImageIndex = 2
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet5: TTabSheet
       Caption = 'Logging'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object BottomPanel: TPanel
         Left = 0
         Top = 0
@@ -315,6 +335,10 @@ object Main: TMain
     object TabSheet3: TTabSheet
       Caption = 'About'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline TAboutArrayBotFrame_21: TAboutArrayBotFrame_2
         Left = 0
         Top = 0
@@ -322,19 +346,19 @@ object Main: TMain
         Height = 448
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1171
+        ExplicitWidth = 296
         ExplicitHeight = 448
         inherited GroupBox1: TGroupBox
           Width = 1171
           Height = 262
-          ExplicitWidth = 1171
+          ExplicitWidth = 296
           ExplicitHeight = 262
           inherited Memo1: TMemo
             Top = 25
             Width = 1167
             Height = 235
             ExplicitTop = 25
-            ExplicitWidth = 1167
+            ExplicitWidth = 292
             ExplicitHeight = 235
           end
         end

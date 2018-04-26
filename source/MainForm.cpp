@@ -1,40 +1,41 @@
 #include <vcl.h>
 #pragma hdrstop
 #include "MainForm.h"
-#include "TMemoLogger.h"
+#include "dslTMemoLogger.h"
 #include "forms/TSplashForm.h"
-#include "mtkStringList.h"
+#include "dslStringList.h"
 #include "core/atUtilities.h"
 #include "arraybot/apt/atAPTMotor.h"
 #include "arraybot/apt/atTCubeDCServo.h"
-#include "mtkVCLUtils.h"
-#include "mtkLogger.h"
+#include "dslVCLUtils.h"
+#include "dslLogger.h"
 #include <bitset>
-#include "mtkMathUtils.h"
+#include "dslMathUtils.h"
 #include "core/atExceptions.h"
 #include "sound/atSounds.h"
 #include "core/atCore.h"
 #include "TABProcessSequencerFrame.h"
-#include "frames/TXYZPositionsFrame.h"
-#include "frames/TXYZUnitFrame.h"
-#include "frames/TSequencerButtonsFrame.h"
+#include "TXYZUnitFrame.h"
+#include "TSequencerButtonsFrame.h"
 #include "UIUtilities.h"
 #include "arraybot/apt/atAbsoluteMove.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "TIntegerLabeledEdit"
-#pragma link "TFloatLabeledEdit"
-#pragma link "TSTDStringLabeledEdit"
-#pragma link "mtkFloatLabel"
-#pragma link "TAboutArrayBotFrame"
-#pragma link "TAboutArrayBot_2Frame"
-#pragma link "TPropertyCheckBox"
-#pragma link "cspin"
-#pragma link "TSoundsFrame"
-#pragma link "TApplicationSoundsFrame"
-#pragma link "TMotorPositionFrame"
-#pragma link "TAboutArrayBot_2Frame"
-#pragma link "TMotorPositionFrame"
+//#pragma link "TIntegerLabeledEdit"
+//#pragma link "TFloatLabeledEdit"
+//#pragma link "TSTDStringLabeledEdit"
+//#pragma link "dslFloatLabel"
+//#pragma link "TAboutArrayBotFrame"
+//#pragma link "TAboutArrayBot_2Frame"
+//#pragma link "TPropertyCheckBox"
+//#pragma link "cspin"
+//#pragma link "TSoundsFrame"
+//#pragma link "TApplicationSoundsFrame"
+//#pragma link "TMotorPositionFrame"
+//#pragma link "TAboutArrayBot_2Frame"
+//#pragma link "TMotorPositionFrame"
+//#pragma link "TMotorPositionFrame"
+//#pragma link "TMotorPositionFrame"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TMain *Main;
@@ -47,7 +48,7 @@ extern bool             gAppIsStartingUp;
 extern string 			gApplicationRegistryRoot;
 extern string 			gAppName;
 
-using namespace mtk;
+using namespace dsl;
 string gDiveProcessName = "Dive";
 string gLiftProcessName = "Lift";
 

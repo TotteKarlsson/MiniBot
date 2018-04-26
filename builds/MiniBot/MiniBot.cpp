@@ -4,17 +4,20 @@
 #include <string>
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-#include "mtkLogger.h"
-#include "mtkVCLUtils.h"
+#include "dslLogger.h"
+#include "dslVCLUtils.h"
 #include "core/atExceptions.h"
-#include "forms/TSplashForm.h"
-#include "mtkRestartApplicationUtils.h"
+#include "TSplashForm.h"
+#include "dslRestartApplicationUtils.h"
 #include "UIUtilities.h"
-using namespace mtk;
+using namespace dsl;
 using namespace std;
 
 //---------------------------------------------------------------------------
-USEFORM("MainForm.cpp", Main);
+USEFORM("..\..\source\MainForm.cpp", Main);
+USEFORM("..\..\source\frames\TAboutArrayBot_2Frame.cpp", AboutArrayBotFrame_2); /* TFrame: File Type */
+USEFORM("..\..\source\frames\TABProcessSequencerFrame.cpp", ABProcessSequencerFrame); /* TFrame: File Type */
+USEFORM("..\..\source\frames\TAboutArrayBotFrame.cpp", AboutArrayBotFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 string 				gAppName					= "MiniBot";
 string              gLogFileLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
@@ -30,7 +33,7 @@ string              gDateFormat                 = "%Y-%m-%d";
 string              gTimeFormat                 = "%H:%M:%S";
 bool                gIsDevelopmentRelease       = false;
 bool                gAppIsStartingUp            = true;
-bool                gHideSplash                 = false;
+bool                gHideSplash                 = true;
 TSplashForm*        gSplashForm                 = NULL;
 
 int __stdcall FindOtherWindow(HWND hwnd, LPARAM lParam);
@@ -43,17 +46,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 	try
 	{
-		// Initialize restart code
-		// Check if this instance is restarted and
-		// wait while previos instance finish
-		if (mtk::checkForCommandLineFlag("--Restart"))
-		{
-            //TODO: Fix this.. not working properly..
-            //            MessageDlg("Wait...", mtWarning, TMsgDlgButtons() << mbOK, 0);
-			mtk::WaitForPreviousProcessToFinish(gRestartMutexName);
-            Sleep(1000);
-		}
-
         //Look at this later... does not work yet
         const char* appMutexName  = gAppMutexName.c_str();
         appMutex = ::CreateMutexA(NULL, FALSE, appMutexName);

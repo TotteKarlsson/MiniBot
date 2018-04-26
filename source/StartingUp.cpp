@@ -1,7 +1,7 @@
 #include <vcl.h>
 #pragma hdrstop
 #include "MainForm.h"
-#include "TMemoLogger.h"
+#include "dslTMemoLogger.h"
 #include "forms/TSplashForm.h"
 #include "TXYZUnitFrame.h"
 #include "TXYZPositionsFrame.h"
@@ -9,7 +9,7 @@
 #include "TSequencerButtonsFrame.h"
 #include "frames/TABProcessSequencerFrame.h"
 #include "UIUtilities.h"
-#include "mtkVCLUtils.h"
+#include "dslVCLUtils.h"
 
 //---------------------------------------------------------------------------
 extern TSplashForm*  	gSplashForm;
@@ -20,7 +20,7 @@ extern string           gAppName;
 //---------------------------------------------------------------------------
 void __fastcall TMain::FormCreate(TObject *Sender)
 {
-	this->ReadRegistry();
+	this->readRegistry();
 	enableDisableUI(false);
 
 	this->Visible = true;

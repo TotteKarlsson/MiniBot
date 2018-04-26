@@ -1,19 +1,21 @@
 #if defined DSL_STATIC
-	#pragma comment(lib, "mtkCommon-static.lib")
-	#pragma comment(lib, "mtkMath-static.lib")
-	#pragma comment(lib, "mtkIPC-static.lib")
 #else
-	#pragma comment(lib, "mtkCommon.lib")
-	#pragma comment(lib, "mtkMath.lib")
-	#pragma comment(lib, "mtkIPC.lib")
+	#pragma comment(lib, "dslCommon.lib")
+	#pragma comment(lib, "dslMath.lib")
+	#pragma comment(lib, "dslIPC.lib")
 #endif
 
-#pragma comment(lib, "atCore.lib")
+#pragma comment(lib, "atFoundation.lib")
 #pragma comment(lib, "atArrayBotCore.lib")
-#pragma comment(lib, "atVCLCore.bpi")
+
+
 #pragma comment(lib, "poco_foundation-static.lib")
 #pragma comment(lib, "tinyxml2-static.lib")
 
-#pragma comment(lib, "ArrayBotPackage.bpi")
-#pragma comment(lib, "VCLCommon.bpi")
-#pragma comment(lib, "DuneForms.lib")
+#pragma comment(lib, "dslVCLCommon.lib")
+#pragma comment(lib, "atVCLCommon.lib")
+
+#pragma comment(lib, "dslVCLComponents.bpi")
+#pragma comment(lib, "atVCLVisualComponents.bpi")
+#pragma comment(lib, "atVCLAPTVisualComponents.bpi")
+
