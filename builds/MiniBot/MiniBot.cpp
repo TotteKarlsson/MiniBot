@@ -15,8 +15,8 @@ using namespace std;
 
 //---------------------------------------------------------------------------
 USEFORM("..\..\source\MainForm.cpp", Main);
-USEFORM("..\..\source\frames\TAboutArrayBot_2Frame.cpp", AboutArrayBotFrame_2); /* TFrame: File Type */
 USEFORM("..\..\source\frames\TABProcessSequencerFrame.cpp", ABProcessSequencerFrame); /* TFrame: File Type */
+USEFORM("..\..\source\frames\TAboutArrayBot_2Frame.cpp", AboutArrayBotFrame_2); /* TFrame: File Type */
 USEFORM("..\..\source\frames\TAboutArrayBotFrame.cpp", AboutArrayBotFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 string 				gAppName					= "MiniBot";

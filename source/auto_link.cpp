@@ -1,9 +1,6 @@
-#if defined DSL_STATIC
-#else
-	#pragma comment(lib, "dslCommon.lib")
-	#pragma comment(lib, "dslMath.lib")
-	#pragma comment(lib, "dslIPC.lib")
-#endif
+#pragma comment(lib, "dslCommon.lib")
+#pragma comment(lib, "dslMath.lib")
+#pragma comment(lib, "dslIPC.lib")
 
 #pragma comment(lib, "atFoundation.lib")
 #pragma comment(lib, "atArrayBotCore.lib")

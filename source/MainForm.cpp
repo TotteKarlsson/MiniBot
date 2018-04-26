@@ -21,21 +21,6 @@
 #include "arraybot/apt/atAbsoluteMove.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-//#pragma link "TIntegerLabeledEdit"
-//#pragma link "TFloatLabeledEdit"
-//#pragma link "TSTDStringLabeledEdit"
-//#pragma link "dslFloatLabel"
-//#pragma link "TAboutArrayBotFrame"
-//#pragma link "TAboutArrayBot_2Frame"
-//#pragma link "TPropertyCheckBox"
-//#pragma link "cspin"
-//#pragma link "TSoundsFrame"
-//#pragma link "TApplicationSoundsFrame"
-//#pragma link "TMotorPositionFrame"
-//#pragma link "TAboutArrayBot_2Frame"
-//#pragma link "TMotorPositionFrame"
-//#pragma link "TMotorPositionFrame"
-//#pragma link "TMotorPositionFrame"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TMain *Main;
@@ -51,13 +36,6 @@ extern string 			gAppName;
 using namespace dsl;
 string gDiveProcessName = "Dive";
 string gLiftProcessName = "Lift";
-
-//void DummyFocus()
-//{
-//    Main->DummyBtn->Visible=true;
-//    Main->DummyBtn->SetFocus();
-//    Main->DummyBtn->Visible=false;
-//}
 
 //---------------------------------------------------------------------------
 __fastcall TMain::TMain(TComponent* Owner)

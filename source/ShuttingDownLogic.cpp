@@ -1,25 +1,20 @@
 #include <vcl.h>
 #pragma hdrstop
 #include "MainForm.h"
-#include "dslLogger.h"
-#include "dslVCLUtils.h"
-#include "arraybot/apt/atAPTMotor.h"
-#include "forms/TSplashForm.h"
+//#include "dslLogger.h"
+//#include "dslVCLUtils.h"
+//#include "arraybot/apt/atAPTMotor.h"
+//#include "forms/TSplashForm.h"
 #include "TXYZUnitFrame.h"
 
 using namespace dsl;
 
 static HWND gOtherAppWindow = NULL;
-extern TSplashForm*  gSplashForm;
+//extern TSplashForm*  gSplashForm;
 
 
 __fastcall TMain::~TMain()
 {
-//	delete mSequencerButtons;
-
-//    delete mABProcessSequencerFrame;
-	mProperties.write();
-    mIniFile.save();
 }
 
 //---------------------------------------------------------------------------
@@ -106,5 +101,10 @@ void __fastcall TMain::FormCloseQuery(TObject *Sender, bool &CanClose)
 void __fastcall TMain::FormClose(TObject *Sender, TCloseAction &Action)
 {
 	Log(lInfo) << "In FormClose";
+
+//	delete mXYZUnitFrame1;
+//    delete mABProcessSequencerFrame;
+	mProperties.write();
+    mIniFile.save();
 }
 

@@ -81,6 +81,7 @@ void __fastcall	TMain::setupUIFrames()
 {
     //Create MoveSequencer frame
     mABProcessSequencerFrame = new TABProcessSequencerFrame(mProcessSequencer, gAppDataFolder, mMoveSequencesPage);
+
     mABProcessSequencerFrame->Parent = mMoveSequencesPage;
     mABProcessSequencerFrame->Align = alClient;
     mABProcessSequencerFrame->init();
