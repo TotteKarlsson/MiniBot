@@ -3,6 +3,7 @@
 #pragma comment(lib, "dslIPC.lib")
 
 #pragma comment(lib, "atFoundation.lib")
+#pragma comment(lib, "atBarcodereader.lib")
 #pragma comment(lib, "atArrayBotCore.lib")
 
 

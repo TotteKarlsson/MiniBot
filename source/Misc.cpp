@@ -1,6 +1,6 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "MainForm.h"
+#include "TMainForm.h"
 #include "dslLogger.h"
 #include "dslVCLUtils.h"
 #include "arraybot/apt/atAPTMotor.h"
@@ -14,7 +14,7 @@ static HWND gOtherAppWindow = NULL;
 
 extern TSplashForm*  gSplashForm;
 //---------------------------------------------------------------------------
-void __fastcall TMain::checkForDevicesExecute(TObject *Sender)
+void __fastcall TMainForm::checkForDevicesExecute(TObject *Sender)
 {
 	if(!buildDeviceList())
     {
@@ -70,7 +70,7 @@ void __fastcall TMain::checkForDevicesExecute(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::LogLevelCBChange(TObject *Sender)
+void __fastcall TMainForm::LogLevelCBChange(TObject *Sender)
 {
     if(LogLevelCB->ItemIndex == 0)
     {
@@ -84,24 +84,24 @@ void __fastcall TMain::LogLevelCBChange(TObject *Sender)
     gLogger.setLogLevel(mLogLevel);
 }
 
-void TMain::enableDisableUI(bool enable)
+void TMainForm::enableDisableUI(bool enable)
 {
 	this->Visible = enable;
 }
 
-void __fastcall	TMain::OnException()
+void __fastcall	TMainForm::OnException()
 {
-	Log(lInfo) << "Exception TMain::OnException()";
+	Log(lInfo) << "Exception TMainForm::OnException()";
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::ApplicationEvents1Exception(TObject *Sender, Exception *E)
+void __fastcall TMainForm::ApplicationEvents1Exception(TObject *Sender, Exception *E)
 {
 	Log(lInfo) << "Application Exception: "<<stdstr(E->Message);
 }
 
 //This one is called from the reader thread
-void __fastcall TMain::logMsg()
+void __fastcall TMainForm::logMsg()
 {
 	if(infoMemo->Lines->Count > 500)
     {
@@ -111,7 +111,7 @@ void __fastcall TMain::logMsg()
     infoMemo->Lines->Insert(0, (vclstr(mLogFileReader.getData())));
 }
 
-void TMain::setupWindowTitle()
+void TMainForm::setupWindowTitle()
 {
 	string title = createWindowTitle("MiniBot", Application);
 	this->Caption = vclstr(title);

@@ -1,7 +1,7 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "MainForm.h"
-//#include "dslLogger.h"
+#include "TMainForm.h"
+#include "dslLogger.h"
 //#include "dslVCLUtils.h"
 //#include "arraybot/apt/atAPTMotor.h"
 //#include "forms/TSplashForm.h"
@@ -13,12 +13,12 @@ static HWND gOtherAppWindow = NULL;
 //extern TSplashForm*  gSplashForm;
 
 
-__fastcall TMain::~TMain()
+__fastcall TMainForm::~TMainForm()
 {
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::ShutDownTimerTimer(TObject *Sender)
+void __fastcall TMainForm::ShutDownTimerTimer(TObject *Sender)
 {
 	ShutDownTimer->Enabled = false;
 
@@ -55,7 +55,7 @@ void __fastcall TMain::ShutDownTimerTimer(TObject *Sender)
 	Close();
 }
 
-void __fastcall TMain::ShutDownAExecute(TObject *Sender)
+void __fastcall TMainForm::ShutDownAExecute(TObject *Sender)
 {
     mAB.getJoyStick().disable();
     mXYZUnitFrame1->disable();
@@ -72,7 +72,7 @@ void __fastcall TMain::ShutDownAExecute(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormCloseQuery(TObject *Sender, bool &CanClose)
+void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
 	Log(lInfo) << "Closing down....";
 
@@ -98,7 +98,7 @@ void __fastcall TMain::FormCloseQuery(TObject *Sender, bool &CanClose)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormClose(TObject *Sender, TCloseAction &Action)
+void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
 	Log(lInfo) << "In FormClose";
 

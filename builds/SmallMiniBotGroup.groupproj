@@ -18,7 +18,7 @@
         <Projects Include="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj">
+        <Projects Include="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj">
             <Dependencies/>
         </Projects>
         <Projects Include="MiniBot\MiniBot.cbproj">
@@ -78,13 +78,13 @@
         <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj" Targets="Make"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents:Clean">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj" Targets="Clean"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj" Targets="Clean"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents:Make">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj" Targets="Make"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj" Targets="Make"/>
     </Target>
     <Target Name="MiniBot">
         <MSBuild Projects="MiniBot\MiniBot.cbproj"/>

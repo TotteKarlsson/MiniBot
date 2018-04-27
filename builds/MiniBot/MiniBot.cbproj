@@ -52,7 +52,7 @@
         <ProjectType>CppVCLApplication</ProjectType>
         <Multithreaded>true</Multithreaded>
         <IncludePath>..\..\source\forms\;..\..\source\frames\;..\..\source\;P:\libs\atapi\source\vcl\frames\;P:\libs\atapi\source\arraycam\;P:\libs\atapi\source\vcl\forms\;$(IncludePath)</IncludePath>
-        <AllPackageLibs>rtl.lib;vcl.lib;vclactnband.lib;vclx.lib;vclimg.lib;adortl.lib;dbrtl.lib;bcbsmp.lib;bindengine.lib;bindcomp.lib;bindcompvcl.lib;dbexpress.lib;DbxCommonDriver.lib;dbxcds.lib;dsnap.lib;DBXMySQLDriver.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLAPTVisualComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;vclactnband.lib;vclx.lib;vclimg.lib;adortl.lib;dbrtl.lib;bcbsmp.lib;bindengine.lib;bindcomp.lib;bindcompvcl.lib;dbexpress.lib;DbxCommonDriver.lib;dbxcds.lib;dsnap.lib;DBXMySQLDriver.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;ArrayCamPackage.lib;Tee.lib;vcldb.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <UsePackages>true</UsePackages>
@@ -104,14 +104,13 @@
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Allen Institute for Brain Science;FileVersion=0.5.2.0;InternalName=;LegalCopyright=Smith Lab;LegalTrademarks=;OriginalFilename=;ProductName=MiniBot;ProductVersion=0.5;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
-        <LinkPackageStatics>dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLAPTVisualComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib</LinkPackageStatics>
+        <LinkPackageStatics>dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;ArrayCamPackage.lib</LinkPackageStatics>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Defines>POCO_STATIC;$(Defines)</Defines>
         <Debugger_DebugSourcePath>P:\libs\dsl\Common\;P:\ArrayBot\source\;P:\libs\dsl\Common\;P:\libs\dsl\VCL\Components\;P:\libs\dsl\ThirdParty\Poco\Foundation\src\;P:\libs\dsl\VCL\Forms\;P:\libs\dsl\VCL\Common\;P:\libs\dsl\Common\Math\;P:\libs\dsl\Common\IPC\;P:\libs\atapi\source\arraybot\apt\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <FinalOutputDir>$(DEBUG_BCC32)\bin</FinalOutputDir>
-        <LinkPackageImports>rtl.bpi;vcl.bpi;vclactnband.bpi;vclx.bpi;vclimg.bpi;adortl.bpi;dbrtl.bpi;bcbsmp.bpi;bindengine.bpi;bindcomp.bpi;bindcompvcl.bpi;dbexpress.bpi;DbxCommonDriver.bpi;dbxcds.bpi;dsnap.bpi;DBXMySQLDriver.bpi</LinkPackageImports>
+        <LinkPackageImports>rtl.bpi;vcl.bpi;vclactnband.bpi;vclx.bpi;vclimg.bpi;adortl.bpi;dbrtl.bpi;bcbsmp.bpi;bindengine.bpi;bindcomp.bpi;bindcompvcl.bpi;dbexpress.bpi;DbxCommonDriver.bpi;dbxcds.bpi;dsnap.bpi;DBXMySQLDriver.bpi;Tee.bpi;vcldb.bpi</LinkPackageImports>
         <IncludePath>$(DSL_ROOT)\Common;$(AT_ROOT)\source;$(AT_ROOT)\source\vcl;..\..\source;..\..\source\frames;..\..\source\forms;$(IncludePath)</IncludePath>
-        <Icon_MainIcon>MiniBot_Icon.ico</Icon_MainIcon>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
@@ -166,12 +165,6 @@
         <CppCompile Include="..\..\source\InitArrayBotThread.cpp">
             <BuildOrder>11</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\source\MainForm.cpp">
-            <Form>Main</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>..\..\source\MainForm.h</DependentOn>
-            <BuildOrder>2</BuildOrder>
-        </CppCompile>
         <CppCompile Include="..\..\source\Misc.cpp">
             <BuildOrder>22</BuildOrder>
         </CppCompile>
@@ -181,11 +174,20 @@
         <CppCompile Include="..\..\source\StartingUp.cpp">
             <BuildOrder>11</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\source\TMainForm.cpp">
+            <Form>MainForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\source\TMainForm.h</DependentOn>
+            <BuildOrder>2</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\source\UC7Logic.cpp">
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\source\UIUtilities.cpp">
             <DependentOn>..\..\source\UIUtilities.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <FormResources Include="..\..\source\MainForm.dfm"/>
+        <FormResources Include="..\..\source\TMainForm.dfm"/>
         <FormResources Include="..\..\source\frames\TABProcessSequencerFrame.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBot_2Frame.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBotFrame.dfm"/>
@@ -307,15 +309,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\MiniBot.tds" Configuration="Debug" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>MiniBot.tds</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="p:\build\debug\bin\MiniBot.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>MiniBot.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="p:\build\debug\bin\MiniBot.tds" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>MiniBot.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

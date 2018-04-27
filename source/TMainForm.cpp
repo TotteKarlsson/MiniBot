@@ -1,6 +1,6 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "MainForm.h"
+#include "TMainForm.h"
 #include "dslTMemoLogger.h"
 #include "forms/TSplashForm.h"
 #include "dslStringList.h"
@@ -19,11 +19,19 @@
 #include "TSequencerButtonsFrame.h"
 #include "UIUtilities.h"
 #include "arraybot/apt/atAbsoluteMove.h"
+#include "TPGDataModule.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "TUC7StagePositionFrame"
+#pragma link "TFFMPEGFrame"
+#pragma link "THDMIStreamerFrame"
+#pragma link "TPGConnectionFrame"
+#pragma link "TSoundsFrame"
+#pragma link "dslTFloatLabel"
+#pragma link "TMoviesFrame"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
-TMain *Main;
+TMainForm *MainForm;
 
 extern string           gLogFileLocation;
 extern string           gLogFileName;
@@ -38,17 +46,40 @@ string gDiveProcessName = "Dive";
 string gLiftProcessName = "Lift";
 
 //---------------------------------------------------------------------------
-__fastcall TMain::TMain(TComponent* Owner)
+__fastcall TMainForm::TMainForm(TComponent* Owner)
 :
-	TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
-	mLogFileReader(joinPath(gAppDataFolder, gLogFileName), &logMsg),
-    mInitBotThread(),
-    mIniFile(joinPath(gAppDataFolder, gAppName + ".ini"), true, true),
-    mLogLevel(lAny),
-    mAB(mIniFile, gAppDataFolder),
-    mProcessSequencer(mAB, mArrayCamClient, gAppDataFolder),
-	mABProcessSequencerFrame(NULL),
-    mSequencerButtons1(NULL)
+        TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
+        mLogFileReader(joinPath(gAppDataFolder, gLogFileName), &logMsg),
+        mInitBotThread(),
+        mIniFile(joinPath(gAppDataFolder, gAppName + ".ini"), true, true),
+        mLogLevel(lAny),
+        mAB(mIniFile, gAppDataFolder),
+        mProcessSequencer(mAB, mArrayCamClient, gAppDataFolder),
+        mABProcessSequencerFrame(NULL),
+        mSequencerButtons1(NULL),
+        mLocalDBName(""),
+        mUC7(Handle),
+        mUC7COMPort(0),
+        mCountTo(0),
+	    mDBUserID(0),
+        mStopCutterMode(0),
+	    mBlockID(0),
+	    mKnifeID(0),
+	    mZebraCOMPort(17),
+    	mZebraBaudRate(9600),
+	    mZebra(),
+        mKnifeStageMaxPos(0),
+        mKnifeStageJogStep(0),
+        mKnifeStageResumeDelta(0),
+        mKnifeCuttingSound(ApplicationSound("")),
+		mKnifeBeforeCuttingSound(ApplicationSound("")),
+		mBeforeKnifeBackOffSound(ApplicationSound("")),
+        mKnifeAfterCuttingSound(ApplicationSound("")),
+		mArmRetractingSound(ApplicationSound("")),
+        mHandWheelPositionForm(NULL)
+
+
+
 {
     //Init the CoreLibDLL -> give intra messages their ID's
 	initABCoreLib();
@@ -69,14 +100,14 @@ __fastcall TMain::TMain(TComponent* Owner)
 }
 
 //---------------------------------------------------------------------------
-void TMain::enableDisableUI(bool e)
+void TMainForm::enableDisableUI(bool e)
 {
 	MainPC->Visible = e;
 	enableDisablePanel(MiddlePanel, e);
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::UIUpdateTimerTimer(TObject *Sender)
+void __fastcall TMainForm::UIUpdateTimerTimer(TObject *Sender)
 {
 	if(MainPC->TabIndex == pcMain)
     {
@@ -85,7 +116,7 @@ void __fastcall TMain::UIUpdateTimerTimer(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
+void __fastcall TMainForm::FormKeyPress(TObject *Sender, System::WideChar &Key)
 {
 	static bool wasAborted(false);
     //Get the motor and jog it
@@ -147,7 +178,7 @@ void __fastcall TMain::FormKeyPress(TObject *Sender, System::WideChar &Key)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
 {
     //Get the motor and jog it
     APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
@@ -163,7 +194,7 @@ void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
+void __fastcall TMainForm::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
 
 {
     if(Key == VK_UP || Key == VK_DOWN)
@@ -184,7 +215,7 @@ void __fastcall TMain::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::WndProc(TMessage& Message)
+void __fastcall TMainForm::WndProc(TMessage& Message)
 {
 	bool jogUp(false);
     bool jogDown(false);
@@ -250,7 +281,7 @@ void __fastcall TMain::WndProc(TMessage& Message)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::WaitForDeviceInitTimerTimer(TObject *Sender)
+void __fastcall TMainForm::WaitForDeviceInitTimerTimer(TObject *Sender)
 {
 	if(!mInitBotThread.isRunning()) //Not waiting for devices any more
     {
@@ -262,7 +293,7 @@ void __fastcall TMain::WaitForDeviceInitTimerTimer(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::reInitBotAExecute(TObject *Sender)
+void __fastcall TMainForm::reInitBotAExecute(TObject *Sender)
 {
 	mAB.initialize();
 
@@ -276,53 +307,53 @@ void __fastcall TMain::reInitBotAExecute(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::stopAllAExecute(TObject *Sender)
+void __fastcall TMainForm::stopAllAExecute(TObject *Sender)
 {
 	mAB.stopAll();
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::MainPCChange(TObject *Sender)
+void __fastcall TMainForm::MainPCChange(TObject *Sender)
 {
-	//Check what tab got selected
-	if(MainPC->TabIndex == pcMoveSequences && mABProcessSequencerFrame != NULL)
-    {
-    	//Reload the currently selected sequence
-		mABProcessSequencerFrame->mSequencesCBChange(Sender);
-    }
-
-    else if(MainPC->TabIndex == pcMain)
-    {
-        if(mSequencerButtons1)
-        {
-        	mSequencerButtons1->update();
-        }
-    }
-    else if(MainPC->TabIndex == pcMotors)
-    {
-		//Disable joystick
-	 	mAB.disableJoyStick();
-
-        //Disable motor status timers
-        mXYZUnitFrame1->enable();
-    }
-
-	else if(MainPC->TabIndex == pcAbout)
-    {
-		TAboutArrayBotFrame_21->populate();
-    }
-
-    if(MainPC->TabIndex != pcMotors)
-    {
-   	 	mAB.enableJoyStick();
-
-        //Disable motor status timers
-        mXYZUnitFrame1->disable();
-    }
+//	//Check what tab got selected
+//	if(MainPC->TabIndex == pcMoveSequences && mABProcessSequencerFrame != NULL)
+//    {
+//    	//Reload the currently selected sequence
+//		mABProcessSequencerFrame->mSequencesCBChange(Sender);
+//    }
+//
+//    else if(MainPC->TabIndex == pcMain)
+//    {
+//        if(mSequencerButtons1)
+//        {
+//        	mSequencerButtons1->update();
+//        }
+//    }
+//    else if(MainPC->TabIndex == pcMotors)
+//    {
+//		//Disable joystick
+//	 	mAB.disableJoyStick();
+//
+//        //Disable motor status timers
+//        mXYZUnitFrame1->enable();
+//    }
+//
+//	else if(MainPC->TabIndex == pcAbout)
+//    {
+//		TAboutArrayBotFrame_21->populate();
+//    }
+//
+//    if(MainPC->TabIndex != pcMotors)
+//    {
+//   	 	mAB.enableJoyStick();
+//
+//        //Disable motor status timers
+//        mXYZUnitFrame1->disable();
+//    }
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::HomeAllDevicesAExecute(TObject *Sender)
+void __fastcall TMainForm::HomeAllDevicesAExecute(TObject *Sender)
 {
 	if(MessageDlg("ATTENTION: Make sure all motors have a free path to their home position before executing!", mtWarning, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrOk)
     {
@@ -331,7 +362,7 @@ void __fastcall TMain::HomeAllDevicesAExecute(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::mClearLogWindowBtnClick(TObject *Sender)
+void __fastcall TMainForm::mClearLogWindowBtnClick(TObject *Sender)
 {
 	if(infoMemo)
     {
@@ -340,7 +371,7 @@ void __fastcall TMain::mClearLogWindowBtnClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::DiveButtonClick(TObject *Sender)
+void __fastcall TMainForm::DiveButtonClick(TObject *Sender)
 {
 	//Run a sequence
 	mProcessSequencer.selectSequence("Dive");
@@ -348,7 +379,7 @@ void __fastcall TMain::DiveButtonClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::LiftBtnClick(TObject *Sender)
+void __fastcall TMainForm::LiftBtnClick(TObject *Sender)
 {
 	//Run a sequence
 	mProcessSequencer.selectSequence("Lift CS");
@@ -356,7 +387,7 @@ void __fastcall TMain::LiftBtnClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
+void __fastcall TMainForm::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y)
 {
    //Get the motor and stop it
@@ -375,7 +406,7 @@ void __fastcall TMain::JogMotorMouseUp(TObject *Sender, TMouseButton Button,
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
+void __fastcall TMainForm::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y)
 {
 	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
@@ -412,7 +443,7 @@ void __fastcall TMain::JogMotorMouseDown(TObject *Sender, TMouseButton Button,
     }
 }
 
-void TMain::updateDivePosition(double pos)
+void TMainForm::updateDivePosition(double pos)
 {
     APTMotor* m = mAB.getMotorWithName("COVERSLIP UNIT_Z");
     if(!m)
@@ -457,4 +488,10 @@ void TMain::updateDivePosition(double pos)
 }
 
 
+
+void __fastcall TMainForm::mConnectUC7BtnClick(TObject *Sender)
+{
+;
+}
+//---------------------------------------------------------------------------
 

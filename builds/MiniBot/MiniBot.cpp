@@ -14,7 +14,7 @@ using namespace dsl;
 using namespace std;
 
 //---------------------------------------------------------------------------
-USEFORM("..\..\source\MainForm.cpp", Main);
+USEFORM("..\..\source\TMainForm.cpp", MainForm);
 USEFORM("..\..\source\frames\TABProcessSequencerFrame.cpp", ABProcessSequencerFrame); /* TFrame: File Type */
 USEFORM("..\..\source\frames\TAboutArrayBot_2Frame.cpp", AboutArrayBotFrame_2); /* TFrame: File Type */
 USEFORM("..\..\source\frames\TAboutArrayBotFrame.cpp", AboutArrayBotFrame); /* TFrame: File Type */
@@ -85,7 +85,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		Application->Title = "MiniBot - Software for Microtomes";
 		TStyleManager::TrySetStyle("Carbon");
-		Application->CreateForm(__classid(TMain), &Main);
+		Application->CreateForm(__classid(TMainForm), &MainForm);
 		Application->ShowMainForm = false;
 		Application->Run();
         delete gSplashForm;

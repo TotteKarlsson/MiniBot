@@ -1,6 +1,6 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "MainForm.h"
+#include "TMainForm.h"
 #include "dslTMemoLogger.h"
 #include "forms/TSplashForm.h"
 #include "TXYZUnitFrame.h"
@@ -10,7 +10,9 @@
 #include "frames/TABProcessSequencerFrame.h"
 #include "UIUtilities.h"
 #include "dslVCLUtils.h"
+#include "dslLogger.h"
 
+using namespace dsl;
 //---------------------------------------------------------------------------
 extern TSplashForm*  	gSplashForm;
 extern bool             gAppIsStartingUp;
@@ -18,7 +20,7 @@ extern string           gAppDataFolder;
 extern string           gAppName;
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormCreate(TObject *Sender)
+void __fastcall TMainForm::FormCreate(TObject *Sender)
 {
 	this->readRegistry();
 	enableDisableUI(false);
@@ -66,10 +68,10 @@ void __fastcall TMain::FormCreate(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMain::FormShow(TObject *Sender)
+void __fastcall TMainForm::FormShow(TObject *Sender)
 {}
 
-void TMain::setupProperties()
+void TMainForm::setupProperties()
 {
 	//Setup UI properties
     mProperties.setSection("UI");
@@ -77,7 +79,7 @@ void TMain::setupProperties()
 	mProperties.add((BaseProperty*)  &mLogLevel.setup( 	                    		"LOG_LEVEL",    	                lAny));
 }
 
-void __fastcall	TMain::setupUIFrames()
+void __fastcall	TMainForm::setupUIFrames()
 {
     //Create MoveSequencer frame
     mABProcessSequencerFrame = new TABProcessSequencerFrame(mProcessSequencer, gAppDataFolder, mMoveSequencesPage);
@@ -95,7 +97,7 @@ void __fastcall	TMain::setupUIFrames()
     TAboutArrayBotFrame_21->AppNameLabel->Caption = vclstr(gAppName);
 }
 
-void __fastcall	TMain::onFinishedInitBot()
+void __fastcall	TMainForm::onFinishedInitBot()
 {
 	Log(lInfo) << "Synching ArrayBot UI";
     ReInitBotBtn->Action = ShutDownA;
