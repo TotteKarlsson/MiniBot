@@ -197,8 +197,8 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>..\..\source\UIUtilities.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <FormResources Include="..\..\source\TMainForm.dfm"/>
         <FormResources Include="..\..\source\frames\TABProcessSequencerFrame.dfm"/>
+        <FormResources Include="..\..\source\TMainForm.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBot_2Frame.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBotFrame.dfm"/>
         <FormResources Include="..\..\source\forms\TRegisterNewRibbonForm.dfm"/>
@@ -270,13 +270,15 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </ProjectProperties>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
+                <DeployFile LocalName="p:\build\debug\bin\MiniBot.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>MiniBot.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64250.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
+                <DeployFile LocalName="p:\build\debug\bin\MiniBot.tds" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>MiniBot.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -315,20 +317,18 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64250.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32250mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\MiniBot.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>MiniBot.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\MiniBot.tds" Configuration="Debug" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>MiniBot.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

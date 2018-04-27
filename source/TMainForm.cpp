@@ -77,9 +77,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
         mKnifeAfterCuttingSound(ApplicationSound("")),
 		mArmRetractingSound(ApplicationSound("")),
         mHandWheelPositionForm(NULL)
-
-
-
 {
     //Init the CoreLibDLL -> give intra messages their ID's
 	initABCoreLib();
@@ -88,7 +85,51 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
    	mLogFileReader.start(true);
 
     setupProperties();
-    mProperties.read();
+    mGeneralProperties.read();
+
+    //The loglevel is read from ini file
+	gLogger.setLogLevel(mLogLevel);
+
+    //Give all sounds a Handle (create a sound container..)
+	mKnifeBeforeCuttingSound.getReference().setHandle(this->Handle);
+	mBeforeKnifeBackOffSound.getReference().setHandle(this->Handle);
+    mKnifeCuttingSound.getReference().setHandle(this->Handle);
+	mKnifeAfterCuttingSound.getReference().setHandle(this->Handle);
+	mArmRetractingSound.getReference().setHandle(this->Handle);
+
+    /******** Update UI controls *************/
+    //Todo, put these in a container and call update in a loop
+
+  	mCountToE->update();
+    mPresetFeedRateE->update();
+    mUC7.setFeedRatePreset(mPresetFeedRateE->getValue());
+
+    PresetReturnSpeedE->update();
+    SlowReturnSpeedE->update();
+    UltraSlowReturnSpeedE->update();
+
+    mStageMoveDelayE->update();
+	mZeroCutsE->update();
+	mUC7ComportCB->ItemIndex = mUC7COMPort - 1;
+
+    MaxStagePosFrame->setValue(mKnifeStageMaxPos.getValue());
+    BackOffStepFrame->setValue(mKnifeStageJogStep.getValue());
+    ResumeDeltaDistanceFrame->setValue(mKnifeStageResumeDelta.getValue());
+    mUC7.setKnifeStageResumeDelta(mKnifeStageResumeDelta.getValue());
+    mUC7.setKnifeStageJogStepPreset(mKnifeStageJogStep.getValue());
+
+	mZebraCOMPortCB->ItemIndex = mZebraCOMPort - 1;
+
+    //Find out which item in the CB that should be selected
+    for(int i = 0; i < mZebraBaudRateCB->Items->Count; i++)
+    {
+		if(mZebraBaudRateCB->Items->Strings[i].ToInt() == mZebraBaudRate)
+        {
+			mZebraBaudRateCB->ItemIndex = i;
+            break;
+        }
+    }
+
 
 	//Load motors in a thread
     mInitBotThread.assingBot(&mAB);
@@ -531,4 +572,29 @@ void __fastcall TMainForm::AppInBox(ATWindowStructMessage& msg)
 		Log(lError) << "An exception was thrown in AppInBox.";
 	}
 }
+
+void __fastcall TMainForm::mStartupTimerTimer(TObject *Sender)
+{
+	mStartupTimer->Enabled = false;
+    try
+    {
+        TPGConnectionFrame1->init(&mIniFile, "POSTGRESDB_CONNECTION");
+        TPGConnectionFrame1->ConnectA->Execute();
+
+        mConnectZebraBtnClick(Sender);
+
+        //Connect to the UC7
+        mConnectUC7Btn->Click();
+
+    }
+//    catch(const SocketException& e)
+//    {
+//
+//    }
+    catch(const TDBXError& e)
+    {
+        Log(lError) << "There was an exception: "<<stdstr(e.Message);
+    }
+}
+
 

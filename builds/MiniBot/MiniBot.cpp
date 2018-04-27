@@ -10,6 +10,10 @@
 #include "TSplashForm.h"
 #include "dslRestartApplicationUtils.h"
 #include "UIUtilities.h"
+#include "TPGDataModule.h"
+#include "TPGCoverSlipDataModule.h"
+#include "TPGImagesAndMoviesDataModule.h"
+
 using namespace dsl;
 using namespace std;
 
@@ -70,6 +74,9 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
 
+		pgDM 	                = new TpgDM(NULL);
+        csPGDM                  = new TcsPGDM(NULL);
+        PGImagesAndMoviesDM     = new TPGImagesAndMoviesDM(NULL);
 
         if(!gHideSplash)
         {

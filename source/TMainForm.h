@@ -115,10 +115,6 @@ class TMainForm : public TRegistryForm
 	TGroupBox *UC7GB;
 	TGroupBox *GroupBox4;
 	TIntegerLabeledEdit *mStageMoveDelayE;
-	TPanel *mTopPanel;
-	TComboBox *mUC7ComportCB;
-	TButton *mConnectUC7Btn;
-	TArrayBotButton *mSynchUIBtn;
 	TGroupBox *KnifeGB;
 	TUC7StagePositionFrame *ResumeDeltaDistanceFrame;
 	TGroupBox *KnifeStageGB;
@@ -153,12 +149,6 @@ class TMainForm : public TRegistryForm
 	TUC7StagePositionFrame *BackOffStepFrame;
 	TPanel *GroupBox7;
 	TRadioGroup *StopOptionsRG;
-	TPanel *CutterStatusPanel;
-	TShape *UC7Shape;
-	TLabel *Label4;
-	TLabel *Label16;
-	TLabel *Label17;
-	TLabel *Label18;
 	TGroupBox *CutterGB;
 	TArrayBotButton *StartStopBtn;
 	TGroupBox *GroupBox9;
@@ -229,6 +219,17 @@ class TMainForm : public TRegistryForm
 	TDBMemo *mRibbonNoteMemo;
 	TDBNavigator *mRibbonNoteNavigator;
 	TMoviesFrame *TMoviesFrame1;
+	TPanel *mTopPanel;
+	TComboBox *mUC7ComportCB;
+	TButton *mConnectUC7Btn;
+	TArrayBotButton *mSynchUIBtn;
+	TTimer *mStartupTimer;
+	TPanel *CutterStatusPanel;
+	TShape *UC7Shape;
+	TLabel *Label4;
+	TLabel *Label16;
+	TLabel *Label17;
+	TLabel *Label18;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -262,6 +263,7 @@ class TMainForm : public TRegistryForm
 	void __fastcall mConnectZebraBtnClick(TObject *Sender);
 	void __fastcall DecodeBarcodeClick(TObject *Sender);
 	void __fastcall scannerSettingsClick(TObject *Sender);
+	void __fastcall mStartupTimerTimer(TObject *Sender);
 
     private:
 		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
@@ -279,7 +281,7 @@ class TMainForm : public TRegistryForm
         void __fastcall					        setupUIFrames();
 
         IniFile						            mIniFile;
-        IniFileProperties  			            mProperties;
+        IniFileProperties  			            mGeneralProperties;
 		dsl::Property<dsl::LogLevel>            mLogLevel;
 
 		void									setupProperties();
@@ -347,7 +349,7 @@ class TMainForm : public TRegistryForm
 		void	__fastcall						afterDBServerConnect(System::TObject* Sender);
 		void	__fastcall						afterDBServerDisconnect(System::TObject* Sender);
 
-        												//!The barcode reader
+        										//!The barcode reader
 		DS457									mZebra;
 
 												//INI Parameters...
@@ -377,7 +379,6 @@ class TMainForm : public TRegistryForm
 		string									getCurrentRibbonID();
 		int										getCurrentKnifeID();
 		string									getCurrentUserName();
-
 
 	BEGIN_MESSAGE_MAP
 //	MESSAGE_HANDLER(IS_UC480_MESSAGE,			TMessage,						onUSBCameraMessage);

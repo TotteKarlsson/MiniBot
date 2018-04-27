@@ -2,9 +2,8 @@
 #pragma hdrstop
 #include "TMainForm.h"
 #include "dslLogger.h"
-//#include "dslVCLUtils.h"
-//#include "arraybot/apt/atAPTMotor.h"
-//#include "forms/TSplashForm.h"
+#include "TPGDataModule.h"
+#include "THandWheelPositionForm.h"
 #include "TXYZUnitFrame.h"
 
 using namespace dsl;
@@ -46,6 +45,29 @@ void __fastcall TMainForm::ShutDownTimerTimer(TObject *Sender)
         }
     }
 
+	if(mHandWheelPositionForm)
+    {
+    	mHandWheelPositionForm->setTimeToClose();
+        mHandWheelPositionForm->Close();
+        mHandWheelPositionForm = NULL;
+    }
+
+   	if(mZebra.isConnected())
+    {
+    	mZebra.disconnect();
+    }
+
+    if(mUC7.isConnected())
+    {
+	    mUC7.disConnect();
+    }
+
+    if(pgDM && pgDM->SQLConnection1 && pgDM->SQLConnection1->Connected)
+    {
+    	pgDM->SQLConnection1->Connected = false;
+	    pgDM->SQLConnection1->Close();
+    }
+
 	if(mLogFileReader.isRunning())
 	{
 		Log(lDebug) << "Shutting down log file reader";
@@ -78,33 +100,44 @@ void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 
 	//Check if active stuff is going on.. if so call the ShutDown in the
     //Timer fire
-	if(	   mAB.getJoyStick().isEnabled()
-    	|| mAB.isActive()
-        || UIUpdateTimer->Enabled
-        || mLogFileReader.isRunning()
+	if(
+    	mAB.getJoyStick().isEnabled()       ||
+    	mAB.isActive()                      ||
+        UIUpdateTimer->Enabled              ||
+        mLogFileReader.isRunning()          ||
+        pgDM && pgDM->SQLConnection1 && pgDM->SQLConnection1->Connected     ||
+        mZebra.isConnected()                ||
+        mHandWheelPositionForm
       )
     {
   		CanClose = false;
-    }
-    else
-    {
-    	CanClose = true;
+		ShutDownTimer->Enabled = true;
+        return;
     }
 
-	if(CanClose == false)
-	{
-		ShutDownTimer->Enabled = true;
-	}
+   	CanClose = true;
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
 	Log(lInfo) << "In FormClose";
+	TPGConnectionFrame1->writeParameters();
 
-//	delete mXYZUnitFrame1;
-//    delete mABProcessSequencerFrame;
-	mProperties.write();
+	Log(lInfo) << "In FormClose";
+	mUC7COMPort = mUC7ComportCB->ItemIndex + 1;
+
+	mZebraCOMPort = mZebraCOMPortCB->ItemIndex + 1;
+    mZebraBaudRate = mZebraBaudRateCB->Items->Strings[mZebraBaudRateCB->ItemIndex].ToInt();
+
+    mKnifeStageMaxPos.setValue(MaxStagePosFrame->getValue());
+    mKnifeStageJogStep.setValue(BackOffStepFrame->getValue());
+    mKnifeStageResumeDelta.setValue(ResumeDeltaDistanceFrame->getValue());
+
+    mStopCutterMode = StopOptionsRG->ItemIndex;
+
+	mGeneralProperties.write();
+	mSoundProperties.write();
     mIniFile.save();
 }
 
