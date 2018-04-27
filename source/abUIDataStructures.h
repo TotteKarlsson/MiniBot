@@ -4,11 +4,21 @@
 #include "Poco/DateTime.h"
 #include <System.hpp>
 
+
 enum ApplicationMessageEnum
 {
-    abSplashWasClosed,
+    atSplashWasClosed = 0,
+    atUC7Message = 1,
+    atMiscMessage = 2,
+    atEnableResumeBtn = 3,
     abSequencerUpdate
 };
+
+//enum ApplicationMessageEnum
+//{
+//    abSplashWasClosed,
+//    abSequencerUpdate
+//};
 
 using Poco::DateTime;
 

@@ -45,6 +45,9 @@
 #include <Data.DB.hpp>
 #include <Vcl.DBGrids.hpp>
 #include <Vcl.Grids.hpp>
+#include "atVCLUtils.h"
+//#include "camera/uc480Class.h"
+#include "uc7/atUC7ApplicationMessages.h"
 //---------------------------------------------------------------------------
 
 using Poco::Timestamp;
@@ -54,9 +57,12 @@ class TRibbonLifterFrame;
 class TXYZUnitFrame;
 class TSequencerButtonsFrame;
 class THandWheelPositionForm;
+class TRegisterNewRibbonForm;
+
 //---------------------------------------------------------------------------
 class TMainForm : public TRegistryForm
 {
+	friend TRegisterNewRibbonForm;
     __published:	// IDE-managed Components
         TActionList *ActionList1;
         TAction *checkForDevices;
@@ -249,6 +255,13 @@ class TMainForm : public TRegistryForm
 	void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
 	void __fastcall UIUpdateTimerTimer(TObject *Sender);
 	void __fastcall mConnectUC7BtnClick(TObject *Sender);
+	void __fastcall mResetCounterBtnClick(TObject *Sender);
+	void __fastcall uc7EditKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
+	void __fastcall CreateUC7Message(TObject *Sender);
+	void __fastcall RegisterRibbonBtnClick(TObject *Sender);
+	void __fastcall mConnectZebraBtnClick(TObject *Sender);
+	void __fastcall DecodeBarcodeClick(TObject *Sender);
+	void __fastcall scannerSettingsClick(TObject *Sender);
 
     private:
 		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
@@ -291,7 +304,10 @@ class TMainForm : public TRegistryForm
         TSequencerButtonsFrame*			        mSequencerButtons1;
 		void __fastcall		                    OnException();
         void									updateDivePosition(double newPos);
+
         UC7                                     mUC7;
+		int										getUC7COMPortNumber();
+
 		bool									handleUC7Message(const UC7Message& msg);
 		void __fastcall							onConnectedToUC7();
 		void __fastcall							onDisConnectedToUC7();
@@ -300,7 +316,7 @@ class TMainForm : public TRegistryForm
 		void __fastcall							enableDisableUC7UI(bool enableDisable);
 		void									onUC7Count();
 		void									onUC7CountedTo();
-//		void __fastcall							AppInBox(ATWindowStructMessage& Msg);
+		void __fastcall							AppInBox(ATWindowStructMessage& Msg);
 
 
 		Property<string>						mLocalDBName;
@@ -316,8 +332,6 @@ class TMainForm : public TRegistryForm
 		Property<ApplicationSound>				mKnifeCuttingSound;
 		Property<ApplicationSound>				mKnifeAfterCuttingSound;
 		Property<ApplicationSound>				mArmRetractingSound;
-
-
 
 		Property<int>							mKnifeStageMaxPos;
 		Property<int>							mKnifeStageJogStep;
@@ -353,13 +367,29 @@ class TMainForm : public TRegistryForm
 
 		THandWheelPositionForm*					mHandWheelPositionForm;
 
-
-
-
-
 	public:
 		__fastcall 					            TMainForm(TComponent* Owner);
 		__fastcall 					            ~TMainForm();
+
+		int										getCurrentUserID();
+		int										getCurrentCoverSlipID();
+		int										getCurrentBlockID();
+		string									getCurrentRibbonID();
+		int										getCurrentKnifeID();
+		string									getCurrentUserName();
+
+
+	BEGIN_MESSAGE_MAP
+//	MESSAGE_HANDLER(IS_UC480_MESSAGE,			TMessage,						onUSBCameraMessage);
+		MESSAGE_HANDLER(UWM_UC7_MESSAGE,		ATWindowStructMessage,			AppInBox);
+		MESSAGE_HANDLER(WM_DECODE,				TMessage,						onWMDecode);
+		MESSAGE_HANDLER(WM_CAPABILITIES,		TMessage,						onSSICapabilities)
+		MESSAGE_HANDLER(WM_IMAGE,				TMessage,						onSSIImage)
+		MESSAGE_HANDLER(WM_ERROR,				TMessage,						onSSIError)
+		MESSAGE_HANDLER(WM_TIMEOUT,				TMessage,						onSSITimeout)
+		MESSAGE_HANDLER(WM_EVENT,				TMessage,						onSSIEvent)
+	END_MESSAGE_MAP(TForm)
+
 };
 
 extern PACKAGE TMainForm *MainForm;

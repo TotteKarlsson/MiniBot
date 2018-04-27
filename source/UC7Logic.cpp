@@ -195,233 +195,231 @@ bool TMainForm::handleUC7Message(const UC7Message& msg)
 
     return true;
 }
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::mSynchUIBtnClick(TObject *Sender)
-//{
-//    mUC7.getStatus();
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::mResetCounterBtnClick(TObject *Sender)
-//{
-//	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
-//    if(btn == mResetCounterBtn)
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::mResetCounterBtnClick(TObject *Sender)
+{
+	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
+    if(btn == mResetCounterBtn)
+    {
+    	mUC7.getSectionCounter().reset();
+        SectionCounterLabel->update();
+    }
+    else if(btn == mResetRibbonOrderBtn)
+    {
+		mUC7.getRibbonOrderCounter().reset();
+        RibbonOrderCountLabel->update();
+    }
+}
+
+//---------------------------------------------------------------------------
+int	TMainForm::getUC7COMPortNumber()
+{
+	return mUC7ComportCB->ItemIndex + 1;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::mConnectUC7BtnClick(TObject *Sender)
+{
+	if(mConnectUC7Btn->Caption == "Open")
+    {
+        if(mUC7.connect(getUC7COMPortNumber()))
+        {
+            Log(lInfo) << "Connected to a UC7 device";
+        }
+        else
+        {
+            Log(lInfo) << "Connection failed";
+        }
+    }
+    else
+    {
+        if(!mUC7.disConnect())
+        {
+			Log(lError) << "Failed to close serial port";
+        }
+    }
+
+    //Give it some time to close down..
+    //These should be UC7 callbacks..
+    Sleep(100);
+
+    if(mUC7.isConnected())
+    {
+	    onConnectedToUC7();
+    }
+    else
+    {
+		onDisConnectedToUC7();
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::onConnectedToUC7()
+{
+	//Setup callbacks
+    mUC7.getSectionCounter().assignOnCountCallBack(onUC7Count);
+    mUC7.getSectionCounter().assignOnCountedToCallBack(onUC7CountedTo);
+    mUC7.setNorthLimitPosition(MaxStagePosFrame->AbsPosE->getValue());
+
+	enableDisableUC7UI(true);
+    mUC7.getStatus();
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::onDisConnectedToUC7()
+{
+	enableDisableUC7UI(false);
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::enableDisableUC7UI(bool enableDisable)
+{
+	//Buttons
+    mConnectUC7Btn->Caption                 = enableDisable ? "Close" : "Open";
+    mSynchUIBtn->Enabled					= enableDisable;
+
+    //group boxes
+	enableDisableGroupBox(CounterGB, 		enableDisable);
+    enableDisableGroupBox(UC7OperationGB, 	enableDisable);
+    enableDisableGroupBox(CutterGB, 	enableDisable);
+    enableDisableGroupBox(CuttingGB, 		enableDisable);
+    enableDisableGroupBox(KnifeStageGB,		enableDisable);
+}
+
+//---------------------------------------------------------------------------
+void TMainForm::onUC7Count()
+{
+	SectionCounterLabel->update();
+}
+
+//---------------------------------------------------------------------------
+void TMainForm::onUC7CountedTo()
+{
+	if(mUC7.isActive())
+    {
+	    mUC7.getSectionCounter().reset();
+		Log(lInfo) << "Creating new ribbon";
+	    mUC7.prepareToCutRibbon(true);
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::CreateUC7Message(TObject *Sender)
+{
+	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
+
+    if(!btn)
+    {
+    	Log(lError) << "Sender object was NULl!";
+    	return;
+    }
+
+	if (btn == StartStopBtn)
+    {
+    	if(StartStopBtn->Caption == "Start")
+        {
+            mUC7.startCutter();
+        }
+        else
+        {
+        	//Fix this..
+            mUC7.stopCutter(StopOptionsRG->ItemIndex);
+        }
+    }
+    else if(btn == mSetZeroCutBtn)
+    {
+		mUC7.setFeedRate(0);
+    }
+    else if(btn == SetPresetFeedBtn)
+    {
+		mUC7.setFeedRate(mPresetFeedRateE->getValue());
+    }
+
+//    else if(btn == mRibbonStartBtn)
 //    {
-//    	mUC7.getSectionCounter().reset();
-//        SectionCounterLabel->update();
-//    }
-//    else if(btn == mResetRibbonOrderBtn)
-//    {
-//		mUC7.getRibbonOrderCounter().reset();
-//        RibbonOrderCountLabel->update();
-//    }
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::mConnectUC7BtnClick(TObject *Sender)
-//{
-//	if(mConnectUC7Btn->Caption == "Open")
-//    {
-//        if(mUC7.connect(getCOMPortNumber()))
+//    	if(btn->Caption == "Back off")
 //        {
-//            Log(lInfo) << "Connected to a UC7 device";
+//			mUC7.prepareToCutRibbon(true);
+//            btn->Caption = "Preparing for IDLE";
+//
+//            //check if this screws up things
+//			mUC7.setFeedRate(0);
 //        }
 //        else
 //        {
-//            Log(lInfo) << "Connection failed";
+//            mUC7.prepareForNewRibbon(true);
+//            btn->Caption = "Preparing start of Ribbon";
+//            //btn->Enabled = false;
 //        }
 //    }
-//    else
-//    {
-//        if(!mUC7.disConnect())
-//        {
-//			Log(lError) << "Failed to close serial port";
-//        }
-//    }
-//
-//    //Give it some time to close down..
-//    //These should be UC7 callbacks..
-//    Sleep(100);
-//
-//    if(mUC7.isConnected())
-//    {
-//	    onConnectedToUC7();
-//    }
-//    else
-//    {
-//		onDisConnectedToUC7();
-//    }
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::onConnectedToUC7()
-//{
-//	//Setup callbacks
-//    mUC7.getSectionCounter().assignOnCountCallBack(onUC7Count);
-//    mUC7.getSectionCounter().assignOnCountedToCallBack(onUC7CountedTo);
-//    mUC7.setNorthLimitPosition(MaxStagePosFrame->AbsPosE->getValue());
-//
-//	enableDisableUC7UI(true);
-//	mSynchUIBtnClick(NULL);
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::onDisConnectedToUC7()
-//{
-//	enableDisableUC7UI(false);
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::enableDisableUC7UI(bool enableDisable)
-//{
-//	//Buttons
-//    mConnectUC7Btn->Caption                 = enableDisable ? "Close" : "Open";
-//    mSynchUIBtn->Enabled					= enableDisable;
-//
-//    //group boxes
-//	enableDisableGroupBox(CounterGB, 		enableDisable);
-//    enableDisableGroupBox(UC7OperationGB, 	enableDisable);
-//    enableDisableGroupBox(CutterGB, 	enableDisable);
-//    enableDisableGroupBox(CuttingGB, 		enableDisable);
-//    enableDisableGroupBox(KnifeStageGB,		enableDisable);
-//}
-//
-////---------------------------------------------------------------------------
-//void TMainForm::onUC7Count()
-//{
-//	SectionCounterLabel->update();
-//}
-//
-////---------------------------------------------------------------------------
-//void TMainForm::onUC7CountedTo()
-//{
-//	if(mUC7.isActive())
-//    {
-//	    mUC7.getSectionCounter().reset();
-//		Log(lInfo) << "Creating new ribbon";
-//	    mUC7.prepareToCutRibbon(true);
-//    }
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::CreateUC7Message(TObject *Sender)
-//{
-//	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
-//
-//    if(!btn)
-//    {
-//    	Log(lError) << "Sender object was NULl!";
-//    	return;
-//    }
-//
-//	if (btn == StartStopBtn)
-//    {
-//    	if(StartStopBtn->Caption == "Start")
-//        {
-//            mUC7.startCutter();
-//            mACServer.broadcast(acrUC7Started);
-//        }
-//        else
-//        {
-//        	//Fix this..
-//            mUC7.stopCutter(StopOptionsRG->ItemIndex);
-//            mACServer.broadcast(acrUC7Stopped);
-//        }
-//    }
-//    else if(btn == mSetZeroCutBtn)
-//    {
-//		mUC7.setFeedRate(0);
-//    }
-//    else if(btn == SetPresetFeedBtn)
-//    {
-//		mUC7.setFeedRate(mPresetFeedRateE->getValue());
-//    }
-//
-////    else if(btn == mRibbonStartBtn)
-////    {
-////    	if(btn->Caption == "Back off")
-////        {
-////			mUC7.prepareToCutRibbon(true);
-////            btn->Caption = "Preparing for IDLE";
-////
-////            //check if this screws up things
-////			mUC7.setFeedRate(0);
-////        }
-////        else
-////        {
-////            mUC7.prepareForNewRibbon(true);
-////            btn->Caption = "Preparing start of Ribbon";
-////            //btn->Enabled = false;
-////        }
-////    }
-//    else if(btn == mMoveSouthBtn)
-//    {
-//   		mUC7.setFeedRate(0);
-//    	mUC7.jogKnifeStageSouth(BackOffStepFrame->getValue(), true);
-//    }
-//    else if(btn == mMoveNorthBtn)
-//    {
-//		mUC7.setFeedRate(0);
-//    	mUC7.jogKnifeStageNorth(BackOffStepFrame->getValue(), true);
-//    }
-//    else if(btn == PresetReturnSpeedBtn)
-//    {
-//    	mUC7.setReturnSpeed(PresetReturnSpeedE->getValue());
-//    }
-//    else if(btn == SlowReturnSpeedBtn)
-//    {
-//    	mUC7.setReturnSpeed(SlowReturnSpeedE->getValue());
-//    }
-//    else if(btn == UltraSlowReturnSpeedBtn)
-//    {
-//    	mUC7.setReturnSpeed(UltraSlowReturnSpeedE->getValue());
-//    }
-//
-//    string msg = mUC7.getLastSentMessage().getMessage();
-//	Log(lDebug3) << "Sent message: "<<msg;
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TMainForm::uc7EditKeyDown(TObject *Sender, WORD &Key,
-//          TShiftState Shift)
-//{
-//	TIntegerLabeledEdit* 	e  = dynamic_cast<TIntegerLabeledEdit*>(Sender);
-//	TIntegerEdit* 			ie = dynamic_cast<TIntegerEdit*>(Sender);
-//
-//    if(Key == VK_RETURN)
-//    {
-//        if(e == mPresetFeedRateE)
-//        {
-//            mUC7.setFeedRatePreset(e->getValue());
-//        }
-//        else if(e == mStageMoveDelayE)
-//        {
-//            mUC7.setStageMoveDelay(e->getValue());
-//        }
-//
-//        else if(e == mFeedRateE)
-//        {
-//            //Set feedrate
-//            mUC7.setFeedRate(e->getValue());
-//
-//            //This will also change preset feed
-//            mPresetFeedRateE->setValue(e->getValue());
-//	        mUC7.setFeedRatePreset(e->getValue());
-//        }
-//        else if(ie == MaxStagePosFrame->AbsPosE)
-//        {
-//	        MaxStagePosFrame->AbsPosEKeyDown(Sender, Key, Shift);
-//            mUC7.setNorthLimitPosition(MaxStagePosFrame->AbsPosE->getValue());
-//        }
-//        else if(ie == CurrentStagePosFrame->AbsPosE)
-//        {
-//	        CurrentStagePosFrame->AbsPosEKeyDown(Sender, Key, Shift);
-//            mUC7.moveKnifeStageNSAbsolute(CurrentStagePosFrame->AbsPosE->getValue());
-//        }
-//    }
-//}
-//
+    else if(btn == mMoveSouthBtn)
+    {
+   		mUC7.setFeedRate(0);
+    	mUC7.jogKnifeStageSouth(BackOffStepFrame->getValue(), true);
+    }
+    else if(btn == mMoveNorthBtn)
+    {
+		mUC7.setFeedRate(0);
+    	mUC7.jogKnifeStageNorth(BackOffStepFrame->getValue(), true);
+    }
+    else if(btn == PresetReturnSpeedBtn)
+    {
+    	mUC7.setReturnSpeed(PresetReturnSpeedE->getValue());
+    }
+    else if(btn == SlowReturnSpeedBtn)
+    {
+    	mUC7.setReturnSpeed(SlowReturnSpeedE->getValue());
+    }
+    else if(btn == UltraSlowReturnSpeedBtn)
+    {
+    	mUC7.setReturnSpeed(UltraSlowReturnSpeedE->getValue());
+    }
+
+    string msg = mUC7.getLastSentMessage().getMessage();
+	Log(lDebug3) << "Sent message: "<<msg;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::uc7EditKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift)
+{
+	TIntegerLabeledEdit* 	e  = dynamic_cast<TIntegerLabeledEdit*>(Sender);
+	TIntegerEdit* 			ie = dynamic_cast<TIntegerEdit*>(Sender);
+
+    if(Key == VK_RETURN)
+    {
+        if(e == mPresetFeedRateE)
+        {
+            mUC7.setFeedRatePreset(e->getValue());
+        }
+        else if(e == mStageMoveDelayE)
+        {
+            mUC7.setStageMoveDelay(e->getValue());
+        }
+
+        else if(e == mFeedRateE)
+        {
+            //Set feedrate
+            mUC7.setFeedRate(e->getValue());
+
+            //This will also change preset feed
+            mPresetFeedRateE->setValue(e->getValue());
+	        mUC7.setFeedRatePreset(e->getValue());
+        }
+        else if(ie == MaxStagePosFrame->AbsPosE)
+        {
+	        MaxStagePosFrame->AbsPosEKeyDown(Sender, Key, Shift);
+            mUC7.setNorthLimitPosition(MaxStagePosFrame->AbsPosE->getValue());
+        }
+        else if(ie == CurrentStagePosFrame->AbsPosE)
+        {
+	        CurrentStagePosFrame->AbsPosEKeyDown(Sender, Key, Shift);
+            mUC7.moveKnifeStageNSAbsolute(CurrentStagePosFrame->AbsPosE->getValue());
+        }
+    }
+}
+
 ////---------------------------------------------------------------------------
 //void __fastcall TMainForm::KnifePosChange(TObject *Sender, WORD &Key, TShiftState Shift)
 //{
@@ -468,5 +466,5 @@ bool TMainForm::handleUC7Message(const UC7Message& msg)
 //    MaxStagePosFrame->setValue(CurrentStagePosFrame->getValue());
 //	mUC7.setNorthLimitPosition(MaxStagePosFrame->AbsPosE->getValue());
 //}
-//
+
 

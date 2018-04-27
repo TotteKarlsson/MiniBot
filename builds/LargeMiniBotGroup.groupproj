@@ -6,6 +6,15 @@
         <Projects Include="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="P:\libs\atapi\builds\atResources\atResources.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="P:\libs\atapi\thirdparty\ssidll\atSSI.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="P:\libs\atapi\builds\atBarcodeReader\atBarcodeReader.cbproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="P:\libs\atapi\builds\atArrayBotCore\atArrayBotCore.cbproj">
             <Dependencies/>
         </Projects>
@@ -21,7 +30,7 @@
         <Projects Include="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj">
+        <Projects Include="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj">
             <Dependencies/>
         </Projects>
         <Projects Include="MiniBot\MiniBot.cbproj">
@@ -43,6 +52,33 @@
     </Target>
     <Target Name="atFoundation:Make">
         <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="atResources">
+        <MSBuild Projects="P:\libs\atapi\builds\atResources\atResources.cbproj"/>
+    </Target>
+    <Target Name="atResources:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atResources\atResources.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atResources:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atResources\atResources.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="atSSI">
+        <MSBuild Projects="P:\libs\atapi\thirdparty\ssidll\atSSI.cbproj"/>
+    </Target>
+    <Target Name="atSSI:Clean">
+        <MSBuild Projects="P:\libs\atapi\thirdparty\ssidll\atSSI.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atSSI:Make">
+        <MSBuild Projects="P:\libs\atapi\thirdparty\ssidll\atSSI.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="atBarcodeReader">
+        <MSBuild Projects="P:\libs\atapi\builds\atBarcodeReader\atBarcodeReader.cbproj"/>
+    </Target>
+    <Target Name="atBarcodeReader:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atBarcodeReader\atBarcodeReader.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atBarcodeReader:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atBarcodeReader\atBarcodeReader.cbproj" Targets="Make"/>
     </Target>
     <Target Name="atArrayBotCore">
         <MSBuild Projects="P:\libs\atapi\builds\atArrayBotCore\atArrayBotCore.cbproj"/>
@@ -90,13 +126,13 @@
         <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj" Targets="Make"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents:Clean">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj" Targets="Clean"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj" Targets="Clean"/>
     </Target>
     <Target Name="atVCLAPTVisualComponents:Make">
-        <MSBuild Projects="P:\libs\atapi\builds\atAPTFrames\atVCLAPTVisualComponents.cbproj" Targets="Make"/>
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLAPTVisualComponents\atVCLAPTVisualComponents.cbproj" Targets="Make"/>
     </Target>
     <Target Name="MiniBot">
         <MSBuild Projects="MiniBot\MiniBot.cbproj"/>
@@ -108,13 +144,13 @@
         <MSBuild Projects="MiniBot\MiniBot.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="atFoundation;atArrayBotCore;atVCLCommon;atVCLComponents;atVCLDataModules;atVCLVisualComponents;atVCLAPTVisualComponents;MiniBot"/>
+        <CallTarget Targets="atFoundation;atResources;atSSI;atBarcodeReader;atArrayBotCore;atVCLCommon;atVCLComponents;atVCLDataModules;atVCLVisualComponents;atVCLAPTVisualComponents;MiniBot"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="atFoundation:Clean;atArrayBotCore:Clean;atVCLCommon:Clean;atVCLComponents:Clean;atVCLDataModules:Clean;atVCLVisualComponents:Clean;atVCLAPTVisualComponents:Clean;MiniBot:Clean"/>
+        <CallTarget Targets="atFoundation:Clean;atResources:Clean;atSSI:Clean;atBarcodeReader:Clean;atArrayBotCore:Clean;atVCLCommon:Clean;atVCLComponents:Clean;atVCLDataModules:Clean;atVCLVisualComponents:Clean;atVCLAPTVisualComponents:Clean;MiniBot:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="atFoundation:Make;atArrayBotCore:Make;atVCLCommon:Make;atVCLComponents:Make;atVCLDataModules:Make;atVCLVisualComponents:Make;atVCLAPTVisualComponents:Make;MiniBot:Make"/>
+        <CallTarget Targets="atFoundation:Make;atResources:Make;atSSI:Make;atBarcodeReader:Make;atArrayBotCore:Make;atVCLCommon:Make;atVCLComponents:Make;atVCLDataModules:Make;atVCLVisualComponents:Make;atVCLAPTVisualComponents:Make;MiniBot:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

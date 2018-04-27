@@ -3,6 +3,9 @@
         <ProjectGuid>{9D7B788E-1612-4D2A-99DA-365D58720234}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="P:\libs\atapi\builds\atArrayBotCore\atArrayBotCore.cbproj">
             <Dependencies/>
         </Projects>
@@ -32,6 +35,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="atFoundation">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj"/>
+    </Target>
+    <Target Name="atFoundation:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atFoundation:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Make"/>
+    </Target>
     <Target Name="atArrayBotCore">
         <MSBuild Projects="P:\libs\atapi\builds\atArrayBotCore\atArrayBotCore.cbproj"/>
     </Target>
@@ -96,13 +108,13 @@
         <MSBuild Projects="MiniBot\MiniBot.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="atArrayBotCore;atVCLCommon;atVCLComponents;atVCLDataModules;atVCLVisualComponents;atVCLAPTVisualComponents;MiniBot"/>
+        <CallTarget Targets="atFoundation;atArrayBotCore;atVCLCommon;atVCLComponents;atVCLDataModules;atVCLVisualComponents;atVCLAPTVisualComponents;MiniBot"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="atArrayBotCore:Clean;atVCLCommon:Clean;atVCLComponents:Clean;atVCLDataModules:Clean;atVCLVisualComponents:Clean;atVCLAPTVisualComponents:Clean;MiniBot:Clean"/>
+        <CallTarget Targets="atFoundation:Clean;atArrayBotCore:Clean;atVCLCommon:Clean;atVCLComponents:Clean;atVCLDataModules:Clean;atVCLVisualComponents:Clean;atVCLAPTVisualComponents:Clean;MiniBot:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="atArrayBotCore:Make;atVCLCommon:Make;atVCLComponents:Make;atVCLDataModules:Make;atVCLVisualComponents:Make;atVCLAPTVisualComponents:Make;MiniBot:Make"/>
+        <CallTarget Targets="atFoundation:Make;atArrayBotCore:Make;atVCLCommon:Make;atVCLComponents:Make;atVCLDataModules:Make;atVCLVisualComponents:Make;atVCLAPTVisualComponents:Make;MiniBot:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

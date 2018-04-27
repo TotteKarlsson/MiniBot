@@ -52,7 +52,7 @@
         <ProjectType>CppVCLApplication</ProjectType>
         <Multithreaded>true</Multithreaded>
         <IncludePath>..\..\source\forms\;..\..\source\frames\;..\..\source\;P:\libs\atapi\source\vcl\frames\;P:\libs\atapi\source\arraycam\;P:\libs\atapi\source\vcl\forms\;$(IncludePath)</IncludePath>
-        <AllPackageLibs>rtl.lib;vcl.lib;vclactnband.lib;vclx.lib;vclimg.lib;adortl.lib;dbrtl.lib;bcbsmp.lib;bindengine.lib;bindcomp.lib;bindcompvcl.lib;dbexpress.lib;DbxCommonDriver.lib;dbxcds.lib;dsnap.lib;DBXMySQLDriver.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;ArrayCamPackage.lib;Tee.lib;vcldb.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;vclactnband.lib;vclx.lib;vclimg.lib;adortl.lib;dbrtl.lib;bcbsmp.lib;bindengine.lib;bindcomp.lib;bindcompvcl.lib;dbexpress.lib;DbxCommonDriver.lib;dbxcds.lib;dsnap.lib;DBXMySQLDriver.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;Tee.lib;vcldb.lib;atVCLAPTVisualComponents.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <UsePackages>true</UsePackages>
@@ -99,15 +99,15 @@
         <VerInfo_Release>2</VerInfo_Release>
         <_TCHARMapping>char</_TCHARMapping>
         <BCC_wcsu>false</BCC_wcsu>
-        <BCC_PCHInject>ArrayBotPCH1.h</BCC_PCHInject>
+        <BCC_PCHInject>..\..\source\MiniBotPCH.h</BCC_PCHInject>
         <VerInfo_Debug>true</VerInfo_Debug>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Allen Institute for Brain Science;FileVersion=0.5.2.0;InternalName=;LegalCopyright=Smith Lab;LegalTrademarks=;OriginalFilename=;ProductName=MiniBot;ProductVersion=0.5;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
-        <LinkPackageStatics>dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;ArrayCamPackage.lib</LinkPackageStatics>
+        <LinkPackageStatics>dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib;atVCLAPTVisualComponents.lib</LinkPackageStatics>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Defines>POCO_STATIC;$(Defines)</Defines>
-        <Debugger_DebugSourcePath>P:\libs\dsl\Common\;P:\ArrayBot\source\;P:\libs\dsl\Common\;P:\libs\dsl\VCL\Components\;P:\libs\dsl\ThirdParty\Poco\Foundation\src\;P:\libs\dsl\VCL\Forms\;P:\libs\dsl\VCL\Common\;P:\libs\dsl\Common\Math\;P:\libs\dsl\Common\IPC\;P:\libs\atapi\source\arraybot\apt\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <Debugger_DebugSourcePath>P:\libs\dsl\Common\;P:\ArrayBot\source\;P:\libs\dsl\Common\;P:\libs\dsl\VCL\Components\;P:\libs\dsl\ThirdParty\Poco\Foundation\src\;P:\libs\dsl\VCL\Forms\;P:\libs\dsl\VCL\Common\;P:\libs\dsl\Common\Math\;P:\libs\dsl\Common\IPC\;P:\libs\atapi\source\arraybot\apt\;P:\libs\atapi\source\uc7\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <FinalOutputDir>$(DEBUG_BCC32)\bin</FinalOutputDir>
         <LinkPackageImports>rtl.bpi;vcl.bpi;vclactnband.bpi;vclx.bpi;vclimg.bpi;adortl.bpi;dbrtl.bpi;bcbsmp.bpi;bindengine.bpi;bindcomp.bpi;bindcompvcl.bpi;dbexpress.bpi;DbxCommonDriver.bpi;dbxcds.bpi;dsnap.bpi;DBXMySQLDriver.bpi;Tee.bpi;vcldb.bpi</LinkPackageImports>
         <IncludePath>$(DSL_ROOT)\Common;$(AT_ROOT)\source;$(AT_ROOT)\source\vcl;..\..\source;..\..\source\frames;..\..\source\forms;$(IncludePath)</IncludePath>
@@ -117,6 +117,8 @@
         <BCC_MonitorInlinePtrAccess>true</BCC_MonitorInlinePtrAccess>
         <BCC_MonitorGlobalAndStackData>true</BCC_MonitorGlobalAndStackData>
         <BCC_MonitorThis>true</BCC_MonitorThis>
+        <PostBuildEvent><![CDATA[REM $(SH_EXE) ..\..\source\postbuild.sh $(OUTPUTDIR)  $(APP_RELEASES) $(OUTPUTFILENAME) $(BDSCOMMONDIR)
+$(PostBuildEvent)]]></PostBuildEvent>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -130,12 +132,20 @@
         <CppCompile Include="MiniBot.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <RcItem Include="MiniBot_Icon.ico">
-            <ResourceType>ICON</ResourceType>
-            <ResourceId>Icon_1</ResourceId>
-        </RcItem>
         <CppCompile Include="..\..\source\auto_link.cpp">
             <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\source\BarcodeLogic.cpp">
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\source\DBLogic.cpp">
+            <BuildOrder>15</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\source\forms\TRegisterNewRibbonForm.cpp">
+            <Form>RegisterNewRibbonForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\source\forms\TRegisterNewRibbonForm.h</DependentOn>
+            <BuildOrder>14</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\source\forms\TSplashForm.cpp">
             <DependentOn>..\..\source\forms\TSplashForm.h</DependentOn>
@@ -191,6 +201,7 @@
         <FormResources Include="..\..\source\frames\TABProcessSequencerFrame.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBot_2Frame.dfm"/>
         <FormResources Include="..\..\source\frames\TAboutArrayBotFrame.dfm"/>
+        <FormResources Include="..\..\source\forms\TRegisterNewRibbonForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -247,6 +258,7 @@
                     <VersionInfoKeys Name="CFBundleExecutable"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="p:\build\debug\BPL\ArrayCamPackage.bpl">ArrayCam VCL Core package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k250.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcbofficexp250.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                 </Excluded_Packages>
@@ -258,6 +270,16 @@
                 </ProjectProperties>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64250.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c250mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
@@ -288,23 +310,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32250mt.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="MiniBot_Icon.ico" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32250.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32250mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -318,11 +329,6 @@
                 <DeployFile LocalName="p:\build\debug\bin\MiniBot.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>MiniBot.tds</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64250.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -751,4 +757,12 @@
     <Import Project="$(BDS)\Bin\CodeGear.Cpp.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Cpp.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
+    <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
+        <PreBuildEvent/>
+        <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
+        <PreLinkEvent/>
+        <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
+        <PostBuildEvent>REM $(SH_EXE) ..\..\source\postbuild.sh $(OUTPUTDIR)  $(APP_RELEASES) $(OUTPUTFILENAME) $(BDSCOMMONDIR)</PostBuildEvent>
+        <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
+    </PropertyGroup>
 </Project>

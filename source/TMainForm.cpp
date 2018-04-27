@@ -488,10 +488,47 @@ void TMainForm::updateDivePosition(double pos)
 }
 
 
-
-void __fastcall TMainForm::mConnectUC7BtnClick(TObject *Sender)
-{
-;
-}
 //---------------------------------------------------------------------------
+void __fastcall TMainForm::AppInBox(ATWindowStructMessage& msg)
+{
+    if(msg.lparam == NULL)
+    {
+        return;
+    }
+
+    try
+    {
+        ApplicationMessageEnum aMsg = (ApplicationMessageEnum) msg.wparam;
+
+        switch(aMsg)
+        {
+			case atUC7Message:
+            {
+            	//Cast data
+            	UC7Message* m = (UC7Message*) msg.lparam;
+                Log(lDebug) << "Handling UC7 message: \"" << m->getMessageNameAsString()<<"\" with data: "<<m->getData();
+                bool result = handleUC7Message(*m);
+                if(!result)
+                {
+                	Log(lError) << "The message: "<<m->getFullMessage()<<" was not properly handled!";
+                }
+                delete m;
+            }
+            break;
+
+            case atMiscMessage:
+            {
+            	int* m = (int*) msg.lparam;
+                Log(lDebug) << "Handling Misc message: \"" << *m;
+            }
+            break;
+            default:
+            break ;
+        }
+	}
+	catch(...)
+	{
+		Log(lError) << "An exception was thrown in AppInBox.";
+	}
+}
 
