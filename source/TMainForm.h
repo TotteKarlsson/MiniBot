@@ -161,15 +161,9 @@ class TMainForm : public TRegistryForm
 	TSoundsFrame *TSoundsFrame1;
 	TApplicationSoundsFrame *TApplicationSoundsFrame1;
 	TTabSheet *TabSheet11;
-	TFFMPEGFrame *TFFMPEGFrame1;
-	THDMIStreamerFrame *THDMIStreamerFrame1;
 	TGroupBox *GroupBox6;
 	TButton *BrowseForMediaFolderBtn;
 	TSTDStringLabeledEdit *MediaFolderE;
-	TTabSheet *RibbonSeparatorSheet;
-	TGroupBox *GroupBox10;
-	TButton *RunWiperBtn;
-	TButton *ConnectWipterClientBtn;
 	TTabSheet *TabSheet12;
 	TPGConnectionFrame *TPGConnectionFrame1;
 	TTabSheet *TabSheet9;

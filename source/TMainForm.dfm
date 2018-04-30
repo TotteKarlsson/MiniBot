@@ -29,7 +29,7 @@ object MainForm: TMainForm
     Top = 123
     Width = 1179
     Height = 850
-    ActivePage = mFrontPage
+    ActivePage = SettingsTab
     Align = alClient
     HotTrack = True
     TabHeight = 60
@@ -55,7 +55,7 @@ object MainForm: TMainForm
           780)
         object LiftBtn: TArrayBotButton
           Left = 67
-          Top = 40
+          Top = 64
           Width = 250
           Height = 200
           Caption = 'Lift'
@@ -703,10 +703,9 @@ object MainForm: TMainForm
         Top = 0
         Width = 1171
         Height = 780
-        ActivePage = UC7Tab
+        ActivePage = TabSheet8
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 821
         object TabSheet8: TTabSheet
           Caption = 'Sounds'
           ImageIndex = 1
@@ -769,16 +768,6 @@ object MainForm: TMainForm
                   Height = 31
                   ExplicitHeight = 31
                 end
-                inherited FloatLabeledEdit1: TFloatLabeledEdit
-                  Height = 31
-                  EditLabel.Width = 147
-                  EditLabel.Height = 23
-                  EditLabel.ExplicitLeft = 56
-                  EditLabel.ExplicitTop = 158
-                  EditLabel.ExplicitWidth = 147
-                  EditLabel.ExplicitHeight = 23
-                  ExplicitHeight = 31
-                end
               end
             end
           end
@@ -787,141 +776,6 @@ object MainForm: TMainForm
           Caption = 'Media'
           ImageIndex = 3
           ExplicitHeight = 783
-          inline TFFMPEGFrame1: TFFMPEGFrame
-            Left = 0
-            Top = 89
-            Width = 1163
-            Height = 233
-            Align = alTop
-            AutoSize = True
-            TabOrder = 0
-            ExplicitTop = 89
-            ExplicitWidth = 1163
-            ExplicitHeight = 233
-            inherited GroupBox1: TGroupBox
-              Width = 1163
-              Height = 233
-              Align = alTop
-              ExplicitWidth = 1163
-              ExplicitHeight = 233
-              inherited Label1: TLabel
-                Top = 109
-                Width = 106
-                Height = 23
-                ExplicitTop = 109
-                ExplicitWidth = 106
-                ExplicitHeight = 23
-              end
-              inherited FFMPEGThreads: TIntegerLabeledEdit
-                Left = 185
-                Top = 57
-                Height = 31
-                EditLabel.Width = 287
-                EditLabel.Height = 23
-                EditLabel.ExplicitLeft = 185
-                EditLabel.ExplicitTop = 31
-                EditLabel.ExplicitWidth = 287
-                EditLabel.ExplicitHeight = 23
-                ExplicitLeft = 185
-                ExplicitTop = 57
-                ExplicitHeight = 31
-              end
-              inherited CRFValue: TIntegerLabeledEdit
-                Top = 57
-                Height = 31
-                EditLabel.Width = 142
-                EditLabel.Height = 23
-                EditLabel.ExplicitLeft = 17
-                EditLabel.ExplicitTop = 31
-                EditLabel.ExplicitWidth = 142
-                EditLabel.ExplicitHeight = 23
-                ExplicitTop = 57
-                ExplicitHeight = 31
-              end
-              inherited PresetCB: TComboBox
-                Top = 134
-                Height = 31
-                ExplicitTop = 134
-                ExplicitHeight = 31
-              end
-              inherited DeleteSourceFileCB: TPropertyCheckBox
-                Left = 191
-                Top = 194
-                Width = 192
-                ExplicitLeft = 191
-                ExplicitTop = 194
-                ExplicitWidth = 192
-              end
-              inherited RenameSourceFileCB: TPropertyCheckBox
-                Top = 195
-                Width = 168
-                ExplicitTop = 195
-                ExplicitWidth = 168
-              end
-            end
-          end
-          inline THDMIStreamerFrame1: THDMIStreamerFrame
-            Left = 0
-            Top = 322
-            Width = 1163
-            Height = 420
-            Align = alClient
-            AutoSize = True
-            TabOrder = 1
-            ExplicitTop = 322
-            ExplicitWidth = 1163
-            ExplicitHeight = 461
-            inherited SettingsGB: TGroupBox
-              Width = 1163
-              Height = 225
-              ExplicitWidth = 1163
-              ExplicitHeight = 225
-              inherited BitrateE: TIntegerLabeledEdit
-                Height = 31
-                EditLabel.Width = 109
-                EditLabel.Height = 23
-                EditLabel.ExplicitLeft = 16
-                EditLabel.ExplicitTop = 22
-                EditLabel.ExplicitWidth = 109
-                EditLabel.ExplicitHeight = 23
-                ExplicitHeight = 31
-              end
-              inherited OutputFileNameE: TSTDStringLabeledEdit [1]
-                Top = 163
-                Width = 473
-                Height = 31
-                EditLabel.Width = 147
-                EditLabel.Height = 23
-                EditLabel.ExplicitLeft = 16
-                EditLabel.ExplicitTop = 137
-                EditLabel.ExplicitWidth = 147
-                EditLabel.ExplicitHeight = 23
-                ExplicitTop = 163
-                ExplicitWidth = 473
-                ExplicitHeight = 31
-              end
-              inherited OutputFileFolderE: TSTDStringLabeledEdit [2]
-                Top = 104
-                Height = 31
-                EditLabel.Width = 150
-                EditLabel.Height = 23
-                EditLabel.ExplicitLeft = 16
-                EditLabel.ExplicitTop = 78
-                EditLabel.ExplicitWidth = 150
-                EditLabel.ExplicitHeight = 23
-                Enabled = False
-                ExplicitTop = 104
-                ExplicitHeight = 31
-              end
-            end
-            inherited StartRecordingBtn: TArrayBotButton
-              Top = 225
-              Width = 1163
-              Visible = False
-              ExplicitTop = 225
-              ExplicitWidth = 1163
-            end
-          end
           object GroupBox6: TGroupBox
             Left = 0
             Top = 0
@@ -931,7 +785,7 @@ object MainForm: TMainForm
             BiDiMode = bdLeftToRight
             Caption = 'Media'
             ParentBiDiMode = False
-            TabOrder = 2
+            TabOrder = 0
             object BrowseForMediaFolderBtn: TButton
               Left = 339
               Top = 47
@@ -948,37 +802,6 @@ object MainForm: TMainForm
               EditLabel.Width = 152
               EditLabel.Height = 23
               EditLabel.Caption = 'Media Root Folder'
-              TabOrder = 1
-            end
-          end
-        end
-        object RibbonSeparatorSheet: TTabSheet
-          Caption = 'Ribbon Separator'
-          ImageIndex = 4
-          ExplicitHeight = 783
-          object GroupBox10: TGroupBox
-            Left = 0
-            Top = 0
-            Width = 1163
-            Height = 128
-            Align = alTop
-            Caption = 'Run Wiper Action'
-            TabOrder = 0
-            object RunWiperBtn: TButton
-              Left = 24
-              Top = 37
-              Width = 105
-              Height = 64
-              Caption = 'Run'
-              Enabled = False
-              TabOrder = 0
-            end
-            object ConnectWipterClientBtn: TButton
-              Left = 656
-              Top = 45
-              Width = 105
-              Height = 64
-              Caption = 'Connect'
               TabOrder = 1
             end
           end
@@ -2015,10 +1838,10 @@ object MainForm: TMainForm
         SoundID = 'BUTTON_CLICK_4'
       end
       object mResetRibbonOrderBtn: TArrayBotButton
-        Left = 308
-        Top = 26
-        Width = 68
-        Height = 36
+        Left = 358
+        Top = 16
+        Width = 84
+        Height = 46
         Caption = 'Reset'
         Enabled = False
         ParentDoubleBuffered = True
@@ -2160,7 +1983,7 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 250
     OnTimer = mStartupTimerTimer
-    Left = 368
-    Top = 280
+    Left = 240
+    Top = 752
   end
 end

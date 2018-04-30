@@ -71,6 +71,7 @@ cp $CG_REDIST/vclimg$suffix                     $dest
 cp $CG_REDIST/vclx$suffix                       $dest
 cp $CG_REDIST/tee9$suffix                       $dest
 cp $CG_REDIST/vcldb$suffix                      $dest
+cp $CG_REDIST/midas.dll                         $dest
 
 
 #Other 3rd Party binaries
@@ -82,6 +83,7 @@ cp $miscRedist/Thorlabs.MotionControl.IntegratedStepperMotors.dll   $dest
 cp $miscRedist/Thorlabs.MotionControl.TCube.DCServo.dll             $dest
 cp $miscRedist/Thorlabs.MotionControl.Benchtop.StepperMotor.dll     $dest
 cp $miscRedist/Thorlabs.MotionControl.DeviceManager.dll             $dest
+cp $miscRedist/dbexppgsql40.dll                                     $dest
 
 #instead of using local bin folder
 cp $miscRedist/navusbapi.dll                                        $OUTPUTDIR

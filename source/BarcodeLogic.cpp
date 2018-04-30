@@ -45,11 +45,6 @@ void __fastcall TMainForm::RegisterRibbonBtnClick(TObject *Sender)
                 mUC7.getSectionCounter().reset();
                 mUC7.getRibbonOrderCounter().increase(1);
 				RibbonOrderCountLabel->update();
-                //If the knife move is streaming, turn off and let it register with this ribbon
-                if(THDMIStreamerFrame1->getStreamer().isRunning())
-                {
-					THDMIStreamerFrame1->getStreamer().stopRecording();
-                }
             }
             delete rrf;
         }
