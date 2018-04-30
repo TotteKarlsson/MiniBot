@@ -6,20 +6,21 @@
 #include <Vcl.Themes.hpp>
 #include "dslLogger.h"
 #include "dslVCLUtils.h"
+#include "dslRestartApplicationUtils.h"
 #include "core/atExceptions.h"
 #include "TSplashForm.h"
-#include "dslRestartApplicationUtils.h"
 #include "UIUtilities.h"
 #include "TPGDataModule.h"
 #include "TPGCoverSlipDataModule.h"
 #include "TPGImagesAndMoviesDataModule.h"
+#include "TMainForm.h"
 
 using namespace dsl;
 using namespace std;
 
 //---------------------------------------------------------------------------
-USEFORM("..\..\source\TMainForm.cpp", MainForm);
 USEFORM("..\..\source\frames\TABProcessSequencerFrame.cpp", ABProcessSequencerFrame); /* TFrame: File Type */
+USEFORM("..\..\source\TMainForm.cpp", Form1);
 USEFORM("..\..\source\frames\TAboutArrayBot_2Frame.cpp", AboutArrayBotFrame_2); /* TFrame: File Type */
 USEFORM("..\..\source\frames\TAboutArrayBotFrame.cpp", AboutArrayBotFrame); /* TFrame: File Type */
 USEFORM("..\..\source\forms\TRegisterNewRibbonForm.cpp", RegisterNewRibbonForm);
@@ -73,6 +74,15 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
+        string iconFile("MiniBot_Icon.ico");
+        if(fileExists(iconFile))
+        {
+			Application->Icon->LoadFromFile(iconFile.c_str());
+        }
+        else
+        {
+            Log(lWarning) << "Application icon ("<<iconFile<<")  was not found";
+        }
 
 		pgDM 	                = new TpgDM(NULL);
         csPGDM                  = new TcsPGDM(NULL);
@@ -94,7 +104,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->Title = "MiniBot - Software for Microtomes";
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
-		Application->CreateForm(__classid(TRegisterNewRibbonForm), &RegisterNewRibbonForm);
 		Application->ShowMainForm = false;
 		Application->Run();
         delete gSplashForm;
