@@ -17,7 +17,7 @@ echo "Outputfilename: "$OUTPUTFILENAME
 echo "BDSCOMMONDIR: "$BDSCOMMONDIR
 
 #Extract version
-VERSION=`cat ./../../ERSION.txt | tr -d '\r'`
+VERSION=`cat ./../../VERSION.txt | tr -d '\r'`
 APPNAME=MiniBot
 
 echo "Copy stuff"
@@ -26,7 +26,7 @@ mkdir $APP_RELEASES/$APPNAME
 dest=$APP_RELEASES/$APPNAME
 SRC_DIR="./../../source"
 cp $SRC_DIR/../*.txt                                    $dest
-cp $SRC_DIR/*.ico                                   $dest
+cp $SRC_DIR/../resources/*.ico                                   $dest
 cp $OUTPUTDIR/$OUTPUTFILENAME                       $dest
 
 #DS Binaries
@@ -95,5 +95,5 @@ cp $miscRedist/Thorlabs.MotionControl.TCube.DCServo.dll             $OUTPUTDIR
 cp $miscRedist/Thorlabs.MotionControl.Benchtop.StepperMotor.dll     $OUTPUTDIR
 cp $miscRedist/Thorlabs.MotionControl.DeviceManager.dll             $OUTPUTDIR
 cp $SRC_DIR/../*.txt                                                $OUTPUTDIR
-cp $SRC_DIR/*.ico                                                   $OUTPUTDIR
+cp $SRC_DIR/../resources/*.ico                                                   $OUTPUTDIR
 

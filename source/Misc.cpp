@@ -3,15 +3,14 @@
 #include "TMainForm.h"
 #include "dslLogger.h"
 #include "dslVCLUtils.h"
+#include "dslStringUtils.h"
 #include "arraybot/apt/atAPTMotor.h"
 #include "forms/TSplashForm.h"
 #include "forms/TTextInputDialog.h"
 #include "TXYZUnitFrame.h"
 
 using namespace dsl;
-
 static HWND gOtherAppWindow = NULL;
-
 extern TSplashForm*  gSplashForm;
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::checkForDevicesExecute(TObject *Sender)
@@ -125,19 +124,14 @@ int __stdcall FindOtherWindow(HWND hwnd, LPARAM lParam)
 	    return TRUE;
     }
 
-	vector<TCHAR> buffer(length + 1);
+	TCHAR* buffer = new TCHAR[length + 1];
 	GetWindowText(hwnd, &buffer[0], length + 1);
-
     string s(stdstr(buffer));
 	if(startsWith("MiniBot", s))
 	{
-		// do something with hwnd here
 		gOtherAppWindow = hwnd;
         SetFocus(hwnd);
-
-        //Stop enumerating..
 		return false;
 	}
-
 	return true;
 }

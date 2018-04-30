@@ -166,3 +166,4 @@ void __fastcall	TMainForm::onFinishedInitBot()
     MotorPositionFrame1->assignMotor(m);
 }
 
+
