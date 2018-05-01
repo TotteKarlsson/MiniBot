@@ -70,21 +70,21 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-	//Setup DB callbacks
-    if(pgDM && pgDM->SQLConnection1)
-    {
-    	pgDM->SQLConnection1->AfterConnect 		= afterDBServerConnect;
-	    pgDM->SQLConnection1->AfterDisconnect 	= afterDBServerDisconnect;
-    }
+//	//Setup DB callbacks
+//    if(pgDM && pgDM->SQLConnection1)
+//    {
+//    	pgDM->SQLConnection1->AfterConnect 		= afterDBServerConnect;
+//	    pgDM->SQLConnection1->AfterDisconnect 	= afterDBServerDisconnect;
+//    }
 
-	BarcodeLbl->Caption = "";
-	RibbonIDLbl->Caption = "";
+//	BarcodeLbl->Caption = "";
+//	RibbonIDLbl->Caption = "";
 
     //Set UC7 stop mode
     StopOptionsRG->ItemIndex = mStopCutterMode;
     enableDisableUC7UI(false);
-    BarcodeLbl->Caption = "";
-    enableDisableGroupBox(mImagerSettingsGB, false);
+//    BarcodeLbl->Caption = "";
+//    enableDisableGroupBox(mImagerSettingsGB, false);
 //    populateStyleMenu(ThemesMenu, ThemesMenuClick);
 	mStartupTimer->Enabled = true;
 }
@@ -136,9 +136,9 @@ void TMainForm::setupProperties()
 void __fastcall	TMainForm::setupUIFrames()
 {
     //Create MoveSequencer frame
-    mABProcessSequencerFrame = new TABProcessSequencerFrame(mProcessSequencer, gAppDataFolder, mMoveSequencesPage);
+    mABProcessSequencerFrame = new TABProcessSequencerFrame(mProcessSequencer, gAppDataFolder, SequencesTS);
 
-    mABProcessSequencerFrame->Parent = mMoveSequencesPage;
+    mABProcessSequencerFrame->Parent = SequencesTS;
     mABProcessSequencerFrame->Align = alClient;
     mABProcessSequencerFrame->init();
 
@@ -163,7 +163,7 @@ void __fastcall	TMainForm::onFinishedInitBot()
     	Log(lError) << "Failed getting Coverslip UnitZ motor";
         return;
     }
-    MotorPositionFrame1->assignMotor(m);
+//    MotorPositionFrame1->assignMotor(m);
 }
 
 

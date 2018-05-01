@@ -127,12 +127,12 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 	Log(lInfo) << "In FormClose";
 	mUC7COMPort = mUC7ComportCB->ItemIndex + 1;
 
-	mZebraCOMPort = mZebraCOMPortCB->ItemIndex + 1;
-    mZebraBaudRate = mZebraBaudRateCB->Items->Strings[mZebraBaudRateCB->ItemIndex].ToInt();
+//	mZebraCOMPort = mZebraCOMPortCB->ItemIndex + 1;
+//    mZebraBaudRate = mZebraBaudRateCB->Items->Strings[mZebraBaudRateCB->ItemIndex].ToInt();
 
-    mKnifeStageMaxPos.setValue(MaxStagePosFrame->getValue());
-    mKnifeStageJogStep.setValue(BackOffStepFrame->getValue());
-    mKnifeStageResumeDelta.setValue(ResumeDeltaDistanceFrame->getValue());
+//    mKnifeStageMaxPos.setValue(MaxStagePosFrame->getValue());
+//    mKnifeStageJogStep.setValue(BackOffStepFrame->getValue());
+//    mKnifeStageResumeDelta.setValue(ResumeDeltaDistanceFrame->getValue());
 
     mStopCutterMode = StopOptionsRG->ItemIndex;
 

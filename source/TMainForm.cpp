@@ -113,22 +113,22 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 	mUC7ComportCB->ItemIndex = mUC7COMPort - 1;
 
     MaxStagePosFrame->setValue(mKnifeStageMaxPos.getValue());
-    BackOffStepFrame->setValue(mKnifeStageJogStep.getValue());
+//    BackOffStepFrame->setValue(mKnifeStageJogStep.getValue());
     ResumeDeltaDistanceFrame->setValue(mKnifeStageResumeDelta.getValue());
     mUC7.setKnifeStageResumeDelta(mKnifeStageResumeDelta.getValue());
     mUC7.setKnifeStageJogStepPreset(mKnifeStageJogStep.getValue());
 
-	mZebraCOMPortCB->ItemIndex = mZebraCOMPort - 1;
+//	mZebraCOMPortCB->ItemIndex = mZebraCOMPort - 1;
 
     //Find out which item in the CB that should be selected
-    for(int i = 0; i < mZebraBaudRateCB->Items->Count; i++)
-    {
-		if(mZebraBaudRateCB->Items->Strings[i].ToInt() == mZebraBaudRate)
-        {
-			mZebraBaudRateCB->ItemIndex = i;
-            break;
-        }
-    }
+//    for(int i = 0; i < mZebraBaudRateCB->Items->Count; i++)
+//    {
+//		if(mZebraBaudRateCB->Items->Strings[i].ToInt() == mZebraBaudRate)
+//        {
+//			mZebraBaudRateCB->ItemIndex = i;
+//            break;
+//        }
+//    }
 
 
 	//Load motors in a thread
@@ -150,7 +150,7 @@ void TMainForm::enableDisableUI(bool e)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::UIUpdateTimerTimer(TObject *Sender)
 {
-	if(MainPC->TabIndex == pcMain)
+	if(MainPC->ActivePage == MainTS)
     {
 //    	DummyFocus();
     }
@@ -356,41 +356,43 @@ void __fastcall TMainForm::stopAllAExecute(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::MainPCChange(TObject *Sender)
 {
-//	//Check what tab got selected
-//	if(MainPC->TabIndex == pcMoveSequences && mABProcessSequencerFrame != NULL)
-//    {
-//    	//Reload the currently selected sequence
-//		mABProcessSequencerFrame->mSequencesCBChange(Sender);
-//    }
-//
-//    else if(MainPC->TabIndex == pcMain)
-//    {
-//        if(mSequencerButtons1)
-//        {
-//        	mSequencerButtons1->update();
-//        }
-//    }
-//    else if(MainPC->TabIndex == pcMotors)
-//    {
-//		//Disable joystick
-//	 	mAB.disableJoyStick();
-//
-//        //Disable motor status timers
-//        mXYZUnitFrame1->enable();
-//    }
-//
-//	else if(MainPC->TabIndex == pcAbout)
-//    {
-//		TAboutArrayBotFrame_21->populate();
-//    }
-//
-//    if(MainPC->TabIndex != pcMotors)
-//    {
-//   	 	mAB.enableJoyStick();
-//
-//        //Disable motor status timers
-//        mXYZUnitFrame1->disable();
-//    }
+	//Check what tab got selected
+    TTabSheet* currentTab = MainPC->ActivePage;
+
+	if(currentTab == SequencesTS && mABProcessSequencerFrame != NULL)
+    {
+    	//Reload the currently selected sequence
+		mABProcessSequencerFrame->mSequencesCBChange(Sender);
+    }
+
+    else if(currentTab == MainTS)
+    {
+        if(mSequencerButtons1)
+        {
+        	mSequencerButtons1->update();
+        }
+    }
+    else if(currentTab == MotorsTS)
+    {
+		//Disable joystick
+	 	mAB.disableJoyStick();
+
+        //Disable motor status timers
+        mXYZUnitFrame1->enable();
+    }
+
+	else if(currentTab== AboutTS)
+    {
+		TAboutArrayBotFrame_21->populate();
+    }
+
+    if(currentTab != MotorsTS)
+    {
+   	 	mAB.enableJoyStick();
+
+        //Disable motor status timers
+        mXYZUnitFrame1->disable();
+    }
 }
 
 //---------------------------------------------------------------------------

@@ -117,16 +117,17 @@ bool TMainForm::handleUC7Message(const UC7Message& msg)
                 	Log(lDebug3) << "Retracting";
                 	mUC7.setStrokeState(ssRetracting);
 					mArmRetractingSound.getReference().play();
-                    UC7Shape->Left = 624;
-                    UC7Shape->Width = 73;
+                    UC7Shape->Left = RetractingLbl->Left;
+                    UC7Shape->Width = RetractingLbl->Width;
+                    RetractingLbl->Color = clRed;
                 }
                 else if(d == "01")  //Before cutting
                 {
                    	Log(lDebug3) << "Before Cutting";
                    	mUC7.setStrokeState(ssBeforeCutting);
 	                mKnifeBeforeCuttingSound.getReference().play();
-                    UC7Shape->Left = 32;
-                    UC7Shape->Width = 100;
+                    UC7Shape->Left = BeforeCuttingLbl->Left;
+                    UC7Shape->Width = BeforeCuttingLbl->Width;
                 }
                 else if(d == "03") //Cutting
                 {
@@ -134,8 +135,8 @@ bool TMainForm::handleUC7Message(const UC7Message& msg)
                    	mUC7.getSectionCounter().increase();
                    	mUC7.setStrokeState(ssCutting);
                     mKnifeCuttingSound.getReference().play();
-                    UC7Shape->Left = 264;
-                    UC7Shape->Width = 52;
+                    UC7Shape->Left = CuttingLbl->Left;
+                    UC7Shape->Width = CuttingLbl->Width;
                 }
                 else if(d == "02") //After cutting
                 {
@@ -143,10 +144,10 @@ bool TMainForm::handleUC7Message(const UC7Message& msg)
                    	mUC7.setStrokeState(ssAfterCutting);
 					RibbonOrderCountLabel->update();
 	                mKnifeAfterCuttingSound.getReference().play();
-                    UC7Shape->Left = 432;
-                    UC7Shape->Width = 93;
-                    RibbonLengthLbl->SetValue(BlockFaceHeight->getValue() * SectionCounterLabel->getValue());
-                    RibbonLengthLbl->UpdateFromValue();
+                    UC7Shape->Left = AfterCuttingLbl->Left;
+                    UC7Shape->Width = AfterCuttingLbl->Width;
+//                    RibbonLengthLbl->SetValue(BlockFaceHeight->getValue() * SectionCounterLabel->getValue());
+//                    RibbonLengthLbl->UpdateFromValue();
                 }
                 else if(d == "E0")
                 {
@@ -353,16 +354,16 @@ void __fastcall TMainForm::CreateUC7Message(TObject *Sender)
 //            //btn->Enabled = false;
 //        }
 //    }
-    else if(btn == mMoveSouthBtn)
-    {
-   		mUC7.setFeedRate(0);
-    	mUC7.jogKnifeStageSouth(BackOffStepFrame->getValue(), true);
-    }
-    else if(btn == mMoveNorthBtn)
-    {
-		mUC7.setFeedRate(0);
-    	mUC7.jogKnifeStageNorth(BackOffStepFrame->getValue(), true);
-    }
+//    else if(btn == mMoveSouthBtn)
+//    {
+//   		mUC7.setFeedRate(0);
+//    	mUC7.jogKnifeStageSouth(BackOffStepFrame->getValue(), true);
+//    }
+//    else if(btn == mMoveNorthBtn)
+//    {
+//		mUC7.setFeedRate(0);
+//    	mUC7.jogKnifeStageNorth(BackOffStepFrame->getValue(), true);
+//    }
     else if(btn == PresetReturnSpeedBtn)
     {
     	mUC7.setReturnSpeed(PresetReturnSpeedE->getValue());
