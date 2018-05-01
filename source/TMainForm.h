@@ -144,10 +144,6 @@ class TMainForm : public TRegistryForm
 	TTabSheet *TabSheet8;
 	TSoundsFrame *TSoundsFrame1;
 	TApplicationSoundsFrame *TApplicationSoundsFrame1;
-	TTabSheet *TabSheet11;
-	TGroupBox *GroupBox6;
-	TButton *BrowseForMediaFolderBtn;
-	TSTDStringLabeledEdit *MediaFolderE;
 	TTabSheet *TabSheet12;
 	TPGConnectionFrame *TPGConnectionFrame1;
 	TTabSheet *UC7Tab;
@@ -173,6 +169,26 @@ class TMainForm : public TRegistryForm
 	TTabSheet *About;
 	TTabSheet *Help;
 	TArrayBotButton *ArrayBotButton1;
+	TMotorPositionFrame *MotorPositionFrame1;
+	TGroupBox *RibbonRegistrationGB;
+	TLabel *BarcodeLbl;
+	TLabel *RibbonIDLbl;
+	TLabel *Label7;
+	TDBText *DBText1;
+	TArrayBotButton *ClearBarcodeBtn;
+	TArrayBotButton *ClearRibbonIDBtn;
+	TArrayBotButton *RegisterRibbonBtn;
+	TArrayBotButton *DecodeSessionBtn;
+	TTabSheet *TabSheet1;
+	TGroupBox *BarCodeGB;
+	TPanel *Panel3;
+	TComboBox *mZebraCOMPortCB;
+	TButton *mConnectZebraBtn;
+	TComboBox *mZebraBaudRateCB;
+	TGroupBox *mImagerSettingsGB;
+	TRadioGroup *mScannerAimRG;
+	TRadioGroup *mScannerEnabledRG;
+	TArrayBotButton *BeepBtn;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -203,10 +219,11 @@ class TMainForm : public TRegistryForm
 	void __fastcall uc7EditKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
 	void __fastcall CreateUC7Message(TObject *Sender);
 	void __fastcall RegisterRibbonBtnClick(TObject *Sender);
-	void __fastcall mConnectZebraBtnClick(TObject *Sender);
+	void __fastcall ConnectZebraBtnClick(TObject *Sender);
 	void __fastcall DecodeBarcodeClick(TObject *Sender);
 	void __fastcall scannerSettingsClick(TObject *Sender);
 	void __fastcall mStartupTimerTimer(TObject *Sender);
+	void __fastcall CountLabelClick(TObject *Sender);
 
     private:
 //		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
@@ -305,7 +322,6 @@ class TMainForm : public TRegistryForm
 												//Decoder events
 		void __fastcall							onWMDecode(TMessage& Msg);
 		void __fastcall							onSSIEvent(TMessage& Msg);
-		void __fastcall							onSSIImage(TMessage& Msg);
 		void __fastcall							onSSIError(TMessage& Msg);
 		void __fastcall							onSSITimeout(TMessage& Msg);
 		void __fastcall							onSSICapabilities(TMessage& Msg);
@@ -324,11 +340,9 @@ class TMainForm : public TRegistryForm
 		string									getCurrentUserName();
 
 	BEGIN_MESSAGE_MAP
-//	MESSAGE_HANDLER(IS_UC480_MESSAGE,			TMessage,						onUSBCameraMessage);
 		MESSAGE_HANDLER(UWM_UC7_MESSAGE,		ATWindowStructMessage,			AppInBox);
 		MESSAGE_HANDLER(WM_DECODE,				TMessage,						onWMDecode);
 		MESSAGE_HANDLER(WM_CAPABILITIES,		TMessage,						onSSICapabilities)
-		MESSAGE_HANDLER(WM_IMAGE,				TMessage,						onSSIImage)
 		MESSAGE_HANDLER(WM_ERROR,				TMessage,						onSSIError)
 		MESSAGE_HANDLER(WM_TIMEOUT,				TMessage,						onSSITimeout)
 		MESSAGE_HANDLER(WM_EVENT,				TMessage,						onSSIEvent)

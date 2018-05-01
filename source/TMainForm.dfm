@@ -68,8 +68,8 @@ object MainForm: TMainForm
         end
         object StopButton: TArrayBotButton
           Left = 67
-          Top = 681
-          Width = 183
+          Top = 337
+          Width = 250
           Height = 180
           Margins.Left = 15
           Margins.Top = 15
@@ -135,6 +135,118 @@ object MainForm: TMainForm
             TabOrder = 2
             OnMouseDown = JogMotorMouseDown
             OnMouseUp = JogMotorMouseUp
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object MotorPositionFrame1: TMotorPositionFrame
+            Left = 426
+            Top = 16
+            Width = 161
+            Height = 81
+            Anchors = [akTop, akRight]
+            AutoSize = True
+            TabOrder = 3
+          end
+        end
+        object RibbonRegistrationGB: TGroupBox
+          Left = 1
+          Top = 649
+          Width = 1219
+          Height = 239
+          Align = alBottom
+          Caption = 'Ribbon  Registration'
+          TabOrder = 3
+          DesignSize = (
+            1219
+            239)
+          object BarcodeLbl: TLabel
+            AlignWithMargins = True
+            Left = 1013
+            Top = 39
+            Width = 85
+            Height = 25
+            Alignment = taRightJustify
+            Anchors = [akTop, akRight]
+            Caption = 'Barcode'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -21
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = 835
+          end
+          object RibbonIDLbl: TLabel
+            AlignWithMargins = True
+            Left = 1046
+            Top = 89
+            Width = 52
+            Height = 13
+            Alignment = taRightJustify
+            Anchors = [akTop, akRight]
+            Caption = 'RibbonID'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = 868
+          end
+          object Label7: TLabel
+            Left = 413
+            Top = 40
+            Width = 82
+            Height = 23
+            Caption = 'Block ID: '
+          end
+          object DBText1: TDBText
+            Left = 489
+            Top = 40
+            Width = 65
+            Height = 33
+            DataField = 'id'
+          end
+          object ClearBarcodeBtn: TArrayBotButton
+            Left = 1104
+            Top = 30
+            Width = 99
+            Height = 41
+            Anchors = [akTop, akRight]
+            Caption = 'Clear'
+            TabOrder = 1
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object ClearRibbonIDBtn: TArrayBotButton
+            Left = 1104
+            Top = 78
+            Width = 99
+            Height = 41
+            Anchors = [akTop, akRight]
+            Caption = 'Clear'
+            TabOrder = 2
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object RegisterRibbonBtn: TArrayBotButton
+            Left = 24
+            Top = 144
+            Width = 241
+            Height = 78
+            Caption = 'Register Floating Ribbon'
+            ParentDoubleBuffered = True
+            TabOrder = 3
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object DecodeSessionBtn: TArrayBotButton
+            Left = 24
+            Top = 37
+            Width = 241
+            Height = 85
+            Caption = 'Scan Barcode'
+            ParentDoubleBuffered = True
+            TabOrder = 0
+            OnClick = DecodeBarcodeClick
             SoundID = 'BUTTON_CLICK_4'
           end
         end
@@ -633,7 +745,7 @@ object MainForm: TMainForm
         Top = 0
         Width = 1475
         Height = 889
-        ActivePage = TabSheet8
+        ActivePage = TabSheet1
         Align = alClient
         TabOrder = 0
         object UC7Tab: TTabSheet
@@ -834,39 +946,6 @@ object MainForm: TMainForm
             end
           end
         end
-        object TabSheet11: TTabSheet
-          Caption = 'Media'
-          ImageIndex = 3
-          object GroupBox6: TGroupBox
-            Left = 0
-            Top = 0
-            Width = 1467
-            Height = 89
-            Align = alTop
-            BiDiMode = bdLeftToRight
-            Caption = 'Media'
-            ParentBiDiMode = False
-            TabOrder = 0
-            object BrowseForMediaFolderBtn: TButton
-              Left = 339
-              Top = 47
-              Width = 27
-              Height = 25
-              Caption = '...'
-              TabOrder = 0
-            end
-            object MediaFolderE: TSTDStringLabeledEdit
-              Left = 16
-              Top = 46
-              Width = 317
-              Height = 31
-              EditLabel.Width = 152
-              EditLabel.Height = 23
-              EditLabel.Caption = 'Media Root Folder'
-              TabOrder = 1
-            end
-          end
-        end
         object TabSheet12: TTabSheet
           Caption = 'DB Connection'
           ImageIndex = 5
@@ -948,6 +1027,136 @@ object MainForm: TMainForm
                 ExplicitTop = 47
                 ExplicitWidth = 265
                 ExplicitHeight = 81
+              end
+            end
+          end
+        end
+        object TabSheet1: TTabSheet
+          Caption = 'Barcode Reader'
+          ImageIndex = 3
+          object BarCodeGB: TGroupBox
+            Left = 0
+            Top = 0
+            Width = 1467
+            Height = 209
+            Align = alTop
+            Caption = 'Zebra'
+            TabOrder = 0
+            object Panel3: TPanel
+              Left = 2
+              Top = 25
+              Width = 1463
+              Height = 28
+              Align = alTop
+              BevelOuter = bvNone
+              TabOrder = 0
+              object mZebraCOMPortCB: TComboBox
+                Left = 0
+                Top = 0
+                Width = 87
+                Height = 31
+                Margins.Left = 10
+                Align = alLeft
+                TabOrder = 0
+                Text = 'COM1'
+                Items.Strings = (
+                  'COM1'
+                  'COM2'
+                  'COM3'
+                  'COM4'
+                  'COM5'
+                  'COM6'
+                  'COM7'
+                  'COM8'
+                  'COM9'
+                  'COM10'
+                  'COM11'
+                  'COM12'
+                  'COM13'
+                  'COM14'
+                  'COM15'
+                  'COM16'
+                  'COM17'
+                  'COM18'
+                  'COM19'
+                  'COM20')
+              end
+              object mConnectZebraBtn: TButton
+                Left = 163
+                Top = 0
+                Width = 77
+                Height = 28
+                Align = alLeft
+                Caption = 'Open'
+                TabOrder = 1
+                OnClick = ConnectZebraBtnClick
+              end
+              object mZebraBaudRateCB: TComboBox
+                Left = 87
+                Top = 0
+                Width = 76
+                Height = 31
+                Margins.Left = 10
+                Align = alLeft
+                ItemIndex = 0
+                TabOrder = 2
+                Text = '9600'
+                Items.Strings = (
+                  '9600'
+                  '14400'
+                  '19200'
+                  '38400'
+                  '57600'
+                  '115200'
+                  '128000'
+                  '256000')
+              end
+            end
+            object mImagerSettingsGB: TGroupBox
+              Left = 13
+              Top = 76
+              Width = 518
+              Height = 107
+              Caption = 'Check'
+              TabOrder = 1
+              object mScannerAimRG: TRadioGroup
+                Left = 179
+                Top = 22
+                Width = 145
+                Height = 49
+                Caption = 'Aim'
+                Columns = 2
+                ItemIndex = 1
+                Items.Strings = (
+                  'On'
+                  'Off')
+                TabOrder = 0
+                OnClick = scannerSettingsClick
+              end
+              object mScannerEnabledRG: TRadioGroup
+                Left = 9
+                Top = 23
+                Width = 145
+                Height = 49
+                Caption = 'Enabled'
+                Columns = 2
+                ItemIndex = 0
+                Items.Strings = (
+                  'On'
+                  'Off')
+                TabOrder = 1
+                OnClick = scannerSettingsClick
+              end
+              object BeepBtn: TArrayBotButton
+                Left = 342
+                Top = 31
+                Width = 89
+                Height = 37
+                Caption = 'Beep'
+                ParentDoubleBuffered = True
+                TabOrder = 2
+                OnClick = DecodeBarcodeClick
+                SoundID = 'BUTTON_CLICK_4'
               end
             end
           end
@@ -1081,6 +1290,7 @@ object MainForm: TMainForm
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+        OnClick = CountLabelClick
         Value = 1
         TheFont.Charset = DEFAULT_CHARSET
         TheFont.Color = clWindowText
@@ -1100,6 +1310,7 @@ object MainForm: TMainForm
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+        OnClick = CountLabelClick
         Value = 1
         TheFont.Charset = DEFAULT_CHARSET
         TheFont.Color = clWindowText

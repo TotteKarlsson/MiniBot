@@ -168,7 +168,7 @@ void __fastcall	TMainForm::onFinishedInitBot()
     	Log(lError) << "Failed getting Coverslip UnitZ motor";
         return;
     }
-//    MotorPositionFrame1->assignMotor(m);
+    MotorPositionFrame1->assignMotor(m);
 }
 
 

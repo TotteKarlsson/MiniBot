@@ -20,6 +20,7 @@
 #include "UIUtilities.h"
 #include "arraybot/apt/atAbsoluteMove.h"
 #include "TPGDataModule.h"
+#include "TSelectIntegerForm.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "TUC7StagePositionFrame"
@@ -81,6 +82,19 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     //Init the CoreLibDLL -> give intra messages their ID's
 	initABCoreLib();
 
+	//Setup references
+  	//The following causes the editbox, and its property to reference the counters CountTo value
+   	mCountToE->setReference(mUC7.getSectionCounter().getCountToReference());
+   	SectionCounterLabel->setReference(mUC7.getSectionCounter().getCountReference());
+    RibbonOrderCountLabel->setReference(mUC7.getRibbonOrderCounter().getCountReference());
+    mZeroCutsE->setReference(mUC7.getNumberOfZeroStrokesReference());
+
+    mCountToE->update();
+    SectionCounterLabel->update();
+    RibbonOrderCountLabel->update();
+    mZeroCutsE->update();
+
+
 	TMemoLogger::mMemoIsEnabled = false;
    	mLogFileReader.start(true);
 
@@ -118,17 +132,17 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     mUC7.setKnifeStageResumeDelta(mKnifeStageResumeDelta.getValue());
     mUC7.setKnifeStageJogStepPreset(mKnifeStageJogStep.getValue());
 
-//	mZebraCOMPortCB->ItemIndex = mZebraCOMPort - 1;
+	mZebraCOMPortCB->ItemIndex = mZebraCOMPort - 1;
 
     //Find out which item in the CB that should be selected
-//    for(int i = 0; i < mZebraBaudRateCB->Items->Count; i++)
-//    {
-//		if(mZebraBaudRateCB->Items->Strings[i].ToInt() == mZebraBaudRate)
-//        {
-//			mZebraBaudRateCB->ItemIndex = i;
-//            break;
-//        }
-//    }
+    for(int i = 0; i < mZebraBaudRateCB->Items->Count; i++)
+    {
+		if(mZebraBaudRateCB->Items->Strings[i].ToInt() == mZebraBaudRate)
+        {
+			mZebraBaudRateCB->ItemIndex = i;
+            break;
+        }
+    }
 
 
 	//Load motors in a thread
@@ -583,7 +597,7 @@ void __fastcall TMainForm::mStartupTimerTimer(TObject *Sender)
         TPGConnectionFrame1->init(&mIniFile, "POSTGRESDB_CONNECTION");
         TPGConnectionFrame1->ConnectA->Execute();
 
-        mConnectZebraBtnClick(Sender);
+        ConnectZebraBtnClick(Sender);
 
         //Connect to the UC7
         mConnectUC7Btn->Click();
@@ -598,5 +612,23 @@ void __fastcall TMainForm::mStartupTimerTimer(TObject *Sender)
         Log(lError) << "There was an exception: "<<stdstr(e.Message);
     }
 }
+
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::CountLabelClick(TObject *Sender)
+{
+	TIntLabel* lbl = dynamic_cast<TIntLabel*>(Sender);
+
+    TSelectIntegerForm* f = new TSelectIntegerForm(this);
+    f->setCurrentNumber(lbl->getValue());
+    int res = f->ShowModal();
+    if(res == mrOk)
+    {
+    	lbl->setValue(f->mTheNumberLbl->getValue());
+    }
+
+    delete f;
+}
+
 
 
