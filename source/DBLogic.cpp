@@ -22,48 +22,45 @@ void __fastcall	TMainForm::afterDBServerConnect(System::TObject* Sender)
     csPGDM->afterConnect();
 
     TPGConnectionFrame1->afterConnect();
-//    RegisterRibbonBtn->Enabled = true;
+    RegisterRibbonBtn->Enabled = true;
 
 	//Setup UI
-//    mUsersCB->KeyValue  	= mDBUserID.getValue();
-//    BlockIDCB->KeyValue 	= mBlockID.getValue();
-//    KnifeIDCB->KeyValue 	= mKnifeID.getValue();
-//    enableDisableGroupBox(BlockSelectionGB, true);
-//    enableDisableGroupBox(RibbonRegistrationGB, true);
+    mUsersCB->KeyValue  	= mDBUserID.getValue();
+    BlockIDCB->KeyValue 	= mBlockID.getValue();
+    KnifeIDCB->KeyValue 	= mKnifeID.getValue();
+    enableDisableGroupBox(BlockSelectionGB, true);
+    enableDisableGroupBox(RibbonRegistrationGB, true);
 //    enableDisableGroupBox(RibbonsDataGB, true);
 }
 
 //---------------------------------------------------------------------------
 void __fastcall	TMainForm::afterDBServerDisconnect(System::TObject* Sender)
 {
-//	Log(lInfo) << "Disconnected from the DB Server";
-//	pgDM->afterDisConnect();
-//
-//	TPGConnectionFrame1->afterDisconnect();
-//	RegisterRibbonBtn->Enabled = false;
-//
-//    enableDisableGroupBox(RibbonRegistrationGB, false);
-//    enableDisableGroupBox(BlockSelectionGB, false);
-////    enableDisableGroupBox(RibbonsDataGB, false);
+	Log(lInfo) << "Disconnected from the DB Server";
+	pgDM->afterDisConnect();
+
+	TPGConnectionFrame1->afterDisconnect();
+	RegisterRibbonBtn->Enabled = false;
+
+    enableDisableGroupBox(RibbonRegistrationGB, false);
+    enableDisableGroupBox(BlockSelectionGB, false);
+//    enableDisableGroupBox(RibbonsDataGB, false);
 }
 
 //---------------------------------------------------------------------------
 int TMainForm::getCurrentUserID()
 {
-//	return  mUsersCB->KeyValue;
-    return -1;
+	return  mUsersCB->KeyValue;
 }
 
 int TMainForm::getCurrentCoverSlipID()
 {
-//	return extractCoverSlipID(stdstr(BarcodeLbl->Caption));
-    return -1;
+	return extractCoverSlipID(stdstr(BarcodeLbl->Caption));
 }
 
 int TMainForm::getCurrentBlockID()
 {
-//	return pgDM->getCurrentBlockIDFromAllBlocks();
-    return -1;
+	return pgDM->getCurrentBlockIDFromAllBlocks();
 }
 
 int TMainForm::getCurrentKnifeID()

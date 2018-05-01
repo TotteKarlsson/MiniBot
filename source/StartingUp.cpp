@@ -75,22 +75,21 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-//	//Setup DB callbacks
-//    if(pgDM && pgDM->SQLConnection1)
-//    {
-//    	pgDM->SQLConnection1->AfterConnect 		= afterDBServerConnect;
-//	    pgDM->SQLConnection1->AfterDisconnect 	= afterDBServerDisconnect;
-//    }
+	//Setup DB callbacks
+    if(pgDM && pgDM->SQLConnection1)
+    {
+    	pgDM->SQLConnection1->AfterConnect 		= afterDBServerConnect;
+	    pgDM->SQLConnection1->AfterDisconnect 	= afterDBServerDisconnect;
+    }
 
-//	BarcodeLbl->Caption = "";
-//	RibbonIDLbl->Caption = "";
+	BarcodeLbl->Caption = "";
 
     //Set UC7 stop mode
     StopOptionsRG->ItemIndex = mStopCutterMode;
     enableDisableUC7UI(false);
-//    BarcodeLbl->Caption = "";
-//    enableDisableGroupBox(mImagerSettingsGB, false);
-//    populateStyleMenu(ThemesMenu, ThemesMenuClick);
+    BarcodeLbl->Caption = "";
+    enableDisableGroupBox(mImagerSettingsGB, false);
+	populateStyleRG(ThemesRG);
 	mStartupTimer->Enabled = true;
 }
 

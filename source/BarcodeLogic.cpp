@@ -14,42 +14,41 @@ void __fastcall TMainForm::RegisterRibbonBtnClick(TObject *Sender)
 	//Check that we have a valid barcode for the coverslip
     //Block Label
     System::Variant lbl = pgDM->allBlocksCDS->FieldByName("label")->Value;
-//    if(BarcodeLbl->Caption == "" || lbl.IsNull())
-//    {
-//    	MessageDlg("A valid coverslip barcode and a valid block is necesarry for ribbon registration!", mtInformation, TMsgDlgButtons() << mbOK, 0);
-//    }
-//    else
-//    {
-//		//Make sure the barcode exists in the database..
-//        TSQLQuery* tq = new TSQLQuery(NULL);
-//        tq->SQLConnection = pgDM->SQLConnection1;
-//        tq->SQLConnection->AutoClone = false;
-//        stringstream q;
-//        q <<"SELECT * FROM coverslips where id = "<<extractCoverSlipID(stdstr(BarcodeLbl->Caption));
-//        tq->SQL->Add(q.str().c_str());
-//        int affected = tq->ExecSQL();
-//
-//        if(tq->RecordCount < 1)
-//        {
-//        	MessageDlg("This barcode could not be found in the database.. can't continue registration.\nChange or register a proper barcode!", mtWarning, TMsgDlgButtons() << mbOK, 0);
-//        }
-//        else
-//        {
-//            TRegisterNewRibbonForm* rrf = new TRegisterNewRibbonForm(*this);
-//            rrf->setCoverSlipBarcode(stdstr(BarcodeLbl->Caption));
-//
-//            if(rrf->ShowModal() == mrOk)
-//            {
-//                Log(lInfo) << "Ribbon "<<rrf->getRibbonID() << " was registered";
-//                RibbonIDLbl->Caption = rrf->getRibbonID().c_str();
-//                mUC7.getSectionCounter().reset();
-//                mUC7.getRibbonOrderCounter().increase(1);
-//				RibbonOrderCountLabel->update();
-//            }
-//            delete rrf;
-//        }
-//        delete tq;
-//    }
+    if(BarcodeLbl->Caption == "" || lbl.IsNull())
+    {
+    	MessageDlg("A valid coverslip barcode and a valid block is necesarry for ribbon registration!", mtInformation, TMsgDlgButtons() << mbOK, 0);
+    }
+    else
+    {
+		//Make sure the barcode exists in the database..
+        TSQLQuery* tq = new TSQLQuery(NULL);
+        tq->SQLConnection = pgDM->SQLConnection1;
+        tq->SQLConnection->AutoClone = false;
+        stringstream q;
+        q <<"SELECT * FROM coverslips where id = "<<extractCoverSlipID(stdstr(BarcodeLbl->Caption));
+        tq->SQL->Add(q.str().c_str());
+        int affected = tq->ExecSQL();
+
+        if(tq->RecordCount < 1)
+        {
+        	MessageDlg("This barcode could not be found in the database.. can't continue registration.\nChange or register a proper barcode!", mtWarning, TMsgDlgButtons() << mbOK, 0);
+        }
+        else
+        {
+            TRegisterNewRibbonForm* rrf = new TRegisterNewRibbonForm(*this);
+            rrf->setCoverSlipBarcode(stdstr(BarcodeLbl->Caption));
+
+            if(rrf->ShowModal() == mrOk)
+            {
+                Log(lInfo) << "Ribbon "<<rrf->getRibbonID() << " was registered";
+                mUC7.getSectionCounter().reset();
+                mUC7.getRibbonOrderCounter().increase(1);
+				RibbonOrderCountLabel->update();
+            }
+            delete rrf;
+        }
+        delete tq;
+    }
 }
 
 //---------------------------------------------------------------------------

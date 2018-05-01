@@ -31,15 +31,15 @@ string              gLogFileName                = "MiniBot.log";
 string 		        gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\MiniBot\\0.5.0";
 string 		        gAppDataFolder 				= joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
 HWND                gOtherAppWindow             = NULL;
-string              gDefaultAppTheme            = "Iceberg Classico";
 string              gAppMutexName     		    = "MiniBotMutex";
+string              gApplicationStyle           = "Iceberg Classico";
 string              gRestartMutexName           = "MiniBotRestartMutex";
 string              gFullDateTimeFormat         = "%Y-%m-%dT%H:%M:%S";
 string              gDateFormat                 = "%Y-%m-%d";
 string              gTimeFormat                 = "%H:%M:%S";
 bool                gIsDevelopmentRelease       = false;
 bool                gAppIsStartingUp            = true;
-bool                gHideSplash                 = true;
+bool                gHideSplash                 = false;
 TSplashForm*        gSplashForm                 = NULL;
 
 int __stdcall FindOtherWindow(HWND hwnd, LPARAM lParam);
@@ -72,6 +72,16 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
         setupLogging(gLogFileLocation, gLogFileName);
 
+        try
+        {
+        	gApplicationStyle = readStringFromRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
+			TStyleManager::TrySetStyle(gApplicationStyle.c_str());
+			TStyleManager::SetStyle(gApplicationStyle.c_str());
+        }
+        catch(...)
+        {
+        }
+
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
         string iconFile("MiniBot_Icon.ico");
@@ -102,7 +112,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         }
 
 		Application->Title = "MiniBot - Software for Microtomes";
-		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
 		Application->ShowMainForm = false;
 		Application->Run();

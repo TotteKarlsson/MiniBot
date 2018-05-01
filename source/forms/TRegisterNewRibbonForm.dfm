@@ -99,9 +99,9 @@ object RegisterNewRibbonForm: TRegisterNewRibbonForm
       object Label6: TLabel
         Left = 247
         Top = 32
-        Width = 87
+        Width = 65
         Height = 19
-        Caption = 'Block Serial:'
+        Caption = 'Block ID:'
       end
       object Label7: TLabel
         Left = 24

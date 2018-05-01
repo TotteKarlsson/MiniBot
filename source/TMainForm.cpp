@@ -41,6 +41,7 @@ extern TSplashForm*  	gSplashForm;
 extern bool             gAppIsStartingUp;
 extern string 			gApplicationRegistryRoot;
 extern string 			gAppName;
+extern string   		gApplicationStyle;
 
 using namespace dsl;
 string gDiveProcessName = "Dive";
@@ -167,6 +168,37 @@ void __fastcall TMainForm::UIUpdateTimerTimer(TObject *Sender)
 	if(MainPC->ActivePage == MainTS)
     {
 //    	DummyFocus();
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::mUsersCBCloseUp(TObject *Sender)
+{
+
+	if(!mUsersCB->KeyValue.IsNull())
+    {
+    	mDBUserID.setValue(mUsersCB->KeyValue);
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::DB_CBCloseUp(TObject *Sender)
+{
+	TDBLookupComboBox* b = dynamic_cast<TDBLookupComboBox*>(Sender);
+	if(b == BlockIDCB )
+    {
+    	if(!b->KeyValue.IsNull())
+		{
+        	mBlockID.setValue(b->KeyValue);
+        	pgDM->blockNotesCDS->Active = true;
+        }
+    }
+    else if(b == KnifeIDCB)
+    {
+    	if(!b->KeyValue.IsNull())
+		{
+        	mKnifeID.setValue(b->KeyValue);
+        }
     }
 }
 
@@ -630,5 +662,33 @@ void __fastcall TMainForm::CountLabelClick(TObject *Sender)
     delete f;
 }
 
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ClearBarcodeBtnClick(TObject *Sender)
+{
+	//Clear the Barcode
+    BarcodeLbl->Caption = "";
+	ClearBarcodeBtn->Visible = false;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ThemesRGClick(TObject *Sender)
+{
+    if(ThemesRG->ItemIndex < 0)
+    {
+        return;
+    }
+
+	String theme = ThemesRG->Items->Strings[ThemesRG->ItemIndex];
+    if(theme == TStyleManager::ActiveStyle->Name)
+    {
+        return;
+    }
+
+	TStyleManager::SetStyle(theme);
+
+	//Write to registry
+	gApplicationStyle = stdstr(theme);
+	writeStringToRegistry(gApplicationRegistryRoot, "", "Theme", gApplicationStyle);
+}
 
 

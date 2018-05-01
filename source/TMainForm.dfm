@@ -29,7 +29,7 @@ object MainForm: TMainForm
     Top = 82
     Width = 1483
     Height = 959
-    ActivePage = SettingsTS
+    ActivePage = MainTS
     Align = alClient
     HotTrack = True
     MultiLine = True
@@ -37,6 +37,8 @@ object MainForm: TMainForm
     TabOrder = 0
     TabWidth = 150
     OnChange = MainPCChange
+    ExplicitLeft = 120
+    ExplicitTop = 66
     object MainTS: TTabSheet
       Caption = 'The Bot'
       object MiddlePanel: TPanel
@@ -47,106 +49,6 @@ object MainForm: TMainForm
         Align = alClient
         AutoSize = True
         TabOrder = 0
-        DesignSize = (
-          1221
-          889)
-        object LiftBtn: TArrayBotButton
-          Left = 67
-          Top = 64
-          Width = 250
-          Height = 200
-          Caption = 'Lift'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -43
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = LiftBtnClick
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object StopButton: TArrayBotButton
-          Left = 67
-          Top = 337
-          Width = 250
-          Height = 180
-          Margins.Left = 15
-          Margins.Top = 15
-          Margins.Right = 15
-          Margins.Bottom = 15
-          Action = stopAllA
-          Anchors = [akLeft, akBottom]
-          BiDiMode = bdLeftToRight
-          Caption = 'Stop Motor'
-          ParentBiDiMode = False
-          Style = bsNew
-          TabOrder = 1
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object Panel2: TPanel
-          Left = 627
-          Top = 40
-          Width = 612
-          Height = 465
-          Anchors = [akTop, akRight]
-          BevelOuter = bvNone
-          Constraints.MinWidth = 612
-          TabOrder = 2
-          DesignSize = (
-            612
-            465)
-          object DiveButton: TArrayBotButton
-            Left = 45
-            Top = 24
-            Width = 250
-            Height = 200
-            Anchors = [akTop]
-            Caption = 'Dive'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -43
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
-            OnClick = DiveButtonClick
-            SoundID = 'BUTTON_CLICK_4'
-          end
-          object FillLessBtn: TArrayBotButton
-            Left = 472
-            Top = 261
-            Width = 137
-            Height = 105
-            Anchors = [akTop, akRight]
-            Caption = 'v'
-            TabOrder = 1
-            OnMouseDown = JogMotorMouseDown
-            OnMouseUp = JogMotorMouseUp
-            SoundID = 'BUTTON_CLICK_4'
-          end
-          object FillMoreBtn: TArrayBotButton
-            Left = 472
-            Top = 128
-            Width = 137
-            Height = 105
-            Anchors = [akTop, akRight]
-            Caption = '^'
-            TabOrder = 2
-            OnMouseDown = JogMotorMouseDown
-            OnMouseUp = JogMotorMouseUp
-            SoundID = 'BUTTON_CLICK_4'
-          end
-          object MotorPositionFrame1: TMotorPositionFrame
-            Left = 426
-            Top = 16
-            Width = 161
-            Height = 81
-            Anchors = [akTop, akRight]
-            AutoSize = True
-            TabOrder = 3
-          end
-        end
         object RibbonRegistrationGB: TGroupBox
           Left = 1
           Top = 649
@@ -154,7 +56,7 @@ object MainForm: TMainForm
           Height = 239
           Align = alBottom
           Caption = 'Ribbon  Registration'
-          TabOrder = 3
+          TabOrder = 0
           DesignSize = (
             1219
             239)
@@ -176,37 +78,26 @@ object MainForm: TMainForm
             Layout = tlCenter
             ExplicitLeft = 835
           end
-          object RibbonIDLbl: TLabel
-            AlignWithMargins = True
-            Left = 1046
-            Top = 89
-            Width = 52
-            Height = 13
-            Alignment = taRightJustify
-            Anchors = [akTop, akRight]
-            Caption = 'RibbonID'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clLime
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            Layout = tlCenter
-            ExplicitLeft = 868
-          end
           object Label7: TLabel
-            Left = 413
+            Left = 271
             Top = 40
-            Width = 82
+            Width = 159
             Height = 23
-            Caption = 'Block ID: '
+            Caption = 'Selected Block ID: '
           end
           object DBText1: TDBText
-            Left = 489
-            Top = 40
+            Left = 449
+            Top = 32
             Width = 65
             Height = 33
             DataField = 'id'
+            DataSource = pgDM.allBlocksDataSource
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -21
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
           end
           object ClearBarcodeBtn: TArrayBotButton
             Left = 1104
@@ -216,26 +107,19 @@ object MainForm: TMainForm
             Anchors = [akTop, akRight]
             Caption = 'Clear'
             TabOrder = 1
-            SoundID = 'BUTTON_CLICK_4'
-          end
-          object ClearRibbonIDBtn: TArrayBotButton
-            Left = 1104
-            Top = 78
-            Width = 99
-            Height = 41
-            Anchors = [akTop, akRight]
-            Caption = 'Clear'
-            TabOrder = 2
+            Visible = False
+            OnClick = ClearBarcodeBtnClick
             SoundID = 'BUTTON_CLICK_4'
           end
           object RegisterRibbonBtn: TArrayBotButton
             Left = 24
             Top = 144
             Width = 241
-            Height = 78
+            Height = 85
             Caption = 'Register Floating Ribbon'
             ParentDoubleBuffered = True
-            TabOrder = 3
+            TabOrder = 2
+            OnClick = RegisterRibbonBtnClick
             SoundID = 'BUTTON_CLICK_4'
           end
           object DecodeSessionBtn: TArrayBotButton
@@ -247,6 +131,115 @@ object MainForm: TMainForm
             ParentDoubleBuffered = True
             TabOrder = 0
             OnClick = DecodeBarcodeClick
+            SoundID = 'BUTTON_CLICK_4'
+          end
+        end
+        object GroupBox1: TGroupBox
+          Left = 1
+          Top = 1
+          Width = 1219
+          Height = 648
+          Align = alClient
+          Caption = 'GroupBox1'
+          TabOrder = 1
+          DesignSize = (
+            1219
+            648)
+          object LiftBtn: TArrayBotButton
+            Left = 24
+            Top = 73
+            Width = 250
+            Height = 200
+            Caption = 'Lift'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -43
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 0
+            OnClick = LiftBtnClick
+            SoundID = 'BUTTON_CLICK_4'
+          end
+          object Panel2: TPanel
+            Left = 607
+            Top = 40
+            Width = 612
+            Height = 465
+            Anchors = [akTop, akRight]
+            BevelOuter = bvNone
+            Constraints.MinWidth = 612
+            TabOrder = 1
+            DesignSize = (
+              612
+              465)
+            object DiveButton: TArrayBotButton
+              Left = 45
+              Top = 24
+              Width = 250
+              Height = 200
+              Anchors = [akTop]
+              Caption = 'Dive'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -43
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 0
+              OnClick = DiveButtonClick
+              SoundID = 'BUTTON_CLICK_4'
+            end
+            object FillLessBtn: TArrayBotButton
+              Left = 472
+              Top = 261
+              Width = 137
+              Height = 105
+              Anchors = [akTop, akRight]
+              Caption = 'v'
+              TabOrder = 1
+              OnMouseDown = JogMotorMouseDown
+              OnMouseUp = JogMotorMouseUp
+              SoundID = 'BUTTON_CLICK_4'
+            end
+            object FillMoreBtn: TArrayBotButton
+              Left = 472
+              Top = 128
+              Width = 137
+              Height = 105
+              Anchors = [akTop, akRight]
+              Caption = '^'
+              TabOrder = 2
+              OnMouseDown = JogMotorMouseDown
+              OnMouseUp = JogMotorMouseUp
+              SoundID = 'BUTTON_CLICK_4'
+            end
+            object MotorPositionFrame1: TMotorPositionFrame
+              Left = 426
+              Top = 16
+              Width = 161
+              Height = 81
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              TabOrder = 3
+            end
+          end
+          object StopButton: TArrayBotButton
+            Left = 24
+            Top = 450
+            Width = 250
+            Height = 180
+            Margins.Left = 15
+            Margins.Top = 15
+            Margins.Right = 15
+            Margins.Bottom = 15
+            Action = stopAllA
+            Anchors = [akLeft, akBottom]
+            BiDiMode = bdLeftToRight
+            Caption = 'Stop Lifter'
+            ParentBiDiMode = False
+            Style = bsNew
+            TabOrder = 2
             SoundID = 'BUTTON_CLICK_4'
           end
         end
@@ -293,38 +286,36 @@ object MainForm: TMainForm
             Align = alTop
             Caption = 'Return Speed'
             TabOrder = 1
-            object PresetReturnSpeedBtn: TArrayBotButton
+            object PresetReturnSpeedBtn: TSpeedButton
               Left = 22
-              Top = 40
+              Top = 38
               Width = 195
               Height = 81
+              AllowAllUp = True
+              GroupIndex = 1
+              Down = True
               Caption = 'Preset'
-              TabOrder = 0
-              WordWrap = True
               OnClick = CreateUC7Message
-              SoundID = 'BUTTON_CLICK_4'
             end
-            object SlowReturnSpeedBtn: TArrayBotButton
+            object SlowReturnSpeedBtn: TSpeedButton
               Left = 22
               Top = 167
               Width = 195
               Height = 81
+              AllowAllUp = True
+              GroupIndex = 1
               Caption = 'Slow'
-              TabOrder = 1
-              WordWrap = True
               OnClick = CreateUC7Message
-              SoundID = 'BUTTON_CLICK_4'
             end
-            object UltraSlowReturnSpeedBtn: TArrayBotButton
+            object UltraSlowReturnSpeedBtn: TSpeedButton
               Left = 22
               Top = 294
               Width = 195
               Height = 81
+              AllowAllUp = True
+              GroupIndex = 1
               Caption = 'Ultra Slow'
-              TabOrder = 2
-              WordWrap = True
               OnClick = CreateUC7Message
-              SoundID = 'BUTTON_CLICK_4'
             end
           end
         end
@@ -578,6 +569,244 @@ object MainForm: TMainForm
         end
       end
     end
+    object RibbonsTS: TTabSheet
+      Caption = 'Blocks && Ribbons'
+      ImageIndex = 7
+      object GroupBox14: TGroupBox
+        Left = 0
+        Top = 121
+        Width = 1475
+        Height = 456
+        Align = alTop
+        Caption = 'Ribbons'
+        TabOrder = 0
+        object RibbonsGrid: TDBGrid
+          Left = 2
+          Top = 25
+          Width = 1471
+          Height = 323
+          Align = alClient
+          DataSource = pgDM.ribbonsDSource
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -19
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'statusL'
+              Width = 123
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cutting_order'
+              Width = 104
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nr_of_sections'
+              Width = 113
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'coverslip_id'
+              Width = 120
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'created_on'
+              Visible = True
+            end>
+        end
+        object RibbonsNavigator: TDBNavigator
+          Left = 2
+          Top = 348
+          Width = 1471
+          Height = 65
+          DataSource = pgDM.ribbonsDSource
+          VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+          Align = alBottom
+          TabOrder = 1
+        end
+        object Panel4: TPanel
+          Left = 2
+          Top = 413
+          Width = 1471
+          Height = 41
+          Align = alBottom
+          TabOrder = 2
+          object RibbonID: TDBText
+            Left = 1
+            Top = 1
+            Width = 441
+            Height = 39
+            Align = alLeft
+            DataField = 'id'
+            DataSource = pgDM.ribbonsDSource
+            ExplicitLeft = 56
+            ExplicitTop = 6
+            ExplicitHeight = 17
+          end
+        end
+      end
+      object Panel11: TPanel
+        Left = 0
+        Top = 0
+        Width = 1475
+        Height = 121
+        Align = alTop
+        TabOrder = 1
+        object BlockSelectionGB: TGroupBox
+          Left = 1
+          Top = 1
+          Width = 1473
+          Height = 119
+          Align = alClient
+          Caption = 'DB/Block Selection'
+          TabOrder = 0
+          object Label1: TLabel
+            Left = 293
+            Top = 32
+            Width = 68
+            Height = 23
+            Caption = 'Knife ID'
+          end
+          object Label3: TLabel
+            Left = 141
+            Top = 32
+            Width = 69
+            Height = 23
+            Caption = 'Block ID'
+          end
+          object Label5: TLabel
+            Left = 13
+            Top = 32
+            Width = 37
+            Height = 23
+            Caption = 'User'
+          end
+          object BlockIDCB: TDBLookupComboBox
+            Left = 140
+            Top = 57
+            Width = 135
+            Height = 31
+            KeyField = 'id'
+            ListField = 'id'
+            ListSource = pgDM.allBlocksDataSource
+            TabOrder = 0
+            OnCloseUp = DB_CBCloseUp
+          end
+          object KnifeIDCB: TDBLookupComboBox
+            Left = 292
+            Top = 57
+            Width = 135
+            Height = 31
+            KeyField = 'id'
+            ListField = 'id'
+            ListSource = pgDM.knifesDSource
+            TabOrder = 1
+            OnCloseUp = DB_CBCloseUp
+          end
+          object mUsersCB: TDBLookupComboBox
+            Left = 12
+            Top = 57
+            Width = 109
+            Height = 31
+            KeyField = 'id'
+            ListField = 'user_name'
+            ListSource = pgDM.usersDataSource
+            TabOrder = 2
+            OnCloseUp = mUsersCBCloseUp
+          end
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 0
+        Top = 577
+        Width = 1475
+        Height = 312
+        Align = alClient
+        Caption = 'Ribbon Notes'
+        TabOrder = 2
+        object Panel6: TPanel
+          Left = 2
+          Top = 25
+          Width = 185
+          Height = 285
+          Align = alLeft
+          TabOrder = 0
+          object mRibbonNotesGrid: TDBGrid
+            Left = 1
+            Top = 1
+            Width = 183
+            Height = 258
+            Align = alClient
+            DataSource = pgDM.ribbonNotesDSource
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWindowText
+            TitleFont.Height = -19
+            TitleFont.Name = 'Tahoma'
+            TitleFont.Style = []
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'created_on'
+                Title.Caption = 'Date'
+                Width = 143
+                Visible = True
+              end>
+          end
+          object mRibbonNotesNavigator: TDBNavigator
+            Left = 1
+            Top = 259
+            Width = 183
+            Height = 25
+            DataSource = pgDM.ribbonNotesDSource
+            VisibleButtons = [nbInsert, nbDelete, nbRefresh, nbApplyUpdates]
+            Align = alBottom
+            ConfirmDelete = False
+            TabOrder = 1
+          end
+        end
+        object Panel7: TPanel
+          Left = 187
+          Top = 25
+          Width = 1286
+          Height = 285
+          Align = alClient
+          TabOrder = 1
+          object mRibbonNoteMemo: TDBMemo
+            Left = 1
+            Top = 1
+            Width = 1284
+            Height = 258
+            Align = alClient
+            DataField = 'note'
+            DataSource = pgDM.ribbonNotesDSource
+            TabOrder = 0
+          end
+          object mRibbonNoteNavigator: TDBNavigator
+            Left = 1
+            Top = 259
+            Width = 1284
+            Height = 25
+            DataSource = pgDM.ribbonNotesDSource
+            VisibleButtons = [nbPost, nbCancel]
+            Align = alBottom
+            TabOrder = 1
+          end
+        end
+      end
+    end
     object SequencesTS: TTabSheet
       Caption = 'Sequences'
       ImageIndex = 4
@@ -745,7 +974,7 @@ object MainForm: TMainForm
         Top = 0
         Width = 1475
         Height = 889
-        ActivePage = TabSheet1
+        ActivePage = UC7Tab
         Align = alClient
         TabOrder = 0
         object UC7Tab: TTabSheet
@@ -1161,6 +1390,20 @@ object MainForm: TMainForm
             end
           end
         end
+        object Miscellaneous: TTabSheet
+          Caption = 'Miscellaneous'
+          ImageIndex = 4
+          object ThemesRG: TRadioGroup
+            Left = 0
+            Top = 0
+            Width = 305
+            Height = 851
+            Align = alLeft
+            Caption = 'Themes'
+            TabOrder = 0
+            OnClick = ThemesRGClick
+          end
+        end
       end
     end
     object AboutTS: TTabSheet
@@ -1326,35 +1569,35 @@ object MainForm: TMainForm
         Caption = 'Ribbon Order'
       end
       object CuttingLbl: TLabel
-        Left = 976
+        Left = 932
         Top = 25
         Width = 60
         Height = 23
         Caption = 'Cutting'
       end
       object AfterCuttingLbl: TLabel
-        Left = 1064
+        Left = 1020
         Top = 25
         Width = 106
         Height = 23
         Caption = 'After Cutting'
       end
       object RetractingLbl: TLabel
-        Left = 1192
+        Left = 1148
         Top = 25
         Width = 86
         Height = 23
         Caption = 'Retracting'
       end
       object BeforeCuttingLbl: TLabel
-        Left = 840
+        Left = 796
         Top = 25
         Width = 120
         Height = 23
         Caption = 'Before Cutting'
       end
       object UC7Shape: TShape
-        Left = 840
+        Left = 796
         Top = 48
         Width = 93
         Height = 6
@@ -1415,8 +1658,8 @@ object MainForm: TMainForm
     end
   end
   object ActionList1: TActionList
-    Left = 716
-    Top = 752
+    Left = 1060
+    Top = 616
     object checkForDevices: TAction
       Caption = 'Devices Check'
       OnExecute = checkForDevicesExecute
@@ -1474,33 +1717,33 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 100
     OnTimer = ShutDownTimerTimer
-    Left = 348
-    Top = 752
+    Left = 948
+    Top = 664
   end
   object ApplicationEvents1: TApplicationEvents
     OnException = ApplicationEvents1Exception
-    Left = 624
-    Top = 656
+    Left = 928
+    Top = 584
   end
   object UIUpdateTimer: TTimer
     Enabled = False
     Interval = 250
     OnTimer = UIUpdateTimerTimer
-    Left = 436
-    Top = 752
+    Left = 948
+    Top = 728
   end
   object WaitForDeviceInitTimer: TTimer
     Enabled = False
     Interval = 100
     OnTimer = WaitForDeviceInitTimerTimer
-    Left = 544
-    Top = 752
+    Left = 1072
+    Top = 704
   end
   object mStartupTimer: TTimer
     Enabled = False
     Interval = 250
     OnTimer = mStartupTimerTimer
-    Left = 240
-    Top = 752
+    Left = 848
+    Top = 648
   end
 end

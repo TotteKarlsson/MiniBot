@@ -136,9 +136,6 @@ class TMainForm : public TRegistryForm
 	TGroupBox *CutterGB;
 	TArrayBotButton *StartStopBtn;
 	TGroupBox *GroupBox9;
-	TArrayBotButton *PresetReturnSpeedBtn;
-	TArrayBotButton *SlowReturnSpeedBtn;
-	TArrayBotButton *UltraSlowReturnSpeedBtn;
 	TTabSheet *SettingsTS;
 	TPageControl *MiscPageControl;
 	TTabSheet *TabSheet8;
@@ -172,11 +169,9 @@ class TMainForm : public TRegistryForm
 	TMotorPositionFrame *MotorPositionFrame1;
 	TGroupBox *RibbonRegistrationGB;
 	TLabel *BarcodeLbl;
-	TLabel *RibbonIDLbl;
 	TLabel *Label7;
 	TDBText *DBText1;
 	TArrayBotButton *ClearBarcodeBtn;
-	TArrayBotButton *ClearRibbonIDBtn;
 	TArrayBotButton *RegisterRibbonBtn;
 	TArrayBotButton *DecodeSessionBtn;
 	TTabSheet *TabSheet1;
@@ -189,6 +184,33 @@ class TMainForm : public TRegistryForm
 	TRadioGroup *mScannerAimRG;
 	TRadioGroup *mScannerEnabledRG;
 	TArrayBotButton *BeepBtn;
+	TTabSheet *RibbonsTS;
+	TGroupBox *GroupBox14;
+	TDBGrid *RibbonsGrid;
+	TDBNavigator *RibbonsNavigator;
+	TPanel *Panel4;
+	TDBText *RibbonID;
+	TPanel *Panel11;
+	TGroupBox *BlockSelectionGB;
+	TLabel *Label1;
+	TLabel *Label3;
+	TLabel *Label5;
+	TDBLookupComboBox *BlockIDCB;
+	TDBLookupComboBox *KnifeIDCB;
+	TDBLookupComboBox *mUsersCB;
+	TGroupBox *GroupBox3;
+	TPanel *Panel6;
+	TDBGrid *mRibbonNotesGrid;
+	TDBNavigator *mRibbonNotesNavigator;
+	TPanel *Panel7;
+	TDBMemo *mRibbonNoteMemo;
+	TDBNavigator *mRibbonNoteNavigator;
+	TSpeedButton *PresetReturnSpeedBtn;
+	TSpeedButton *SlowReturnSpeedBtn;
+	TSpeedButton *UltraSlowReturnSpeedBtn;
+	TTabSheet *Miscellaneous;
+	TRadioGroup *ThemesRG;
+	TGroupBox *GroupBox1;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall checkForDevicesExecute(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
@@ -224,11 +246,12 @@ class TMainForm : public TRegistryForm
 	void __fastcall scannerSettingsClick(TObject *Sender);
 	void __fastcall mStartupTimerTimer(TObject *Sender);
 	void __fastcall CountLabelClick(TObject *Sender);
+	void __fastcall ClearBarcodeBtnClick(TObject *Sender);
+	void __fastcall mUsersCBCloseUp(TObject *Sender);
+	void __fastcall DB_CBCloseUp(TObject *Sender);
+	void __fastcall ThemesRGClick(TObject *Sender);
 
     private:
-//		enum PageControlTabs 					{pcMain = 0,  pcMoveSequences,
-//        										pcMotors, pcLogs, pcAbout};
-
         void									enableDisableUI(bool enable);
         LogFileReader                           mLogFileReader;
         void __fastcall                         logMsg();
