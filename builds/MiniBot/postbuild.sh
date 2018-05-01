@@ -7,7 +7,7 @@ echo "Arg3: "$3
 echo "Arg4: "$4
 
 #OUTPUTDIR=`cygpath $1`
-OUTPUTDIR=$
+OUTPUTDIR=$1
 #APP_RELEASES=`cygpath $2`
 APP_RELEASES=$2
 OUTPUTFILENAME=$3

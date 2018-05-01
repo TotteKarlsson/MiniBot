@@ -28,6 +28,11 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
 	this->Visible = true;
 	setupWindowTitle();
 
+    //Populate misc frames
+	TSoundsFrame1->populate();
+    TApplicationSoundsFrame1->populate(mSoundProperties);
+
+
 	TMemoLogger::mMemoIsEnabled = true;
     if(gSplashForm)
     {
