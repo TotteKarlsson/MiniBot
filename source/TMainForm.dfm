@@ -37,8 +37,6 @@ object MainForm: TMainForm
     TabOrder = 0
     TabWidth = 150
     OnChange = MainPCChange
-    ExplicitLeft = 120
-    ExplicitTop = 66
     object MainTS: TTabSheet
       Caption = 'The Bot'
       object MiddlePanel: TPanel

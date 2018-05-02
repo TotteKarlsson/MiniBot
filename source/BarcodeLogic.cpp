@@ -55,7 +55,6 @@ void __fastcall TMainForm::RegisterRibbonBtnClick(TObject *Sender)
 int	TMainForm::getZebraCOMPortNumber()
 {
 	return mZebraCOMPortCB->ItemIndex + 1;
-    return -1;
 }
 
 void __fastcall TMainForm::ConnectZebraBtnClick(TObject *Sender)

@@ -308,77 +308,56 @@ void TMainForm::onUC7CountedTo()
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::CreateUC7Message(TObject *Sender)
 {
-	TArrayBotButton* btn = dynamic_cast<TArrayBotButton*>(Sender);
+	TArrayBotButton* btn 	= dynamic_cast<TArrayBotButton*>(Sender);
+	TSpeedButton* sbtn 		= dynamic_cast<TSpeedButton*>(Sender);
 
-    if(!btn)
+    //Arraybot Buttons
+    if(btn)
     {
-    	Log(lError) << "Sender object was NULl!";
+        if (btn == StartStopBtn)
+        {
+            if(StartStopBtn->Caption == "Start")
+            {
+                mUC7.startCutter();
+            }
+            else
+            {
+                //Fix this..
+                mUC7.stopCutter(StopOptionsRG->ItemIndex);
+            }
+        }
+        else if(btn == mSetZeroCutBtn)
+        {
+            mUC7.setFeedRate(0);
+        }
+        else if(btn == SetPresetFeedBtn)
+        {
+            mUC7.setFeedRate(mPresetFeedRateE->getValue());
+        }
+    }
+    else if(sbtn)
+    {
+        if(sbtn == PresetReturnSpeedBtn)
+        {
+            mUC7.setReturnSpeed(PresetReturnSpeedE->getValue());
+        }
+        else if(sbtn == SlowReturnSpeedBtn)
+        {
+            mUC7.setReturnSpeed(SlowReturnSpeedE->getValue());
+        }
+        else if(sbtn == UltraSlowReturnSpeedBtn)
+        {
+            mUC7.setReturnSpeed(UltraSlowReturnSpeedE->getValue());
+        }
+    }
+
+    if(!btn && sbtn)
+    {
+    	Log(lError) << "No Sender object in CreateUC7Message";
     	return;
     }
 
-	if (btn == StartStopBtn)
-    {
-    	if(StartStopBtn->Caption == "Start")
-        {
-            mUC7.startCutter();
-        }
-        else
-        {
-        	//Fix this..
-            mUC7.stopCutter(StopOptionsRG->ItemIndex);
-        }
-    }
-    else if(btn == mSetZeroCutBtn)
-    {
-		mUC7.setFeedRate(0);
-    }
-    else if(btn == SetPresetFeedBtn)
-    {
-		mUC7.setFeedRate(mPresetFeedRateE->getValue());
-    }
-
-//    else if(btn == mRibbonStartBtn)
-//    {
-//    	if(btn->Caption == "Back off")
-//        {
-//			mUC7.prepareToCutRibbon(true);
-//            btn->Caption = "Preparing for IDLE";
-//
-//            //check if this screws up things
-//			mUC7.setFeedRate(0);
-//        }
-//        else
-//        {
-//            mUC7.prepareForNewRibbon(true);
-//            btn->Caption = "Preparing start of Ribbon";
-//            //btn->Enabled = false;
-//        }
-//    }
-//    else if(btn == mMoveSouthBtn)
-//    {
-//   		mUC7.setFeedRate(0);
-//    	mUC7.jogKnifeStageSouth(BackOffStepFrame->getValue(), true);
-//    }
-//    else if(btn == mMoveNorthBtn)
-//    {
-//		mUC7.setFeedRate(0);
-//    	mUC7.jogKnifeStageNorth(BackOffStepFrame->getValue(), true);
-//    }
-    else if(btn == PresetReturnSpeedBtn)
-    {
-    	mUC7.setReturnSpeed(PresetReturnSpeedE->getValue());
-    }
-    else if(btn == SlowReturnSpeedBtn)
-    {
-    	mUC7.setReturnSpeed(SlowReturnSpeedE->getValue());
-    }
-    else if(btn == UltraSlowReturnSpeedBtn)
-    {
-    	mUC7.setReturnSpeed(UltraSlowReturnSpeedE->getValue());
-    }
-
-    string msg = mUC7.getLastSentMessage().getMessage();
-	Log(lDebug3) << "Sent message: "<<msg;
+	Log(lDebug3) << "Sent message: " << mUC7.getLastSentMessage().getMessage();
 }
 
 //---------------------------------------------------------------------------
